@@ -3,4 +3,4 @@
 
 #### Autoři:
 - Dominik Harmim <xharmi00@stud.fit.vutbr.cz>
-- Matúš Burzala <xbrza00@stud.fit.vutbr.cz>
+- Matúš Burzala <xburza00@stud.fit.vutbr.cz>
