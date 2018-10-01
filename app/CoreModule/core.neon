@@ -1,0 +1,10 @@
+services:
+	# Router
+	router: \App\CoreModule\Model\Router\RouterFactory::createRouter
+
+	# Controls
+	-
+		implement: \App\CoreModule\Controls\Head\IHeadControlFactory
+		class: \App\CoreModule\Controls\Head\HeadControl(%isProductionDomain%, %wwwDir%)
+	- \App\CoreModule\Controls\Header\IHeaderControlFactory
+	- \App\CoreModule\Controls\Footer\IFooterControlFactory

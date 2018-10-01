@@ -1,0 +1,9 @@
+parameters:
+	config:
+		domainUrl: http://vut-iis-project.localhost.com
+
+	database:
+		host: database
+		user: iis
+		password: iis
+		dbname: vut_iis_project

@@ -1,0 +1,16 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<meta name="author" content="Dominik Harmim, Matúš Burzala">
+<meta name="description" content="Informační systémy - Projekt.">
+<meta name="keywords" content="vut, vut-fit, iis, information-systems, nette-framework, php7">
+
+{var $title = !empty($title) ? $title . ' | ' : ''}
+{php $title .= 'Půjčovna kostýmů'}
+<title>{$title}</title>
+
+<link rel="icon" type="image/x-icon" href="{$basePath}/favicon.ico">
+
+{foreach $styles as $style}
+	<link rel="stylesheet" type="text/css" n:nonce href="{$basePath . $style}">
+{/foreach}

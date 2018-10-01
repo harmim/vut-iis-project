@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	{control head title => isset($title) ? $title : null}
+</head>
+<body>
+	<header>
+		{control header}
+	</header>
+
+	<main class="container">
+		{ifset #content}{include content}{/ifset}
+	</main>
+
+	<footer class="footer">
+		{control footer}
+	</footer>
+
+	{control head:scripts}
+</body>
+</html>

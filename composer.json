@@ -1,0 +1,39 @@
+{
+	"name": "harmim/vut-iis-project",
+	"description": "Informační systémy - Projekt.",
+	"type": "project",
+	"keywords": ["vut", "vut-fit", "iis", "information-systems", "nette-framework", "php7"],
+	"homepage": "https://github.com/harmim/vut-iis-project",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Dominik Harmim",
+			"email": "xharmi00@stud.fit.vutbr.cz",
+			"role": "Developer"
+		},
+		{
+			"name": "Matúš Burzala",
+			"email": "xburza00@stud.fit.vutbr.cz",
+			"role": "Developer"
+		}
+	],
+	"require": {
+		"php": ">= 7.2",
+		"nette/application": "~2.4.12",
+		"nette/bootstrap": "~2.4.6",
+		"nette/database": "~2.4.6",
+		"nette/security": "~2.4.3",
+		"nette/utils": "~2.5.3",
+		"nette/http": "~2.4.10",
+		"nette/finder": "~2.4.2",
+		"nette/forms": "~2.4.9",
+		"latte/latte": "~2.4.8",
+		"tracy/tracy": "~2.5.3"
+	},
+	"autoload": {
+		"psr-4": {
+			"App\\": "app",
+			"IIS\\": "libs/iis"
+		}
+	}
+}

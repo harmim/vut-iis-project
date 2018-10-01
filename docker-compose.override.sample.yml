@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+    web:
+        environment:
+            IIS_DEBUG: 1
+            XDEBUG_CONFIG: remote_host=docker.for.mac.localhost
+
+    database:
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_USER: iis
+            MYSQL_PASSWORD: iis
+            MYSQL_DATABASE: vut_iis_project
+
+    adminer:
+        environment:
+            VIRTUAL_HOST: adminer.vut-iis-project.localhost.com
+
+networks:
+    default:
+        external:
+            name: nginx-proxy

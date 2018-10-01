@@ -1,4 +1,11 @@
 SET FOREIGN_KEY_CHECKS = 0;
+SET NAMES utf8;
+
+ALTER DATABASE `vut_iis_project`
+	DEFAULT CHARACTER SET utf8
+	COLLATE utf8_czech_ci;
+
+USE `vut_iis_project`;
 
 DROP TABLE IF EXISTS Zaznam;
 DROP TABLE IF EXISTS Doplnek;

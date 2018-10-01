@@ -1,0 +1,9 @@
+parameters:
+	config:
+		domainUrl: http://vut-iis-project.harmim.cz
+
+	database:
+		host:
+		user:
+		password:
+		dbname:

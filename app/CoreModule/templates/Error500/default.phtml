@@ -1,0 +1,59 @@
+<?php
+
+declare(strict_types=1);
+
+
+$message = [
+	'title' => 'Půjčovna kostýmů',
+	'headline' => 'Probíhá údržba',
+	'link' => 'http://vut-iis-project.harmim.cz',
+	'message1' => 'Omlouváme se, na této stránce právě probíhá údržba.',
+	'message2' => 'Prosím zkuste navštívit náš web za několik minut.',
+	'thanks' => 'Děkujeme.',
+];
+
+$csp = null;
+$cspName = 'Content-Security-Policy:';
+$cspNameLen = \strlen($cspName);
+foreach (\headers_list() as $header) {
+	if (\strncasecmp($header, $cspName, $cspNameLen) === 0) {
+		$csp = \ltrim(\substr($header, $cspNameLen));
+		break;
+	}
+}
+$nonce = \preg_match("~\s'nonce-([^']+)'~", (string) $csp, $matches) ? $matches[1] : null;
+
+?>
+
+<!DOCTYPE html>
+<!-- "' -->
+</textarea></script></style></pre></xmp></a></audio></button></canvas></datalist></details></dialog></iframe>
+</listing></meter></noembed></noframes></noscript></optgroup></option></progress></rp></select></table></template>
+</title></video>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<title><?= $message['title']; ?></title>
+
+<style<?php if ($nonce) echo " nonce=\"$nonce\""; ?>>
+	#error-500 {
+		all: initial; position: absolute; top: 0; left: 0; right: 0; height: 70vh; min-height: 400px; display: flex;
+		align-items: center; justify-content: center; z-index: 1000;
+	}
+	#error-500 div { all: initial; max-width: 550px; background: white; color: #333; display: block; }
+	#error-500 h1 { all: initial; font: bold 50px/1.1 sans-serif; display: block; margin: 40px; }
+	#error-500 p { all: initial; font: 20px/1.4 sans-serif; margin: 40px; display: block; }
+</style>
+
+<div id="error-500">
+	<div>
+		<h1><?= $message['headline']; ?></h1>
+		<p><?= $message['message1']; ?></p>
+		<p><?= $message['message2']; ?></p>
+		<p><a href="<?= $message['link']; ?>"><?= $message['link']; ?></a></p>
+		<p><?= $message['thanks']; ?></p>
+	</div>
+</div>
+
+<script<?php if ($nonce) echo " nonce=\"$nonce\""; ?>>
+	document.body.insertBefore(document.getElementById('error-500'), document.body.firstChild);
+</script>

@@ -1,0 +1,10 @@
+/.idea/
+
+/log/*
+/node_modules/*
+/temp/*
+/vendor/*
+
+!.htaccess
+
+/docker-compose.override.yml
