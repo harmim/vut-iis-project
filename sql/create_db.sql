@@ -29,6 +29,7 @@ opotrebeni VARCHAR(25),
 velikost VARCHAR(25) NOT NULL,
 barva VARCHAR(25) NOT NULL,
 dostupnost VARCHAR(25) NOT NULL,
+obrazok VARCHAR(255) NULL,
 id_kategorie INTEGER NOT NULL,
 id_zamestnanec INTEGER NOT NULL,
 PRIMARY KEY(id_kostym)
@@ -74,6 +75,8 @@ PRIMARY KEY (id_zaznam)
 CREATE TABLE Uzivatel(
 id_uzivatel INTEGER NOT NULL AUTO_INCREMENT,
 typ ENUM('admin', 'zamestnanec', 'klient') NOT NULL,
+email VARCHAR(25) NOT NULL,
+heslo VARCHAR(255) NOT NULL,
 PRIMARY KEY (id_uzivatel)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
@@ -121,13 +124,13 @@ ALTER TABLE PravnickaOsoba ADD FOREIGN KEY (id_klient) REFERENCES Klient(id_klie
 
 /*---------------------------------------------------test data---------------------------------------------------------------------------------*/
 
-INSERT INTO Uzivatel (typ) VALUES('admin');
-INSERT INTO Uzivatel (typ) VALUES('zamestnanec');
-INSERT INTO Uzivatel (typ) VALUES('zamestnanec');
-INSERT INTO Uzivatel (typ) VALUES('zamestnanec');
-INSERT INTO Uzivatel (typ) VALUES('klient');
-INSERT INTO Uzivatel (typ) VALUES('klient');
-INSERT INTO Uzivatel (typ) VALUES('klient');
+INSERT INTO Uzivatel (typ, email, heslo) VALUES('admin', 'admin@gmail.com', 'heslo');
+INSERT INTO Uzivatel (typ, email, heslo) VALUES('zamestnanec', 'zamest2@gmail.com', 'heslo');
+INSERT INTO Uzivatel (typ, email, heslo) VALUES('zamestnanec', 'zamest3@gmail.com', 'heslo');
+INSERT INTO Uzivatel (typ, email, heslo) VALUES('zamestnanec', 'zamest4@gmail.com', 'heslo');
+INSERT INTO Uzivatel (typ, email, heslo) VALUES('klient', 'klient1@gmail.com', 'heslo');
+INSERT INTO Uzivatel (typ, email, heslo) VALUES('klient', 'klient1@gmail.com', 'heslo');
+INSERT INTO Uzivatel (typ, email, heslo) VALUES('klient', 'klient1@gmail.com', 'heslo');
 
 INSERT INTO Zamestnanec (id_zamestnanec, jmeno, prijmeni, datumNarozeni, telefonniCislo) VALUES('2', 'Jan', 'Novak', '1995-12-10', '+420911222444');
 INSERT INTO Zamestnanec (id_zamestnanec, jmeno, prijmeni, datumNarozeni, telefonniCislo) VALUES('3', 'Jakub', 'Slepy', '1991-02-10', '+420911222444');
