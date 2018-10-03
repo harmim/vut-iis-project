@@ -15,7 +15,7 @@ Dokumentace projektu se nachází v ... **TODO**.
 - `./app/` Jádro systému. PHP skripty a třídy, konfigurační NEON soubory. Latte šablony.
   * `./app/config/` Konfigurační NEON soubory systému.
   * `./app/*Module/` Jednotlivé moduly systému. Tento adresář obsahuje konfigurační NEON soubor pro daný modul,
-    adresář `Controls` pro komponentami, `Model` pro modelové třídy, `Presenters` pro presentery (kontrolery) a 
+    adresář `Controls` pro komponenty, `Model` pro modelové třídy, `Presenters` pro presentery (kontrolery) a 
     `templates` pro Latte šablony.
   * `./app/bootstrap.php` výchozí skript s nastavením konfigrace celého systému.
 - `./doc/` Dokumentace.
@@ -46,7 +46,7 @@ Dokumentace projektu se nachází v ... **TODO**.
 - `./Gruntfile.js` JavaScript skript pro správu a stahování JavaScript a CSS závislostí systému.
   (Konfigurační soubor nástroje Grunt.)
 - `./LICENSE` Licence.
-- `./Makefile` Soubor pro správu systému příkazem programem make.
+- `./Makefile` Soubor pro správu systému programem make.
 - `./package.json` Definice používaných JavaScript knihoven pro stahování JavaScript a CSS závislostí systému
   nástrojem NPM.
 - `./package-lock.json` Pomocný soubor pro nástroj NPM.
@@ -128,13 +128,15 @@ networks:
       external:
         name: nginx-proxy
 ```
+
 2.
 ```
 $ docker network create nginx-proxy
 ```
+
 3.
 ```
-$ cd ~ && docker-compose up -d
+$ (cd ~ && docker-compose up -d)
 ```
 Tato Nginx proxy se teď bude spouštět vždy po restartu Docker automaticky.
 
@@ -149,8 +151,8 @@ $ make DOCKER=0
 ```
 $ cp app/config/local.sample.neon app/config/local.neon
 ```
-2.
-Nastavení údajů k vlastní databázi v souboru `app/config/loocal.neon`.
+
+2. Nastavení údajů k vlastní databázi v souboru `app/config/loocal.neon`.
 
 
 ### Instalace (s použitím docker)
@@ -158,14 +160,16 @@ Nastavení údajů k vlastní databázi v souboru `app/config/loocal.neon`.
 ```
 $ cp docker-compose.override.sample.yml docker-compose.override.yml
 ```
-2.
-Změna konfigurace v souboru `docker-compose.override.yml`, např. nastavení `XDEBUG_CONFIG` na 
+
+2. Změna konfigurace v souboru `docker-compose.override.yml`, např. nastavení `XDEBUG_CONFIG` na 
 `docker.for.win.localhost` pro Windows.
+
 3.
 ```
 $ docker-compose up -d
 ```
 (pro vypnutí Docker kontejneru `$ docker-compose down`)
+
 4.
 ```
 $ make
@@ -176,7 +180,7 @@ $ make
 U každého příkazu je možné uvést `DOCKER=1/0` pro používání/nepoužívaní Docker, např. `$ make install DOCKER=0`.
 Výchozí hodnota je `1`.
 
-U kažédho příkazu je možné uvést `PRODUCTION=1/0` pro nastevení a nastavení knihoven pro produkční/vývojový server,
+U kažédho příkazu je možné uvést `PRODUCTION=1/0` pro a nastavení knihoven pro produkční/vývojový server,
 např. `$ make install PRODUCTION=1`. Výchozí hodnota je `0`.
 
 - `install` `composer` + `assets`. Výchozí cíl.
@@ -187,6 +191,6 @@ např. `$ make install PRODUCTION=1`. Výchozí hodnota je `0`.
 - `grunt` Kopírování a nastavování (minifikace, aj.) JavaScript a CSS knihoven systému.
 - `code-checker` Spuštění kontroly validity PHP kódu.
 - `coding-standard` Spuštění kontroly stylu PHP kódu.
-- `phpstan` Spuštění statické analýzi PHP kódu.
+- `phpstan` Spuštění statické analýzy PHP kódu.
 - `clean` Odstranení všech dočasných souborů.
 - `clean-cache` Ostranění dočasných souborů Nette framework.
