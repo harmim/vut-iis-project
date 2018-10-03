@@ -8,4 +8,5 @@ if (typeof customMain === "undefined") {
 
 
 $(function () {
+	$.nette.init();
 });

@@ -17,9 +17,14 @@ tracy:
 	strictMode: true
 	showLocation: true
 	maxLength: 500
+	errorTemplate: %appDir%/CoreModule/templates/Error500/default.phtml
 
-#database:
-#	dsn: "mysql:host=%%"
+database:
+	dsn: "mysql:host=%database.host%;dbname=%database.dbname%"
+	user: %database.user%
+	password: %database.password%
+	options:
+		lazy: true
 
 http:
 	cookieSecure: auto

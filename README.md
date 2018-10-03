@@ -15,7 +15,7 @@ Dokumentace projektu se nachází v ... **TODO**.
 - `./app/` Jádro systému. PHP skripty a třídy, konfigurační NEON soubory. Latte šablony.
   * `./app/config/` Konfigurační NEON soubory systému.
   * `./app/*Module/` Jednotlivé moduly systému. Tento adresář obsahuje konfigurační NEON soubor pro daný modul,
-    adresář `Controls` pro komponenty, `Model` pro modelové třídy, `Presenters` pro presentery (kontrolery) a 
+    adresář `Controls` pro komponenty, `Model` pro modelové třídy, `Presenters` pro presentery (kontrolery) a
     `templates` pro Latte šablony.
   * `./app/bootstrap.php` výchozí skript s nastavením konfigrace celého systému.
 - `./doc/` Dokumentace.
@@ -161,7 +161,7 @@ $ cp app/config/local.sample.neon app/config/local.neon
 $ cp docker-compose.override.sample.yml docker-compose.override.yml
 ```
 
-2. Změna konfigurace v souboru `docker-compose.override.yml`, např. nastavení `XDEBUG_CONFIG` na 
+2. Změna konfigurace v souboru `docker-compose.override.yml`, např. nastavení `XDEBUG_CONFIG` na
 `docker.for.win.localhost` pro Windows.
 
 3.
@@ -186,7 +186,7 @@ např. `$ make install PRODUCTION=1`. Výchozí hodnota je `0`.
 - `install` `composer` + `assets`. Výchozí cíl.
 - `composer` Instalace PHP knihoven a vygenerování souboru pro automatické načítání PHP souborů.
 - `assets` `npm` + `bower` + `grunt`.
-- `npm` Instalace JavaScript knihoven přes NPM pro nastavování a stahování JavaScript a CSS knihoven systému. 
+- `npm` Instalace JavaScript knihoven přes NPM pro nastavování a stahování JavaScript a CSS knihoven systému.
 - `bower` Instalace JavaScript a CSS knihoven přes Bower.
 - `grunt` Kopírování a nastavování (minifikace, aj.) JavaScript a CSS knihoven systému.
 - `code-checker` Spuštění kontroly validity PHP kódu.

@@ -102,9 +102,11 @@ endif
 .PHONY: coding-standard-run
 coding-standard-run: docker-compose-web
 ifeq ($(FIX), 0)
-	$(DOCKER_WEB) ./$(CODING_STANDARD_DIR)/ecs check $(APP_DIR) $(LIBS_DIR) --config coding-standard.yml
+	$(DOCKER_WEB) ./$(CODING_STANDARD_DIR)/ecs check \
+		$(APP_DIR) $(LIBS_DIR) $(WWW_DIR) --config coding-standard.yml
 else
-	$(DOCKER_WEB) ./$(CODING_STANDARD_DIR)/ecs check $(APP_DIR) $(LIBS_DIR) --config coding-standard.yml --fix
+	$(DOCKER_WEB) ./$(CODING_STANDARD_DIR)/ecs check \
+		$(APP_DIR) $(LIBS_DIR) $(WWW_DIR) --config coding-standard.yml --fix
 endif
 
 
