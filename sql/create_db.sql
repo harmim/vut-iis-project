@@ -1,171 +1,256 @@
-SET FOREIGN_KEY_CHECKS = 0;
-SET NAMES utf8;
+SET NAMES utf8mb4;
 
 ALTER DATABASE `vut_iis_project`
-	DEFAULT CHARACTER SET utf8
-	COLLATE utf8_czech_ci;
+	DEFAULT CHARACTER SET utf8mb4
+	COLLATE utf8mb4_unicode_520_ci;
 
 USE `vut_iis_project`;
 
-DROP TABLE IF EXISTS Zaznam;
-DROP TABLE IF EXISTS Doplnek;
-DROP TABLE IF EXISTS Kostym;
-DROP TABLE IF EXISTS Kategorie;
-DROP TABLE IF EXISTS PravnickaOsoba;
-DROP TABLE IF EXISTS Klient;
-DROP TABLE IF EXISTS Zamestnanec;
-DROP TABLE IF EXISTS Uzivatel;
 
-SET FOREIGN_KEY_CHECKS = 1;
-
-CREATE TABLE Kostym(
-id_kostym INTEGER NOT NULL AUTO_INCREMENT,
-vyrobce VARCHAR(25) NOT NULL,
-material VARCHAR(25) NOT NULL,
-popis VARCHAR(100),
-cena INTEGER NOT NULL,
-datumVyroby DATE NOT NULL,
-opotrebeni VARCHAR(25),
-velikost VARCHAR(25) NOT NULL,
-barva VARCHAR(25) NOT NULL,
-dostupnost VARCHAR(25) NOT NULL,
-obrazok VARCHAR(255) NULL,
-id_kategorie INTEGER NOT NULL,
-id_zamestnanec INTEGER NOT NULL,
-PRIMARY KEY(id_kostym)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+DROP TABLE IF EXISTS `zaznam`;
+DROP TABLE IF EXISTS `doplnek`;
+DROP TABLE IF EXISTS `kostym`;
+DROP TABLE IF EXISTS `kategorie`;
+DROP TABLE IF EXISTS `pravnicka_osoba`;
+DROP TABLE IF EXISTS `klient`;
+DROP TABLE IF EXISTS `zamestnanec`;
+DROP TABLE IF EXISTS `uzivatel`;
 
 
-CREATE TABLE Kategorie(
-id_kategorie INTEGER NOT NULL AUTO_INCREMENT,
-nazev VARCHAR(25) NOT NULL,
-popis VARCHAR(100) NULL,
-PRIMARY KEY (id_kategorie)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+CREATE TABLE `zamestnanec` (
+	`id` INT UNSIGNED AUTO_INCREMENT NOT NULL,
+	`jmeno` VARCHAR(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+	`prijmeni` VARCHAR(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+	`datum_narozeni` DATE NOT NULL,
+	`telefonni_cislo` VARCHAR(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+	PRIMARY KEY (`id`)
+)
+	ENGINE = InnoDB
+	DEFAULT CHARSET = utf8mb4
+	COLLATE = utf8mb4_unicode_520_ci;
 
 
-CREATE TABLE Doplnek(
-id_doplnek INTEGER NOT NULL AUTO_INCREMENT,
-nazev VARCHAR(25) NOT NULL,
-popis VARCHAR(100) NULL,
-datumVyroby DATE NOT NULL,
-cena INTEGER NOT NULL,
-dostupnost VARCHAR(25) NOT NULL,
-id_zamestnanec INTEGER NOT NULL,
-id_kostym INTEGER NOT NULL,
-PRIMARY KEY (id_doplnek)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+CREATE TABLE `klient` (
+	`id` INT UNSIGNED AUTO_INCREMENT NOT NULL,
+	`jmeno` VARCHAR(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+	`prijmeni` VARCHAR(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+	`datum_narozeni` DATE NOT NULL,
+	`telefonni_cislo` VARCHAR(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+	`adresa` VARCHAR(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+	PRIMARY KEY (`id`)
+)
+	ENGINE = InnoDB
+	DEFAULT CHARSET = utf8mb4
+	COLLATE = utf8mb4_unicode_520_ci;
 
 
-CREATE TABLE Zaznam(
-id_zaznam INTEGER NOT NULL AUTO_INCREMENT,
-nazevAkce VARCHAR(25) NOT NULL,
-pocetKostymu INTEGER NOT NULL,
-pocetDoplnku INTEGER NOT NULL,
-datumZapujceni DATE NOT NULL,
-datumVraceni DATE NOT NULL,
-cenaVypujcky INTEGER NOT NULL,
-id_kostym INTEGER NOT NULL,
-id_doplnek INTEGER NULL,
-id_zamestnanec INTEGER NOT NULL,
-id_klient INTEGER NOT NULL,
-PRIMARY KEY (id_zaznam)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
-
-CREATE TABLE Uzivatel(
-id_uzivatel INTEGER NOT NULL AUTO_INCREMENT,
-typ ENUM('admin', 'zamestnanec', 'klient') NOT NULL,
-email VARCHAR(25) NOT NULL,
-heslo VARCHAR(255) NOT NULL,
-PRIMARY KEY (id_uzivatel)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+CREATE TABLE `pravnicka_osoba` (
+	`klient_id` INT UNSIGNED NOT NULL,
+	`ico` VARCHAR(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+	`dic` VARCHAR(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+	`fakturacni_adresa` VARCHAR(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+	PRIMARY KEY (`klient_id`),
+	CONSTRAINT `pravnicka_osoba_fk_klient` FOREIGN KEY (`klient_id`) REFERENCES `klient` (`id`)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE
+)
+	ENGINE = InnoDB
+	DEFAULT CHARSET = utf8mb4
+	COLLATE = utf8mb4_unicode_520_ci;
 
 
-CREATE TABLE Zamestnanec(
-id_zamestnanec INTEGER NOT NULL,
-jmeno VARCHAR(25) NOT NULL,
-prijmeni VARCHAR(25) NOT NULL,
-datumNarozeni DATE NOT NULL,
-telefonniCislo VARCHAR(25) NOT NULL,
-PRIMARY KEY (id_zamestnanec)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+CREATE TABLE `uzivatel` (
+	`id` INT UNSIGNED AUTO_INCREMENT NOT NULL,
+	`typ` ENUM('admin', 'zamestnanec', 'klient') COLLATE utf8mb4_unicode_520_ci DEFAULT 'klient' NOT NULL,
+	`email` VARCHAR(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+	`heslo` VARCHAR(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+	`aktivni` TINYINT(1) DEFAULT 1 NOT NULL,
+	`zamestnanec_id` INT UNSIGNED DEFAULT NULL,
+	`klient_id` INT UNSIGNED DEFAULT NULL,
+	PRIMARY KEY (`id`),
+	UNIQUE KEY `email` (`email`),
+	KEY `zamestnanec_id` (`zamestnanec_id`),
+	KEY `klient_id` (`klient_id`),
+	CONSTRAINT `uzivatel_fk_zamestnanec` FOREIGN KEY (`zamestnanec_id`) REFERENCES `zamestnanec` (`id`)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE,
+	CONSTRAINT `uzivatel_fk_klient` FOREIGN KEY (`klient_id`) REFERENCES `klient` (`id`)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE
+)
+	ENGINE = InnoDB
+	DEFAULT CHARSET = utf8mb4
+	COLLATE = utf8mb4_unicode_520_ci;
 
 
-CREATE TABLE Klient(
-id_klient INTEGER NOT NULL,
-jmeno VARCHAR(25) NOT NULL,
-prijmeni VARCHAR(25) NOT NULL,
-datumNarozeni DATE NOT NULL,
-telefonniCislo VARCHAR(25) NOT NULL,
-adresa VARCHAR(50) NOT NULL,
-PRIMARY KEY (id_klient)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+CREATE TABLE `kategorie` (
+	`id` INT UNSIGNED AUTO_INCREMENT NOT NULL,
+	`nazev` VARCHAR(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+	`popis` LONGTEXT COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
+	PRIMARY KEY (`id`),
+	UNIQUE KEY `nazev` (`nazev`)
+)
+	ENGINE = InnoDB
+	DEFAULT CHARSET = utf8mb4
+	COLLATE = utf8mb4_unicode_520_ci;
 
 
-CREATE TABLE PravnickaOsoba(
-id_klient INTEGER NOT NULL,
-ICO INTEGER NOT NULL,
-DIC INTEGER NOT NULL,
-fakturacniAdresa VARCHAR(50) NOT NULL
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
-
-ALTER TABLE Kostym ADD FOREIGN KEY (id_kategorie) REFERENCES Kategorie(id_kategorie);
-ALTER TABLE Zaznam ADD FOREIGN KEY (id_kostym) REFERENCES Kostym(id_kostym);
-ALTER TABLE Zaznam ADD FOREIGN KEY (id_doplnek) REFERENCES Doplnek(id_doplnek);
-ALTER TABLE Zaznam ADD FOREIGN KEY (id_zamestnanec) REFERENCES Zamestnanec(id_zamestnanec);
-ALTER TABLE Zaznam ADD FOREIGN KEY (id_klient) REFERENCES Klient(id_klient);
-ALTER TABLE Kostym ADD FOREIGN KEY (id_zamestnanec) REFERENCES Zamestnanec(id_zamestnanec);
-ALTER TABLE Doplnek ADD FOREIGN KEY (id_kostym) REFERENCES Kostym(id_kostym);
-ALTER TABLE Doplnek ADD FOREIGN KEY (id_zamestnanec) REFERENCES Zamestnanec(id_zamestnanec);
-ALTER TABLE Zamestnanec ADD FOREIGN KEY (id_zamestnanec) REFERENCES Uzivatel(id_uzivatel);
-ALTER TABLE Klient ADD FOREIGN KEY (id_klient) REFERENCES Uzivatel(id_uzivatel);
-ALTER TABLE PravnickaOsoba ADD FOREIGN KEY (id_klient) REFERENCES Klient(id_klient);
-
-
-/*---------------------------------------------------test data---------------------------------------------------------------------------------*/
-
-INSERT INTO Uzivatel (typ, email, heslo) VALUES('admin', 'admin@gmail.com', 'heslo');
-INSERT INTO Uzivatel (typ, email, heslo) VALUES('zamestnanec', 'zamest2@gmail.com', 'heslo');
-INSERT INTO Uzivatel (typ, email, heslo) VALUES('zamestnanec', 'zamest3@gmail.com', 'heslo');
-INSERT INTO Uzivatel (typ, email, heslo) VALUES('zamestnanec', 'zamest4@gmail.com', 'heslo');
-INSERT INTO Uzivatel (typ, email, heslo) VALUES('klient', 'klient1@gmail.com', 'heslo');
-INSERT INTO Uzivatel (typ, email, heslo) VALUES('klient', 'klient1@gmail.com', 'heslo');
-INSERT INTO Uzivatel (typ, email, heslo) VALUES('klient', 'klient1@gmail.com', 'heslo');
-
-INSERT INTO Zamestnanec (id_zamestnanec, jmeno, prijmeni, datumNarozeni, telefonniCislo) VALUES('2', 'Jan', 'Novak', '1995-12-10', '+420911222444');
-INSERT INTO Zamestnanec (id_zamestnanec, jmeno, prijmeni, datumNarozeni, telefonniCislo) VALUES('3', 'Jakub', 'Slepy', '1991-02-10', '+420911222444');
-INSERT INTO Zamestnanec (id_zamestnanec, jmeno, prijmeni, datumNarozeni, telefonniCislo) VALUES('4', 'Pavel', 'Siska', '1999-04-01', '+420911222444');
-
-INSERT INTO Klient (id_klient, jmeno, prijmeni, datumNarozeni, telefonniCislo, adresa) VALUES('5', 'Jozef', 'Suba', '1991-01-01', '+420911222444', 'Pavlovice 25');
-INSERT INTO Klient (id_klient, jmeno, prijmeni, datumNarozeni, telefonniCislo, adresa) VALUES('6', 'Stanislav', 'Chory', '1992-01-01', '+420911222444', 'Tøinec, Sládkova 25');
-INSERT INTO Klient (id_klient, jmeno, prijmeni, datumNarozeni, telefonniCislo, adresa) VALUES('7', 'David', 'Manas', '1993-01-01', '+420911222444', 'Køížany 25');
-
-INSERT INTO PravnickaOsoba (id_klient, ICO, DIC, fakturacniAdresa) VALUES('6', '256542', '652356', 'Skopalikova 1231');
-
-INSERT INTO Kategorie (nazev, popis) VALUES('Pro deti - pohadky', 'Kostymy pohadkovych bytosti');
-INSERT INTO Kategorie (nazev, popis) VALUES('Pro dospele - filmy', 'Kostymy oblibenych filmovych postav');
-INSERT INTO Kategorie (nazev, popis) VALUES('Pro - zeny', 'Kostymy vyhradne pro zeny');
-
-INSERT INTO Kostym (vyrobce, material, popis, cena, datumVyroby, opotrebeni, velikost, barva, dostupnost, id_kategorie, id_zamestnanec) VALUES('DressMe', 'Bavlna', 'Srandovni klaunsky kostym pro deti', '1100', 	'2018-01-01', 'Znacne', 'L', 'Vicebarevne', 'Na Sklade', 	'1', '3');
-INSERT INTO Kostym (vyrobce, material, popis, cena, datumVyroby, opotrebeni, velikost, barva, dostupnost, id_kategorie, id_zamestnanec) VALUES('DressMe', 'Poly', 'Princezna', '1000', 								'2018-01-01', 'Zachovale', 'S', 'Zluta', 'Na Sklade', 		'1', '2');
-INSERT INTO Kostym (vyrobce, material, popis, cena, datumVyroby, opotrebeni, velikost, barva, dostupnost, id_kategorie, id_zamestnanec) VALUES('DressMe', 'Poly', 'Superman', '1600', 								'2018-01-01', 'Zachovale', 'L', 'Modra', 'Nedostupne', 		'2', '2');
-INSERT INTO Kostym (vyrobce, material, popis, cena, datumVyroby, opotrebeni, velikost, barva, dostupnost, id_kategorie, id_zamestnanec) VALUES('DressMe', 'Poly', 'Pokahontas', '1600', 							'2018-01-01', 'Zachovale', 'M', 'Hneda', 'Nedostupne', 		'3', '4');
-INSERT INTO Kostym (vyrobce, material, popis, cena, datumVyroby, opotrebeni, velikost, barva, dostupnost, id_kategorie, id_zamestnanec) VALUES('Kostymy na miru', 'Bavlna', 'Loupeznik', '1000', 					'2018-01-01', 'Znacne', 'L', 'Hneda', 'Na Sklade', 			'1', '4');
-INSERT INTO Kostym (vyrobce, material, popis, cena, datumVyroby, opotrebeni, velikost, barva, dostupnost, id_kategorie, id_zamestnanec) VALUES('Kostymy na miru', 'Bavlna', 'Princezna', '1000', 					'2018-01-01', 'Zachovale', 'M', 'Cervena', 'Na Sklade', 	'1', '2');
-INSERT INTO Kostym (vyrobce, material, popis, cena, datumVyroby, opotrebeni, velikost, barva, dostupnost, id_kategorie, id_zamestnanec) VALUES('Kostymy s.r.o.', 'Poly', 'Batman', '1100', 							'2018-01-01', 'Znacne', 'XL', 'Cerna', 'Na Sklade', 		'2', '4');
+CREATE TABLE `kostym` (
+	`id` INT UNSIGNED AUTO_INCREMENT NOT NULL,
+	`vyrobce` VARCHAR(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+	`material` VARCHAR(25) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+	`popis` LONGTEXT COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
+	`cena` NUMERIC(15, 5) NOT NULL,
+	`datum_vyroby` DATETIME NOT NULL,
+	`opotrebeni` VARCHAR(255) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
+	`velikost` VARCHAR(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+	`barva` VARCHAR(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+	`dostupnost` VARCHAR(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+	`obrazek` VARCHAR(255) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
+	`aktivni` TINYINT(1) DEFAULT 1 NOT NULL,
+	`kategorie_id` INT UNSIGNED NOT NULL,
+	`zamestnanec_id` INT UNSIGNED NOT NULL,
+	PRIMARY KEY(`id`),
+	KEY `kategorie_id` (`kategorie_id`),
+	KEY zamestnanec_id (`zamestnanec_id`),
+	CONSTRAINT `kostym_fk_kategorie` FOREIGN KEY (`kategorie_id`) REFERENCES `kategorie` (`id`)
+		ON DELETE RESTRICT
+		ON UPDATE CASCADE,
+	CONSTRAINT `kostym_fk_zamestnanec` FOREIGN KEY (`zamestnanec_id`) REFERENCES `zamestnanec` (`id`)
+		ON DELETE RESTRICT
+		ON UPDATE CASCADE
+)
+	ENGINE = InnoDB
+	DEFAULT CHARSET = utf8mb4
+	COLLATE = utf8mb4_unicode_520_ci;
 
 
-INSERT INTO Doplnek (nazev, popis, datumVyroby, cena, dostupnost, id_zamestnanec, id_kostym) VALUES('piratsky klobuk', 'cierny klobuk s piratkym motivom', 			'2018-01-01', '1300', 'Na Sklade', '2', '2');
-INSERT INTO Doplnek (nazev, popis, datumVyroby, cena, dostupnost, id_zamestnanec, id_kostym) VALUES('polovnicky klobuk', 'zeleny klobuk', 							'2018-01-01', '100', 'Na Sklade', '2', '1');
-INSERT INTO Doplnek (nazev, popis, datumVyroby, cena, dostupnost, id_zamestnanec, id_kostym) VALUES('zlaty retizek', 'Obycejny pozlaceny retizek', 					'2018-01-01', '900', 'Na Sklade', '3', '1');
-INSERT INTO Doplnek (nazev, popis, datumVyroby, cena, dostupnost, id_zamestnanec, id_kostym) VALUES('drevenne slunecny bryle', 'ram blryli ej z dreva, cerne skla', '2018-01-01', '500', 'Na Sklade', '4', '3');
+CREATE TABLE `doplnek` (
+	`id` INT UNSIGNED AUTO_INCREMENT NOT NULL,
+	`nazev` VARCHAR(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+	`popis` LONGTEXT COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
+	`datum_vyroby` DATE NOT NULL,
+	`cena` NUMERIC(15, 5) NOT NULL,
+	`dostupnost` VARCHAR(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+	`obrazek` VARCHAR(255) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
+	`aktivni` TINYINT(1) DEFAULT 1 NOT NULL,
+	`zamestnanec_id` INT UNSIGNED NOT NULL,
+	`kostym_id` INT UNSIGNED NOT NULL,
+	PRIMARY KEY (`id`),
+	KEY `zamestnanec_id` (`zamestnanec_id`),
+	KEY `kostym_id` (`kostym_id`),
+	CONSTRAINT `doplnek_fk_zamestnanec` FOREIGN KEY (`zamestnanec_id`) REFERENCES `zamestnanec` (`id`)
+		ON DELETE RESTRICT
+		ON UPDATE CASCADE,
+	CONSTRAINT `doplnek_fk_kostym` FOREIGN KEY (`kostym_id`) REFERENCES `kostym` (`id`)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE
+)
+	ENGINE = InnoDB
+	DEFAULT CHARSET = utf8mb4
+	COLLATE = utf8mb4_unicode_520_ci;
 
 
-INSERT INTO Zaznam (nazevAkce, pocetKostymu, pocetDoplnku, datumZapujceni, datumVraceni, cenaVypujcky, id_kostym, id_doplnek, id_zamestnanec, id_klient) VALUES('Kácení máje',		'1', '1', '2018-01-01', '2018-02-02', '2500', '1', '1',		'4', '6');
-INSERT INTO Zaznam (nazevAkce, pocetKostymu, pocetDoplnku, datumZapujceni, datumVraceni, cenaVypujcky, id_kostym, id_doplnek, id_zamestnanec, id_klient) VALUES('Maškarní bál',		'1', '0', '2018-01-01', '2018-02-02', '2500', '1', '1', 	'2', '6');
-INSERT INTO Zaznam (nazevAkce, pocetKostymu, pocetDoplnku, datumZapujceni, datumVraceni, cenaVypujcky, id_kostym, id_doplnek, id_zamestnanec, id_klient) VALUES('Divadelní hra',	'1', '0', '2018-01-01', '2018-02-02', '1600', '3', NULL, 	'4', '6');
-INSERT INTO Zaznam (nazevAkce, pocetKostymu, pocetDoplnku, datumZapujceni, datumVraceni, cenaVypujcky, id_kostym, id_doplnek, id_zamestnanec, id_klient) VALUES('Kácení máje',		'1', '0', '2018-01-01', '2018-02-02', '2500', '2', '1', 	'2', '5');
-INSERT INTO Zaznam (nazevAkce, pocetKostymu, pocetDoplnku, datumZapujceni, datumVraceni, cenaVypujcky, id_kostym, id_doplnek, id_zamestnanec, id_klient) VALUES('Párty ve škole',	'1', '0', '2018-01-01', '2018-02-02', '1100', '7', NULL, 	'3', '5');
-INSERT INTO Zaznam (nazevAkce, pocetKostymu, pocetDoplnku, datumZapujceni, datumVraceni, cenaVypujcky, id_kostym, id_doplnek, id_zamestnanec, id_klient) VALUES('Párty ve škole',	'1', '0', '2018-01-01', '2018-02-02', '1600', '3', NULL, 	'3', '7');
-INSERT INTO Zaznam (nazevAkce, pocetKostymu, pocetDoplnku, datumZapujceni, datumVraceni, cenaVypujcky, id_kostym, id_doplnek, id_zamestnanec, id_klient) VALUES('Kácení máje',		'1', '0', '2018-01-01', '2018-02-02', '2500', '3', '4', 	'4', '7');
-INSERT INTO Zaznam (nazevAkce, pocetKostymu, pocetDoplnku, datumZapujceni, datumVraceni, cenaVypujcky, id_kostym, id_doplnek, id_zamestnanec, id_klient) VALUES('Ples',				'1', '0', '2018-01-01', '2018-02-02', '1600', '3', NULL, 	'3', '7');
+CREATE TABLE `zaznam` (
+	`id` INT UNSIGNED AUTO_INCREMENT NOT NULL,
+	`nazev_akce` VARCHAR(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+	`pocet` INT UNSIGNED DEFAULT 1 NOT NULL,
+	`cas_zapujceni` DATETIME NOT NULL,
+	`cas_vraceni` DATETIME DEFAULT NULL,
+	`cena` NUMERIC(15, 5) NOT NULL,
+	`kostym_id` INT UNSIGNED DEFAULT NULL,
+	`doplnek_id` INT UNSIGNED DEFAULT NULL,
+	`zamestnanec_id` INT UNSIGNED DEFAULT NULL,
+	`klient_id` INT UNSIGNED NOT NULL,
+	PRIMARY KEY (`id`),
+	KEY `kostym_id` (`kostym_id`),
+	KEY `doplnek_id` (`doplnek_id`),
+	KEY `zamestnanec_id` (`zamestnanec_id`),
+	KEY `klient_id` (`klient_id`),
+	CONSTRAINT `zaznam_fk_kostym` FOREIGN KEY (`kostym_id`) REFERENCES `kostym` (`id`)
+		ON DELETE RESTRICT
+		ON UPDATE CASCADE,
+	CONSTRAINT `zaznam_fk_doplnek` FOREIGN KEY (`doplnek_id`) REFERENCES `doplnek` (`id`)
+		ON DELETE RESTRICT
+		ON UPDATE CASCADE,
+	CONSTRAINT `zaznam_fk_zamestnanec` FOREIGN KEY (`zamestnanec_id`) REFERENCES `zamestnanec` (`id`)
+		ON DELETE RESTRICT
+		ON UPDATE CASCADE,
+	CONSTRAINT `zaznam_fk_klient` FOREIGN KEY (`klient_id`) REFERENCES `klient` (`id`)
+		ON DELETE RESTRICT
+		ON UPDATE CASCADE
+)
+	ENGINE = InnoDB
+	DEFAULT CHARSET = utf8mb4
+	COLLATE = utf8mb4_unicode_520_ci;
+
+
+/*--------------------------------------------------- test data ------------------------------------------------------*/
+
+
+INSERT INTO `zamestnanec` (`id`, `jmeno`, `prijmeni`, `datum_narozeni`, `telefonni_cislo`)
+VALUES
+	(1, 'Jan', 'Novák', '1991-07-19', '+420911222444'),
+	(2, 'Jakub', 'Slepý', '1981-07-19', '+420911222445'),
+	(3, 'Pavel', 'Siska', '1971-07-19', '+420911222446');
+
+
+INSERT INTO `klient` (`id`, `jmeno`, `prijmeni`, `datum_narozeni`, `telefonni_cislo`, `adresa`)
+VALUES
+	(1, 'Josef', 'Suba', '1992-07-19', '+420911222447', 'Pavlovice 25, Praha'),
+	(2, 'Stanislav', 'Chorý', '1983-07-19', '+420911222448', 'Horská 44, Brno'),
+	(3, 'Davis', 'Manas', '1974-07-19', '+420911222449', 'Česká 1, Brno');
+
+
+INSERT INTO `pravnicka_osoba` (`klient_id`, `ico`, `dic`, `fakturacni_adresa`)
+VALUES
+	(2, '256542', 'CZ256542', 'Skopalíkova 123');
+
+
+INSERT INTO `uzivatel` (`typ`, `email`, `heslo`, `zamestnanec_id`, `klient_id`)
+VALUES
+	('admin', 'admin@gmail.com', '$2a$10$qI4zamAo6tXFl0SOTa8Mm.7YdDpYoM6t2ikEoUK0LjQrRcM3v1WZS', NULL, NULL),
+	('zamestnanec', 'novak@gmail.com', '$2a$10$qI4zamAo6tXFl0SOTa8Mm.7YdDpYoM6t2ikEoUK0LjQrRcM3v1WZS', 1, NULL),
+	('zamestnanec', 'slepy@gmail.com', '$2a$10$qI4zamAo6tXFl0SOTa8Mm.7YdDpYoM6t2ikEoUK0LjQrRcM3v1WZS', 2, NULL),
+	('zamestnanec', 'siska@gmail.com', '$2a$10$qI4zamAo6tXFl0SOTa8Mm.7YdDpYoM6t2ikEoUK0LjQrRcM3v1WZS', 3, NULL),
+	('klient', 'suba@gmail.com', '$2a$10$qI4zamAo6tXFl0SOTa8Mm.7YdDpYoM6t2ikEoUK0LjQrRcM3v1WZS', NULL, 1),
+	('klient', 'chory@gmail.com', '$2a$10$qI4zamAo6tXFl0SOTa8Mm.7YdDpYoM6t2ikEoUK0LjQrRcM3v1WZS', NULL, 2),
+	('klient', 'manas@gmail.com', '$2a$10$qI4zamAo6tXFl0SOTa8Mm.7YdDpYoM6t2ikEoUK0LjQrRcM3v1WZS', NULL, 3);
+
+
+INSERT INTO `kategorie` (`id`, `nazev`, `popis`)
+VALUES
+	(1, 'Pro děti - pohádky', 'Kostýmy pohádkových bytostí.'),
+	(2, 'Pro dospělé - filmy', 'Kostýmy oblíbených filmových postav.'),
+	(3, 'Pro ženy', 'Kostýmy vyhrazené pro ženy.');
+
+
+INSERT INTO `kostym` (`id`, `vyrobce`, `material`, `popis`, `cena`, `datum_vyroby`, `opotrebeni`, `velikost`, `barva`, `dostupnost`, `kategorie_id`, `zamestnanec_id`)
+VALUES
+	(1, 'DressMe', 'Bavlna', 'Srandovní klaunský kostým pro děti.', 1100, '2018-01-01', 'Značné', 'L', 'Vícebarevné', 'Na skladě', 1, 3),
+	(2, 'DressMe', 'Poly', 'Princezna.', 1000, '2018-01-02', 'Zachovalé', 'S', 'Žlutá', 'Na skladě', 1, 2),
+	(3, 'DressMe', 'Poly', 'Superman.', 1600, '2018-01-03', 'Zachovalé', 'L', 'Modrá', 'Nedostupné', 2, 2),
+	(4, 'DressMe', 'Poly', 'Pokahontas.', 1600, '2018-01-04', 'Zachovalé', 'M', 'Hnědá', 'Nedostupné', 3, 1),
+	(5, 'Kostýmy na míru', 'Bavlna', 'Loupežník.', 1000, '2018-01-05', 'Značné', 'L', 'Hnědá', 'Na skladě', 1, 1),
+	(6, 'Kostýmy na míru', 'Bavlna', 'Princezna.', 1000, '2018-01-06', 'Zachovalé', 'M', 'Červená', 'Na skladě', 1, 2),
+	(7, 'Kostýmy s.r.o.', 'Poly', 'Batman.', 1100, '2018-01-01', 'Značné', 'XL', 'Černá', 'Na skladě', 2, 1);
+
+
+INSERT INTO `doplnek` (`id`, `nazev`, `popis`, `datum_vyroby`, `cena`, `dostupnost`, `zamestnanec_id`, `kostym_id`)
+VALUES
+	(1, 'Pirátský klobuk', 'Černý klobou s pirátským motivem.', '2018-01-01', 1300, 'Na skladě', 2, 2),
+	(2, 'Poľovnícky klobou', 'Zelený klobou.', '2018-01-02', 100, 'Na skladě', 2, 1),
+	(3, 'Zlatý řetízek', 'Obyčejný pozlacený řetízek.', '2018-01-03', 900, 'Na skladě', 3, 1),
+	(4, 'Dřevenné sluneční brýle', 'Dřevenné sluneční brýle s černým sklem.', '2018-01-04', 500, 'Na skladě', 1, 3);
+
+
+INSERT INTO `zaznam` (`nazev_akce`, `pocet`, `cas_zapujceni`, `cas_vraceni`, `cena`, `kostym_id`, `doplnek_id`, `zamestnanec_id`, `klient_id`)
+VALUES
+	('Kácení máje', 1, '2018-01-01', '2018-02-02', 1100, 1, NULL, 1, 3),
+	('Maškarní bál', 2, '2018-01-02', NULL, 3200, 3, NULL, 2, 2),
+	('Divadelní hra', 1, '2018-01-03', '2018-02-04', 1600, 4, NULL, 3, 1),
+	('Kácení máje', 3, '2018-01-04', NULL, 300, NULL, 2, 3, 1),
+	('Párty ve škole', 1, '2018-01-05', '2018-02-06', 1100, 7, NULL, 1, 1),
+	('Párty ve škole', 1, '2018-01-07', NULL, 1000, 6, NULL, NULL, 3),
+	('Kácení máje', 1, '2018-01-09', '2018-02-10', 1600, 3, NULL, 2, 2),
+	('Ples', 1, '2018-01-11', '2018-02-12', 500, NULL, 4, NULL, 2);
