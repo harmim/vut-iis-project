@@ -21,6 +21,11 @@ abstract class BasePresenter extends \IIS\Application\UI\BasePresenter
 	 */
 	private $footerControlFactory;
 
+	/**
+	 * @var \App\CoreModule\Controls\FlashMessage\IFlashMessageControlFactory
+	 */
+	private $flashMessageControlFactory;
+
 
 	public function injectHeadControlFactory(
 		\App\CoreModule\Controls\Head\IHeadControlFactory $headControlFactory
@@ -43,6 +48,13 @@ abstract class BasePresenter extends \IIS\Application\UI\BasePresenter
 	}
 
 
+	public function injectFlashMessageControlFactory(
+		\App\CoreModule\Controls\FlashMessage\IFlashMessageControlFactory $flashMessageControlFactory
+	): void {
+		$this->flashMessageControlFactory = $flashMessageControlFactory;
+	}
+
+
 	protected function createComponentHead(): \App\CoreModule\Controls\Head\HeadControl
 	{
 		return $this->headControlFactory->create();
@@ -58,6 +70,12 @@ abstract class BasePresenter extends \IIS\Application\UI\BasePresenter
 	protected function createComponentFooter(): \App\CoreModule\Controls\Footer\FooterControl
 	{
 		return $this->footerControlFactory->create();
+	}
+
+
+	protected function createComponentFlashMessage(): \App\CoreModule\Controls\FlashMessage\FlashMessageControl
+	{
+		return $this->flashMessageControlFactory->create();
 	}
 
 

@@ -21,3 +21,9 @@ main.container { padding: 5rem 1rem 3rem; }
 .alert-error { color: #A94442; background-color: #F2DEDE; border-color: #EBCCD1; }
 .alert-error hr { border-top-color: #E4B9C0; }
 .alert-error .alert-link { color: #843534; }
+
+
+/* Form validation
+-------------------------------------------------- */
+form .has-error .form-control { border-color: #DC3545; box-shadow: 0 0 1px #DC3545; }
+form .has-success .form-control { border-color: #28A745; box-shadow: 0 0 1px #28A745; }

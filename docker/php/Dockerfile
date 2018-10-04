@@ -5,10 +5,21 @@ RUN a2enmod rewrite
 RUN apt-get update -y
 RUN apt-get install -y \
 	git \
-	wget
+	wget \
+	libjpeg-dev \
+	libpng-dev \
+	zlib1g-dev \
+	libicu-dev \
+	g++
 RUN apt-get clean -y
 
 RUN pecl install xdebug
+
+RUN docker-php-ext-install \
+	intl \
+	gd \
+	pdo \
+	pdo_mysql
 
 RUN wget https://getcomposer.org/installer -O composer-setup.php
 RUN php composer-setup.php --install-dir=/usr/bin/ --filename=composer --quiet

@@ -26,6 +26,12 @@ database:
 	options:
 		lazy: true
 
+forms:
+	messages:
+		FILLED: "Toto pole je povinné."
+		EMAIL: "Zadejte prosím platnou e-mailovou adresu."
+		MIN_LENGTH: "Zadejte prosím alespoň %d znaků."
+
 http:
 	cookieSecure: auto
 	sameSiteProtection: true
@@ -105,9 +111,6 @@ parameters:
 services:
 	# Application templates locator
 	- \IIS\Application\Templates\TemplateLocator([%appDir%], %config.defaultModuleWithLayout%)
-
-	# Form factory
-	- \IIS\Forms\FormFactory
 
 	# Config service
 	- \IIS\Config\ConfigService(%config%)

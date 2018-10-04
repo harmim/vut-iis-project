@@ -4,4 +4,8 @@
 		Dominik Harmim, Matúš Burzala
 		| Půjčovna kostýmů
 	</span>
+
+	<span n:if="$user->isLoggedIn() && $identity = $user->getIdentity()" class="text-muted float-right">
+		{$userType}: {$identity->getData()['email']}
+	</span>
 </div>

@@ -1,27 +1,9 @@
+{default $title = 'Přihlášení'}
+
 {block content}
 
 <div class="row">
-	<div class="col-md-8">
-		<h4 class="mb-3">Přihlášení</h4>
-
-		<form class="mb-3">
-			<div class="form-row">
-				<div class="col-md-6 form-group">
-					<label for="email">Email</label>
-					<input type="email" class="form-control" id="email" name="email" required>
-				</div>
-
-				<div class="col-md-6 form-group">
-					<label for="password">Heslo</label>
-					<input type="password" class="form-control" id="password" name="password" required>
-				</div>
-			</div>
-
-			<hr class="mb-4">
-
-			<button class="btn btn-primary btn-lg btn-block" type="submit" value="submit" name="submit">
-				Přihlásit se
-			</button>
-		</form>
+	<div class="col-xl-4 offset-xl-4">
+		{control login}
 	</div>
 </div>

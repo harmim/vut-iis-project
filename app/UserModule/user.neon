@@ -1,0 +1,7 @@
+services:
+	# Services
+	- \App\UserModule\Model\UserService
+
+	# Controls
+	- \App\UserModule\Controls\Login\ILoginControlFactory
+	- \App\UserModule\Controls\Registration\IRegistrationControlFactory
