@@ -30,7 +30,8 @@ final class Configurator extends \Nette\Configurator
 		?string $configDir = null,
 		string $productionConfig = 'production',
 		string $developmentConfig = 'development',
-		string $debugConfig = 'debug'
+		string $debugConfig = 'debug',
+		string $localConfig = 'local'
 	): self {
 		if (!$configs) {
 			$configs = ['config'];
@@ -52,6 +53,11 @@ final class Configurator extends \Nette\Configurator
 			if (\is_readable($debugPath)) {
 				$this->addConfig($debugPath);
 			}
+		}
+
+		$localPath = "$configDir/$localConfig.neon";
+		if (\is_readable($localPath)) {
+			$this->addConfig($localPath);
 		}
 
 		return $this;
