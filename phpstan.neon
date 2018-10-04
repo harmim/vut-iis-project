@@ -9,3 +9,7 @@ parameters:
 
 	autoload_files:
 		- vendor/autoload.php
+
+	ignoreErrors:
+		- '~Parameter #2 \$caption of method Czubehead\\BootstrapForms\\BootstrapForm::addCheckbox\(\) expects null, string given\.~'
+		- '~Access to an undefined property Nette\\Database\\Table\\ActiveRow::\$[a-zA-Z_]+\.~'

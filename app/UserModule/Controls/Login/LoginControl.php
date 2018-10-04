@@ -66,10 +66,13 @@ final class LoginControl extends \IIS\Application\UI\BaseControl
 			return;
 		}
 
-		$this->getPresenter()->flashMessage('Byli jste úspěšně přihlášení.', 'success');
-		if ($this->backLink) {
-			$this->getPresenter()->restoreRequest($this->backLink);
+		$presenter = $this->getPresenter();
+		if ($presenter) {
+			$presenter->flashMessage('Byli jste úspěšně přihlášení.', 'success');
+			if ($this->backLink) {
+				$presenter->restoreRequest($this->backLink);
+			}
+			$presenter->redirect(':Core:Homepage:default');
 		}
-		$this->getPresenter()->redirect(':Core:Homepage:default');
 	}
 }

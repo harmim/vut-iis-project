@@ -101,7 +101,10 @@ final class RegistrationControl extends \IIS\Application\UI\BaseControl
 			return;
 		}
 
-		$this->getPresenter()->flashMessage('Registrace proběhla úspěšně.', 'success');
-		$this->getPresenter()->redirect(':User:Sign:login');
+		$presenter = $this->getPresenter();
+		if ($presenter) {
+			$presenter->flashMessage('Registrace proběhla úspěšně.', 'success');
+			$presenter->redirect(':User:Sign:login');
+		}
 	}
 }

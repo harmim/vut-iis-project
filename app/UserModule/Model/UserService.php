@@ -74,7 +74,7 @@ final class UserService extends \IIS\Model\BaseService implements \Nette\Securit
 			'telefonni_cislo' => $data->phone,
 			'adresa' => $data->address,
 		]);
-		if (!$client) {
+		if (!$client instanceof \Nette\Database\Table\ActiveRow) {
 			$this->database->rollBack();
 			throw new \App\UserModule\Model\Exception($errorMessage);
 		}
@@ -86,7 +86,7 @@ final class UserService extends \IIS\Model\BaseService implements \Nette\Securit
 				'dic' => $data->dic,
 				'fakturacni_adresa' => $data->companyAddress,
 			]);
-			if (!$company) {
+			if (!$company instanceof \Nette\Database\Table\ActiveRow) {
 				$this->database->rollBack();
 				throw new \App\UserModule\Model\Exception($errorMessage);
 			}
@@ -103,7 +103,7 @@ final class UserService extends \IIS\Model\BaseService implements \Nette\Securit
 			$this->database->rollBack();
 			throw new \App\UserModule\Model\Exception('Uživatel s tímto e-mailem již existuje.');
 		}
-		if (!$user) {
+		if (!$user instanceof \Nette\Database\Table\ActiveRow) {
 			$this->database->rollBack();
 			throw new \App\UserModule\Model\Exception($errorMessage);
 		}
