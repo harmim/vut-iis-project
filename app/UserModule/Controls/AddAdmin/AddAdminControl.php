@@ -11,11 +11,19 @@ final class AddAdminControl extends \IIS\Application\UI\BaseControl
 	 */
 	private $userService;
 
+	/**
+	 * @var \App\UserModule\Model\UserFormFactory
+	 */
+	private $userFormFactory;
 
-	public function __construct(\App\UserModule\Model\UserService $userService)
-	{
+
+	public function __construct(
+		\App\UserModule\Model\UserService $userService,
+		\App\UserModule\Model\UserFormFactory $userFormFactory
+	) {
 		parent::__construct();
 		$this->userService = $userService;
+		$this->userFormFactory = $userFormFactory;
 	}
 
 
@@ -24,22 +32,7 @@ final class AddAdminControl extends \IIS\Application\UI\BaseControl
 	 */
 	protected function createComponentAddForm(): \Czubehead\BootstrapForms\BootstrapForm
 	{
-		$form = new \Czubehead\BootstrapForms\BootstrapForm();
-
-		$form->addText('email', 'E-mail')
-			->setType('email')
-			->setRequired()
-			->addRule(\Nette\Forms\Form::EMAIL);
-
-		$row = $form->addRow();
-		$row->addCell()
-			->addPassword('password', 'Heslo')
-			->setRequired()
-			->addRule(\Nette\Forms\Form::MIN_LENGTH, null, 6);
-		$row->addCell()
-			->addPassword('passwordConfirmation', 'Potvrzení hesla')
-			->setRequired()
-			->addRule(\Nette\Forms\Form::EQUAL, 'Hesla se musí shodovat.', $form['password']);
+		$form = $this->userFormFactory->createAdminForm();
 
 		$form->addSubmit('add', 'Přidat')
 			->setAttribute('class', 'btn btn-primary btn-block');

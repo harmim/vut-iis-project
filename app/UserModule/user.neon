@@ -8,6 +8,12 @@ services:
 	- \App\UserModule\Controls\UserListGrid\IUserListGridControlFactory
 	- \App\UserModule\Controls\AddAdmin\IAddAdminControlFactory
 	- \App\UserModule\Controls\AddEmployee\IAddEmployeeControlFactory
+	- \App\UserModule\Controls\EditAdmin\IEditAdminControlFactory
+	- \App\UserModule\Controls\EditEmployee\IEditEmployeeControlFactory
+	- \App\UserModule\Controls\EditClient\IEditClientControlFactory
 
 	# Authorizator
 	- \App\UserModule\Model\AuthorizatorFactory::create(%roles%, %appDir%)
+
+	# Forms
+	- \App\UserModule\Model\UserFormFactory

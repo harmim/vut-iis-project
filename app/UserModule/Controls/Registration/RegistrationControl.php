@@ -12,15 +12,24 @@ final class RegistrationControl extends \IIS\Application\UI\BaseControl
 	private $userService;
 
 	/**
+	 * @var \App\UserModule\Model\UserFormFactory
+	 */
+	private $userFormFactory;
+
+	/**
 	 * @var bool
 	 */
 	private $addClientTemplate;
 
 
-	public function __construct(\App\UserModule\Model\UserService $userService, bool $addClientTemplate = false)
-	{
+	public function __construct(
+		\App\UserModule\Model\UserService $userService,
+		\App\UserModule\Model\UserFormFactory $userFormFactory,
+		bool $addClientTemplate = false
+	) {
 		parent::__construct();
 		$this->userService = $userService;
+		$this->userFormFactory = $userFormFactory;
 		$this->addClientTemplate = $addClientTemplate;
 	}
 
@@ -30,61 +39,7 @@ final class RegistrationControl extends \IIS\Application\UI\BaseControl
 	 */
 	protected function createComponentRegistrationForm(): \Czubehead\BootstrapForms\BootstrapForm
 	{
-		$form = new \Czubehead\BootstrapForms\BootstrapForm();
-
-		$form->addText('email', 'E-mail')
-			->setType('email')
-			->setRequired()
-			->addRule(\Nette\Forms\Form::EMAIL);
-
-		$row = $form->addRow();
-		$row->addCell()
-			->addPassword('password', 'Heslo')
-			->setRequired()
-			->addRule(\Nette\Forms\Form::MIN_LENGTH, null, 6);
-		$row->addCell()
-			->addPassword('passwordConfirmation', 'Potvrzení hesla')
-			->setRequired()
-			->addRule(\Nette\Forms\Form::EQUAL, 'Hesla se musí shodovat.', $form['password']);
-
-		$row = $form->addRow();
-		$row->addCell()
-			->addText('firstName', 'Jméno')
-			->setRequired();
-		$row->addCell()
-			->addText('lastName', 'Příjmení')
-			->setRequired();
-
-		$form->addDateTime('bornDate', 'Datum narozeí')
-			->setAttribute('data-provide', 'datepicker')
-			->setAttribute('data-date-format', 'd.m.yyyy')
-			->setRequired()
-			->setFormat(\Czubehead\BootstrapForms\Enums\DateTimeFormat::D_DMY_DOTS_NO_LEAD);
-
-		$row = $form->addRow();
-		$row->addCell()
-			->addText('phone', 'Telefonní číslo')
-			->setRequired();
-		$row->addCell()
-			->addText('address', 'Adresa')
-			->setRequired();
-
-		$useCompany = $form->addCheckbox(
-			'useCompany',
-			$this->addClientTemplate ? 'Přidat jako právnickou osobu' : 'Registrovat se jako právnická osoba'
-		);
-		$row = $form->addRow();
-		$row->addCell()
-			->addText('ico', 'IČO')
-			->addConditionOn($useCompany, \Nette\Forms\Form::EQUAL, true)
-				->setRequired();
-		$row->addCell()
-			->addText('dic', 'DIČ')
-			->addConditionOn($useCompany, \Nette\Forms\Form::EQUAL, true)
-				->setRequired();
-		$form->addText('companyAddress', 'Fakturační adresa')
-			->addConditionOn($useCompany, \Nette\Forms\Form::EQUAL, true)
-				->setRequired();
+		$form = $this->userFormFactory->createClientForm();
 
 		$form->addSubmit('register', $this->addClientTemplate ? 'Přidat' : 'Registrovat')
 			->setAttribute('class', 'btn btn-primary btn-block');

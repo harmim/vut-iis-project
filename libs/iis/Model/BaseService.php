@@ -38,4 +38,16 @@ abstract class BaseService
 
 		return $selection;
 	}
+
+
+	public function fetch(callable $callback = null): ?\Nette\Database\Table\ActiveRow
+	{
+		return $this->selectionCallback($callback)->fetch() ?: null;
+	}
+
+
+	public function fetchById(int $id): ?\Nette\Database\Table\ActiveRow
+	{
+		return $this->getTable()->get($id) ?: null;
+	}
 }

@@ -46,6 +46,8 @@ final class UserListGridControl extends \IIS\Application\UI\BaseControl
 
 		$grid->addColumnActive([$this, 'onActiveChange']);
 
+		$grid->addActionEdit();
+
 		return $grid;
 	}
 
@@ -58,7 +60,7 @@ final class UserListGridControl extends \IIS\Application\UI\BaseControl
 	{
 		$presenter = $this->getPresenter();
 		if ($presenter instanceof \App\CoreModule\Presenters\SecuredPresenter) {
-			$presenter->checkPermission(\App\UserModule\Model\AuthorizatorFactory::ACTION_EDIT);
+			$presenter->checkPermission(\App\UserModule\Model\AuthorizatorFactory::ACTION_DELETE);
 		}
 
 		$this->userService->changeActive($id, $active);

@@ -186,11 +186,113 @@ final class UserService extends \IIS\Model\BaseService implements \Nette\Securit
 
 
 	/**
+	 * @throws \App\UserModule\Model\Exception
+	 * @throws \Nette\InvalidArgumentException
+	 */
+	public function editAdmin(\Nette\Utils\ArrayHash $data): void
+	{
+		try {
+			$updateData = [
+				'email' => $data->email,
+			];
+			if ($data->password) {
+				$updateData['heslo'] = \Nette\Security\Passwords::hash($data->password);
+			}
+			$this->getTable()->wherePrimary($data->id)->update($updateData);
+		} catch (\Nette\Database\UniqueConstraintViolationException $e) {
+			throw new \App\UserModule\Model\Exception('Uživatel s tímto e-mailem již existuje.');
+		}
+	}
+
+
+	/**
+	 * @throws \App\UserModule\Model\Exception
+	 * @throws \Nette\InvalidArgumentException
+	 */
+	public function editEmployee(\Nette\Utils\ArrayHash $data): void
+	{
+		$this->database->beginTransaction();
+
+		$this->getEmployeeTable()->wherePrimary($data->employeeId)->update([
+			'jmeno' => $data->firstName,
+			'prijmeni' => $data->lastName,
+			'datum_narozeni' => $data->bornDate,
+			'telefonni_cislo' => $data->phone,
+		]);
+
+		try {
+			$updateData = [
+				'email' => $data->email,
+			];
+			if ($data->password) {
+				$updateData['heslo'] = \Nette\Security\Passwords::hash($data->password);
+			}
+			$this->getTable()->wherePrimary($data->id)->update($updateData);
+		} catch (\Nette\Database\UniqueConstraintViolationException $e) {
+			$this->database->rollBack();
+			throw new \App\UserModule\Model\Exception('Uživatel s tímto e-mailem již existuje.');
+		}
+
+		$this->database->commit();
+	}
+
+
+	/**
+	 * @throws \App\UserModule\Model\Exception
+	 * @throws \Nette\InvalidArgumentException
+	 */
+	public function editClient(\Nette\Utils\ArrayHash $data): void
+	{
+		$this->database->beginTransaction();
+
+		$this->getClientTable()->wherePrimary($data->clientId)->update([
+			'jmeno' => $data->firstName,
+			'prijmeni' => $data->lastName,
+			'datum_narozeni' => $data->bornDate,
+			'telefonni_cislo' => $data->phone,
+			'adresa' => $data->address,
+		]);
+
+		if ($data->useCompany === true) {
+			$companyData = [
+				'klient_id' => $data->clientId,
+				'ico' => $data->ico,
+				'dic' => $data->dic,
+				'fakturacni_adresa' => $data->companyAddress,
+			];
+			$this->database->query(
+				'INSERT INTO `pravnicka_osoba`',
+				$companyData,
+				'ON DUPLICATE KEY UPDATE',
+				$companyData
+			);
+		} else {
+			$this->getCompanyTable()->wherePrimary($data->clientId)->delete();
+		}
+
+		try {
+			$updateData = [
+				'email' => $data->email,
+			];
+			if ($data->password) {
+				$updateData['heslo'] = \Nette\Security\Passwords::hash($data->password);
+			}
+			$this->getTable()->wherePrimary($data->id)->update($updateData);
+		} catch (\Nette\Database\UniqueConstraintViolationException $e) {
+			$this->database->rollBack();
+			throw new \App\UserModule\Model\Exception('Uživatel s tímto e-mailem již existuje.');
+		}
+
+		$this->database->commit();
+	}
+
+
+	/**
 	 * @throws \Nette\InvalidArgumentException
 	 */
 	public function changeActive(int $id, bool $active): void
 	{
-		$this->getTable()->where('id', $id)->update([
+		$this->getTable()->wherePrimary($id)->update([
 			'aktivni' => $active,
 		]);
 	}

@@ -28,8 +28,8 @@ main.container { padding: 5rem 1rem 3rem; }
 }
 .form-check-input.is-valid ~ .form-check-label { color: initial !important; }
 .custom-control-input.is-valid ~ .custom-control-label { color: initial !important; }
-.custom-control-input.is-valid ~ .custom-control-label::before { background-color: initial !important; }
-.custom-control-input.is-valid:checked ~ .custom-control-label::before { background-color: initial !important; }
+.custom-control-input.is-valid ~ .custom-control-label::before { background-color: #DEE2E6 !important; }
+.custom-control-input.is-valid:checked ~ .custom-control-label::before { background-color: #157FFB !important; }
 .custom-control-input.is-valid:focus ~ .custom-control-label::before { box-shadow: initial !important; }
 .custom-file-input.is-valid ~ .custom-file-label { border-color: initial !important; }
 .custom-file-input.is-valid:focus ~ .custom-file-label { box-shadow: initial !important; }
