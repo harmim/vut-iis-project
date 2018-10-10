@@ -86,6 +86,6 @@ abstract class BasePresenter extends \IIS\Application\UI\BasePresenter
 	{
 		$this->getUser()->logout(true);
 		$this->flashMessage('Byli jste úspěšně odhlášeni.', 'success');
-		$this->redirect(\Nette\Http\IResponse::S303_SEE_OTHER, 'this');
+		$this->redirect(\Nette\Http\IResponse::S303_SEE_OTHER, ':User:Sign:login');
 	}
 }

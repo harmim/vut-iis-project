@@ -6,5 +6,5 @@ namespace App\UserModule\Controls\Registration;
 
 interface IRegistrationControlFactory
 {
-	function create(): \App\UserModule\Controls\Registration\RegistrationControl;
+	function create(bool $addClientTemplate = false): \App\UserModule\Controls\Registration\RegistrationControl;
 }

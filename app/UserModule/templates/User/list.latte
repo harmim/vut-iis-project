@@ -1,0 +1,30 @@
+{default $title = 'Výpis uživatelů'}
+
+{block content}
+
+<div class="row">
+	<div class="col-md-12">
+		<h3>{$title}</h3>
+		<hr class="my-4">
+	</div>
+
+	<div class="col-md-12">
+		<div class="dropdown">
+			<button class="btn btn-success btn-lg dropdown-toggle" type="button" aria-haspopup="true"
+					aria-expanded="false" id="dropdownAddButton" data-toggle="dropdown">
+				Přidat
+			</button>
+			<div class="dropdown-menu" aria-labelledby="dropdownAddButton">
+				<a n:href=":User:User:addAdmin" class="dropdown-item">Administrátora</a>
+				<a n:href=":User:User:addEmployee" class="dropdown-item">Zaměstnance</a>
+				<a n:href=":User:User:addClient" class="dropdown-item">Klienta</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		{control userListGrid}
+	</div>
+</div>

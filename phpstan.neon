@@ -12,4 +12,6 @@ parameters:
 
 	ignoreErrors:
 		- '~Parameter #2 \$caption of method Czubehead\\BootstrapForms\\BootstrapForm::addCheckbox\(\) expects null, string given\.~'
-		- '~Access to an undefined property Nette\\Database\\Table\\ActiveRow::\$[a-zA-Z_]+\.~'
+		- '~Access to an undefined property Nette\\Database\\Table\\ActiveRow::\$[a-zA-Z0-9_]+\.~'
+		- '~Access to an undefined property Nette\\Application\\UI\\ITemplate::\$[a-zA-Z0-9_]+\.~'
+		- '~Access to an undefined property Nette\\Security\\Identity::\$[a-zA-Z0-9_]+\.~'

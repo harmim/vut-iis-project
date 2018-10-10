@@ -12,17 +12,12 @@ final class FlashMessageControl extends \IIS\Application\UI\BaseControl
 
 		$parent = $this->getParent();
 		if ($parent instanceof \Nette\Application\UI\Control) {
-			/** @var \Nette\Bridges\ApplicationLatte\Template $template */
-			$template = $parent->getTemplate();
-			$flashes = $template->getParameters()['flashes'];
-
+			$flashes = $parent->getTemplate()->flashes;
 			$presenterFlashes = [];
 			if (!$parent instanceof \Nette\Application\UI\Presenter) {
 				$presenter = $parent->getPresenter();
 				if ($presenter) {
-					/** @var \Nette\Bridges\ApplicationLatte\Template $presenterTemplate */
-					$presenterTemplate = $presenter->getTemplate();
-					$presenterFlashes = $presenterTemplate->getParameters()['flashes'];
+					$presenterFlashes = $presenter->getTemplate()->flashes;
 				}
 			}
 

@@ -29,4 +29,28 @@ abstract class SecuredPresenter extends \App\CoreModule\Presenters\BasePresenter
 			$this->redirect(':User:Sign:login', ['login-backLink' => $this->storeRequest()]);
 		}
 	}
+
+
+	/**
+	 * @throws \Nette\Application\AbortException
+	 */
+	public function checkPermission(?string $privilege = null, ?string $resource = null): bool
+	{
+		if ($privilege === null) {
+			$privilege = $this->getAction();
+		}
+
+		if ($resource === null) {
+			$resource = $this->getModuleName();
+		}
+
+		if (!$this->getUser()->isAllowed($resource, $privilege)) {
+			$this->flashMessage('Přístup zamítnut.', 'error');
+			$this->redirect(':Core:Homepage:default');
+
+			return false;
+		}
+
+		return true;
+	}
 }

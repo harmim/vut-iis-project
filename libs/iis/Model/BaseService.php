@@ -27,4 +27,15 @@ abstract class BaseService
 	{
 		return $this->database->table($this->getTableName());
 	}
+
+
+	public function selectionCallback(?callable $callback): \Nette\Database\Table\Selection
+	{
+		$selection = $this->getTable();
+		if ($callback) {
+			$callback($selection);
+		}
+
+		return $selection;
+	}
 }

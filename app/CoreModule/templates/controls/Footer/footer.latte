@@ -6,6 +6,6 @@
 	</span>
 
 	<span n:if="$user->isLoggedIn() && $identity = $user->getIdentity()" class="text-muted float-right">
-		{$userType}: {$identity->getData()['email']}
+		{$userType}: {$identity->email}
 	</span>
 </div>

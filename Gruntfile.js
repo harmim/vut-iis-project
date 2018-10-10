@@ -26,7 +26,7 @@ module.exports = function (grunt) {
 
 		files: {
 			js: [
-				"<%= bowerDir %>/jquery/dist/jquery.slim.js",
+				"<%= bowerDir %>/jquery/dist/jquery.js",
 				"<%= bowerDir %>/popper.js/dist/umd/popper.js",
 				"<%= bowerDir %>/bootstrap/dist/js/bootstrap.js",
 				"<%= bowerDir %>/nette-live-form-validation/live-form-validation.js",

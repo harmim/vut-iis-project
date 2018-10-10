@@ -108,6 +108,12 @@ parameters:
 		password:
 		dbname:
 
+	roles:
+		admin:
+			resources: []
+		zamestnanec:
+		klient:
+
 services:
 	# Application templates locator
 	- \IIS\Application\Templates\TemplateLocator([%appDir%], %config.defaultModuleWithLayout%)

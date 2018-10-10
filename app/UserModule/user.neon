@@ -5,3 +5,9 @@ services:
 	# Controls
 	- \App\UserModule\Controls\Login\ILoginControlFactory
 	- \App\UserModule\Controls\Registration\IRegistrationControlFactory
+	- \App\UserModule\Controls\UserListGrid\IUserListGridControlFactory
+	- \App\UserModule\Controls\AddAdmin\IAddAdminControlFactory
+	- \App\UserModule\Controls\AddEmployee\IAddEmployeeControlFactory
+
+	# Authorizator
+	- \App\UserModule\Model\AuthorizatorFactory::create(%roles%, %appDir%)

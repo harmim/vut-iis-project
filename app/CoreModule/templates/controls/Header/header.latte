@@ -10,10 +10,16 @@
 
 	<div class="collapse navbar-collapse" id="navbarCollapse">
 		<ul class="navbar-nav mr-auto">
-			<li n:if="!$user->isLoggedIn()"
-				n:class="nav-item, $presenter->isLinkCurrent(':User:Registration:default') ? active">
-				<a class="nav-link" href="{plink :User:Registration:default}">Registrace</a>
-			</li>
+			{if $user->isLoggedIn()}
+				<li n:if="$user->isInRole(\App\UserModule\Model\AuthorizatorFactory::ROLE_ADMIN)"
+					n:class="nav-item, $presenter->isLinkCurrent(':User:User:list') ? active">
+					<a class="nav-link" href="{plink :User:User:list}">Uživatelé</a>
+				</li>
+			{else}
+				<li n:class="nav-item, $presenter->isLinkCurrent(':User:Registration:default') ? active">
+					<a class="nav-link" href="{plink :User:Registration:default}">Registrace</a>
+				</li>
+			{/if}
 		</ul>
 
 		<ul class="navbar-nav float-lg-right">

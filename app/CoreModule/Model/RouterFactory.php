@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\CoreModule\Model\Router;
+namespace App\CoreModule\Model;
 
 final class RouterFactory
 {

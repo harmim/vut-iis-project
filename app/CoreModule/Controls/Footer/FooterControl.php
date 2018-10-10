@@ -31,16 +31,7 @@ final class FooterControl extends \IIS\Application\UI\BaseControl
 		if ($this->user->isLoggedIn()) {
 			$identity = $this->user->getIdentity();
 			if ($identity instanceof \Nette\Security\Identity) {
-				switch ($identity->getData()['typ']) {
-					case \App\UserModule\Model\UserService::USER_TYPE_ADMIN:
-						return 'Administrátor';
-
-					case \App\UserModule\Model\UserService::USER_TYPE_EMPLOYEE:
-						return 'Zaměstnanec';
-
-					case \App\UserModule\Model\UserService::USER_TYPE_CLIENT:
-						return 'Klient';
-				}
+				return \App\UserModule\Model\UserService::ROLE_TRANSLATION_MAP[$identity->typ];
 			}
 		}
 

@@ -11,11 +11,17 @@ final class RegistrationControl extends \IIS\Application\UI\BaseControl
 	 */
 	private $userService;
 
+	/**
+	 * @var bool
+	 */
+	private $addClientTemplate;
 
-	public function __construct(\App\UserModule\Model\UserService $userService)
+
+	public function __construct(\App\UserModule\Model\UserService $userService, bool $addClientTemplate = false)
 	{
 		parent::__construct();
 		$this->userService = $userService;
+		$this->addClientTemplate = $addClientTemplate;
 	}
 
 
@@ -63,7 +69,10 @@ final class RegistrationControl extends \IIS\Application\UI\BaseControl
 			->addText('address', 'Adresa')
 			->setRequired();
 
-		$useCompany = $form->addCheckbox('useCompany', 'Registrovat se jako právnická osoba');
+		$useCompany = $form->addCheckbox(
+			'useCompany',
+			$this->addClientTemplate ? 'Přidat jako právnickou osobu' : 'Registrovat se jako právnická osoba'
+		);
 		$row = $form->addRow();
 		$row->addCell()
 			->addText('ico', 'IČO')
@@ -77,7 +86,7 @@ final class RegistrationControl extends \IIS\Application\UI\BaseControl
 			->addConditionOn($useCompany, \Nette\Forms\Form::EQUAL, true)
 				->setRequired();
 
-		$form->addSubmit('register', 'Registrovat')
+		$form->addSubmit('register', $this->addClientTemplate ? 'Přidat' : 'Registrovat')
 			->setAttribute('class', 'btn btn-primary btn-block');
 
 		$form->onSuccess[] = [$this, 'onSuccessRegistrationForm'];
@@ -103,8 +112,13 @@ final class RegistrationControl extends \IIS\Application\UI\BaseControl
 
 		$presenter = $this->getPresenter();
 		if ($presenter) {
-			$presenter->flashMessage('Registrace proběhla úspěšně.', 'success');
-			$presenter->redirect(':User:Sign:login');
+			if ($this->addClientTemplate) {
+				$presenter->flashMessage('Klient byl úspěšně přidán.', 'success');
+				$presenter->redirect(':User:User:list');
+			} else {
+				$presenter->flashMessage('Registrace proběhla úspěšně.', 'success');
+				$presenter->redirect(':User:Sign:login');
+			}
 		}
 	}
 }

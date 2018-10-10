@@ -38,4 +38,12 @@ abstract class BasePresenter extends \Nette\Application\UI\Presenter
 
 		return $layoutTemplates ?: parent::formatLayoutTemplateFiles();
 	}
+
+
+	protected function getModuleName(): string
+	{
+		\preg_match('~^(\w+):~', (string) $this->getName(), $mathes);
+
+		return \strtolower($mathes[1]);
+	}
 }

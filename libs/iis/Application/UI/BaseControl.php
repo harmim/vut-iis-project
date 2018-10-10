@@ -77,7 +77,9 @@ abstract class BaseControl extends \Nette\Application\UI\Control
 	private function setTemplateFile(?string $templateName = null): void
 	{
 		$controlDir = \dirname((string) (new \ReflectionClass($this))->getFileName());
-		$files = $this->templateLocator->formatControlTemplate((string) $this->getName(), $controlDir, $templateName);
+		$explodedControlDir = \explode(\DIRECTORY_SEPARATOR, $controlDir);
+		$controlName = \end($explodedControlDir);
+		$files = $this->templateLocator->formatControlTemplate($controlName, $controlDir, $templateName);
 
 		foreach ($files as &$file) {
 			$file = \strtr($file, '/', \DIRECTORY_SEPARATOR);
