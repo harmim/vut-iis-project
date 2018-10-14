@@ -41,7 +41,7 @@ abstract class SecuredPresenter extends \App\CoreModule\Presenters\BasePresenter
 		}
 
 		if ($resource === null) {
-			$resource = $this->getModuleName();
+			$resource = $this->getModuleName() . '.' . $this->getPresenterName();
 		}
 
 		if (!$this->getUser()->isAllowed($resource, $privilege)) {

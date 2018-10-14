@@ -24,9 +24,11 @@
 
 		<ul class="navbar-nav float-lg-right">
 			{if $user->isLoggedIn()}
-				<li n:class="nav-item">
-					<a class="nav-link" href="{plink :User:Profile:edit}">Profil</a>
+				{var $myProfileActive = $presenter->isLinkCurrent(':User:Profile:edit') || $presenter->isLinkCurrent(':User:Profile:editAdmin') || $presenter->isLinkCurrent(':User:Profile:editEmployee') || $presenter->isLinkCurrent(':User:Profile:editClient')}
+				<li n:class="nav-item, $myProfileActive ? active">
+					<a class="nav-link" href="{plink :User:Profile:edit}">Můj profil</a>
 				</li>
+
 				<li class="nav-item">
 					<a class="nav-link" href="{plink logout!}">
 						Odhlásit se <i class="fa fa-sign-out" aria-hidden="true"></i>

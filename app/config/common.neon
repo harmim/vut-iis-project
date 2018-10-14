@@ -109,10 +109,13 @@ parameters:
 		dbname:
 
 	roles:
-		admin:
-			resources: []
-		zamestnanec:
 		klient:
+			resources:
+				user.profile: []
+		zamestnanec:
+		admin:
+			resources:
+				user.user: []
 
 services:
 	# Application templates locator

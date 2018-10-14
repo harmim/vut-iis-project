@@ -50,10 +50,19 @@ final class AuthorizatorFactory
 	 */
 	private static function setupResources(\Nette\Security\Permission $permission, string $appDir): void
 	{
+		/** @var \SplFileInfo $dir */
 		foreach (\Nette\Utils\Finder::findDirectories('*Module')->in($appDir) as $dir) {
-			/** @var \SplFileInfo $dir */
 			\preg_match('~^(.+)Module\z~', $dir->getFilename(), $matches);
-			$permission->addResource(\strtolower($matches[1]));
+			$moduleName = \strtolower($matches[1]);
+
+			$presentersDir = $dir->getRealPath() . \DIRECTORY_SEPARATOR . 'Presenters';
+			/** @var \SplFileInfo $presenter */
+			foreach (\Nette\Utils\Finder::findFiles()->in($presentersDir) as $presenter) {
+				\preg_match('~^(.+)Presenter.php\z~', $presenter->getFilename(), $matches);
+				$presenterName = \strtolower($matches[1]);
+
+				$permission->addResource("$moduleName.$presenterName");
+			}
 		}
 	}
 
@@ -74,16 +83,20 @@ final class AuthorizatorFactory
 				} else {
 					foreach ($roleData['resources'] as $resource => $actions) {
 						if ($permission->hasResource($resource)) {
-							$permission->allow($role, $resource, $actions);
+							$permission->allow($role, $resource, $actions ?: \Nette\Security\IAuthorizator::ALL);
 						}
 					}
 				}
 			}
 
 			if (isset($roleData['denyResources']) && \is_array($roleData['denyResources'])) {
-				foreach ($roleData['denyResources'] as $resource => $actions) {
-					if ($permission->hasResource($resource)) {
-						$permission->deny($role, $resource, $actions);
+				if (!$roleData['denyResources']) {
+					$permission->deny($role, \Nette\Security\IAuthorizator::ALL, \Nette\Security\IAuthorizator::ALL);
+				} else {
+					foreach ($roleData['denyResources'] as $resource => $actions) {
+						if ($permission->hasResource($resource)) {
+							$permission->deny($role, $resource, $actions ?: \Nette\Security\IAuthorizator::ALL);
+						}
 					}
 				}
 			}

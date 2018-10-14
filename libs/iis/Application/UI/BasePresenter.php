@@ -46,4 +46,12 @@ abstract class BasePresenter extends \Nette\Application\UI\Presenter
 
 		return \strtolower($mathes[1]);
 	}
+
+
+	protected function getPresenterName(): string
+	{
+		\preg_match('~:(\w+)\z~', (string) $this->getName(), $mathes);
+
+		return \strtolower($mathes[1]);
+	}
 }

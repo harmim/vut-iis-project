@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\UserModule\Presenters;
 
-final class ProfilePresenter extends \App\CoreModule\Presenters\BasePresenter
+final class ProfilePresenter extends \App\CoreModule\Presenters\SecuredPresenter
 {
     /**
      * @var \Nette\Database\Table\ActiveRow|null
      */
-    private $userData;
+    private $user;
 
     /**
      * @var \App\UserModule\Model\UserService
@@ -50,6 +50,8 @@ final class ProfilePresenter extends \App\CoreModule\Presenters\BasePresenter
      */
     public function actionEdit(): void
     {
+		$this->checkPermission();
+
         $id = $this->getUser()->getId();
         $user = $this->userService->fetchById($id);
 
@@ -80,13 +82,18 @@ final class ProfilePresenter extends \App\CoreModule\Presenters\BasePresenter
      */
     public function actionEditAdmin(int $id): void
     {
-        $this->checkPermission($id, \App\UserModule\Model\AuthorizatorFactory::ROLE_ADMIN);
+		$this->checkPermission(\App\UserModule\Model\AuthorizatorFactory::ACTION_EDIT);
 
-        $this->userData = $this->userService->fetchById($id);
-        if (!$this->userData) {
+        $this->user = $this->userService->fetchById($id);
+        if (!$this->user) {
             $this->error();
             return;
         }
+
+        if ($this->user->typ !== \App\UserModule\Model\AuthorizatorFactory::ROLE_ADMIN) {
+        	$this->redirect(':User:Profile:edit');
+        	return;
+		}
     }
 
 
@@ -96,13 +103,18 @@ final class ProfilePresenter extends \App\CoreModule\Presenters\BasePresenter
      */
     public function actionEditEmployee(int $id): void
     {
-        $this->checkPermission($id, \App\UserModule\Model\AuthorizatorFactory::ROLE_EMPLOYEE);
+		$this->checkPermission(\App\UserModule\Model\AuthorizatorFactory::ACTION_EDIT);
 
-        $this->userData = $this->userService->fetchById($id);
-        if (!$this->userData) {
+        $this->user = $this->userService->fetchById($id);
+        if (!$this->user) {
             $this->error();
             return;
         }
+
+		if ($this->user->typ !== \App\UserModule\Model\AuthorizatorFactory::ROLE_EMPLOYEE) {
+			$this->redirect(':User:Profile:edit');
+			return;
+		}
     }
 
 
@@ -112,13 +124,18 @@ final class ProfilePresenter extends \App\CoreModule\Presenters\BasePresenter
      */
     public function actionEditClient(int $id): void
     {
-        $this->checkPermission($id, \App\UserModule\Model\AuthorizatorFactory::ROLE_CLIENT);
+		$this->checkPermission(\App\UserModule\Model\AuthorizatorFactory::ACTION_EDIT);
 
-        $this->userData = $this->userService->fetchById($id);
-        if (!$this->userData) {
+        $this->user = $this->userService->fetchById($id);
+        if (!$this->user) {
             $this->error();
             return;
         }
+
+		if ($this->user->typ !== \App\UserModule\Model\AuthorizatorFactory::ROLE_CLIENT) {
+			$this->redirect(':User:Profile:edit');
+			return;
+		}
     }
 
 
@@ -132,7 +149,7 @@ final class ProfilePresenter extends \App\CoreModule\Presenters\BasePresenter
             return null;
         }
 
-        return $this->editAdminControlFactory->create($this->userData);
+        return $this->editAdminControlFactory->create($this->user);
     }
 
 
@@ -146,7 +163,7 @@ final class ProfilePresenter extends \App\CoreModule\Presenters\BasePresenter
             return null;
         }
 
-        return $this->editEmployeeControlFactory->create($this->userData);
+        return $this->editEmployeeControlFactory->create($this->user);
     }
 
 
@@ -160,19 +177,6 @@ final class ProfilePresenter extends \App\CoreModule\Presenters\BasePresenter
             return null;
         }
 
-        return $this->editClientControlFactory->create($this->userData);
-    }
-
-
-    /**
-     * @throws \Nette\Application\AbortException
-     */
-    public function checkPermission(int $id,string $type): void
-    {
-        if ($this->getUser()->getId() != $id || $this->userService->fetchById($id)->typ != $type) {
-            $this->flashMessage('Přístup zamítnut.', 'error');
-            $this->redirect(':Core:Homepage:default');
-        }
-
+        return $this->editClientControlFactory->create($this->user);
     }
 }
