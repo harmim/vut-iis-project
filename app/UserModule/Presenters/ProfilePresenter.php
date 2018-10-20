@@ -9,7 +9,7 @@ final class ProfilePresenter extends \App\CoreModule\Presenters\SecuredPresenter
 	/**
 	 * @var \Nette\Database\Table\ActiveRow|null
 	 */
-	private $user;
+	private $editedUser;
 
 	/**
 	 * @var \App\UserModule\Model\UserService
@@ -55,89 +55,19 @@ final class ProfilePresenter extends \App\CoreModule\Presenters\SecuredPresenter
 		$this->checkPermission();
 
 		$id = $this->getUser()->getId();
-		$user = $this->userService->fetchById($id);
+		$this->editedUser = $this->userService->fetchById($id);
 
-		if (!$user) {
+		if (!$this->editedUser) {
 			$this->error();
-			return;
-		}
-
-		switch ($user->typ) {
-			case \App\UserModule\Model\AuthorizatorFactory::ROLE_ADMIN:
-				$this->redirect(':User:Profile:editAdmin', ['id' => $id]);
-				return;
-
-			case \App\UserModule\Model\AuthorizatorFactory::ROLE_EMPLOYEE:
-				$this->redirect(':User:Profile:editEmployee', ['id' => $id]);
-				return;
-
-			case \App\UserModule\Model\AuthorizatorFactory::ROLE_CLIENT:
-				$this->redirect(':User:Profile:editClient', ['id' => $id]);
-				return;
-		}
-	}
-
-
-	/**
-	 * @throws \Nette\Application\AbortException
-	 * @throws \Nette\Application\BadRequestException
-	 */
-	public function actionEditAdmin(int $id): void
-	{
-		$this->checkPermission(\App\UserModule\Model\AuthorizatorFactory::ACTION_EDIT);
-
-		$this->user = $this->userService->fetchById($id);
-		if (!$this->user) {
-			$this->error();
-			return;
-		}
-
-		if ($this->user->typ !== \App\UserModule\Model\AuthorizatorFactory::ROLE_ADMIN) {
-			$this->redirect(':User:Profile:edit');
 			return;
 		}
 	}
 
 
-	/**
-	 * @throws \Nette\Application\AbortException
-	 * @throws \Nette\Application\BadRequestException
-	 */
-	public function actionEditEmployee(int $id): void
+	public function renderEdit(): void
 	{
-		$this->checkPermission(\App\UserModule\Model\AuthorizatorFactory::ACTION_EDIT);
-
-		$this->user = $this->userService->fetchById($id);
-		if (!$this->user) {
-			$this->error();
-			return;
-		}
-
-		if ($this->user->typ !== \App\UserModule\Model\AuthorizatorFactory::ROLE_EMPLOYEE) {
-			$this->redirect(':User:Profile:edit');
-			return;
-		}
-	}
-
-
-	/**
-	 * @throws \Nette\Application\AbortException
-	 * @throws \Nette\Application\BadRequestException
-	 */
-	public function actionEditClient(int $id): void
-	{
-		$this->checkPermission(\App\UserModule\Model\AuthorizatorFactory::ACTION_EDIT);
-
-		$this->user = $this->userService->fetchById($id);
-		if (!$this->user) {
-			$this->error();
-			return;
-		}
-
-		if ($this->user->typ !== \App\UserModule\Model\AuthorizatorFactory::ROLE_CLIENT) {
-			$this->redirect(':User:Profile:edit');
-			return;
-		}
+		$this->getTemplate()->add('editedUser', $this->editedUser);
+		$this->getTemplate()->add('title', 'Můj profil');
 	}
 
 
@@ -146,12 +76,12 @@ final class ProfilePresenter extends \App\CoreModule\Presenters\SecuredPresenter
 	 */
 	protected function createComponentEditAdmin(): ?\App\UserModule\Controls\EditAdmin\EditAdminControl
 	{
-		if (!$this->user) {
+		if (!$this->editedUser) {
 			$this->error();
 			return null;
 		}
 
-		return $this->editAdminControlFactory->create($this->user);
+		return $this->editAdminControlFactory->create($this->editedUser);
 	}
 
 
@@ -160,12 +90,12 @@ final class ProfilePresenter extends \App\CoreModule\Presenters\SecuredPresenter
 	 */
 	protected function createComponentEditEmployee(): ?\App\UserModule\Controls\EditEmployee\EditEmployeeControl
 	{
-		if (!$this->user) {
+		if (!$this->editedUser) {
 			$this->error();
 			return null;
 		}
 
-		return $this->editEmployeeControlFactory->create($this->user);
+		return $this->editEmployeeControlFactory->create($this->editedUser);
 	}
 
 
@@ -174,11 +104,11 @@ final class ProfilePresenter extends \App\CoreModule\Presenters\SecuredPresenter
 	 */
 	protected function createComponentEditClient(): ?\App\UserModule\Controls\EditClient\EditClientControl
 	{
-		if (!$this->user) {
+		if (!$this->editedUser) {
 			$this->error();
 			return null;
 		}
 
-		return $this->editClientControlFactory->create($this->user);
+		return $this->editClientControlFactory->create($this->editedUser);
 	}
 }

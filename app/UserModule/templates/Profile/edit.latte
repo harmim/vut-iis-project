@@ -1,0 +1,21 @@
+{block content}
+
+<div class="row">
+	<div class="col-md-12">
+		<h3>{$title}</h3>
+		<hr class="my-4">
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		{switch $editedUser->typ}
+			{case \App\UserModule\Model\AuthorizatorFactory::ROLE_ADMIN}
+				{control editAdmin}
+			{case \App\UserModule\Model\AuthorizatorFactory::ROLE_EMPLOYEE}
+				{control editEmployee}
+			{case \App\UserModule\Model\AuthorizatorFactory::ROLE_CLIENT}
+				{control editClient}
+		{/switch}
+	</div>
+</div>
