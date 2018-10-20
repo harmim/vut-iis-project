@@ -1,6 +1,5 @@
 images:
 	types:
 		costume:
-			width: 500
-			height: 500
-			transform: fill_exact
+			width: 250
+			height: 250

@@ -60,6 +60,8 @@ final class CostumeListGridControl extends \IIS\Application\UI\BaseControl
 			$grid->addColumnActive([$this, 'onActiveChange']);
 		}
 
+		$grid->addActionEdit();
+
 		return $grid;
 	}
 

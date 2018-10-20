@@ -63,6 +63,10 @@ final class AddCostumeControl extends \IIS\Application\UI\BaseControl
 			return;
 		}
 
+		if ($presenter instanceof \App\CoreModule\Presenters\SecuredPresenter) {
+			$presenter->checkPermission(\App\UserModule\Model\AuthorizatorFactory::ACTION_ADD);
+		}
+
 		/** @var \Nette\Http\FileUpload $image */
 		$image = $values->image;
 		$values->imageFile = null;
@@ -73,13 +77,12 @@ final class AddCostumeControl extends \IIS\Application\UI\BaseControl
 			} catch (\Exception $e) {
 				\Tracy\Debugger::log($e);
 				$presenter->flashMessage('Obrázek se nepodařilo nahrát.', 'error');
-				$presenter->redirect(':Costume:Costume:list');
 				return;
 			}
 		}
 
 		try {
-			$this->costumeService->addCostume($values, $this->user->getId());
+			$this->costumeService->addCostume($values);
 		} catch (\App\CostumeModule\Model\Exception $e) {
 			$form->addError($e->getMessage());
 			if ($values->imageFile) {

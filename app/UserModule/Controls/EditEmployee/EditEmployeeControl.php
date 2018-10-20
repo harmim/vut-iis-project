@@ -74,6 +74,11 @@ final class EditEmployeeControl extends \IIS\Application\UI\BaseControl
 		\Czubehead\BootstrapForms\BootstrapForm $form,
 		\Nette\Utils\ArrayHash $values
 	): void {
+		$presenter = $this->getPresenter();
+		if ($presenter instanceof \App\CoreModule\Presenters\SecuredPresenter) {
+			$presenter->checkPermission(\App\UserModule\Model\AuthorizatorFactory::ACTION_EDIT);
+		}
+
 		try {
 			$this->userService->editEmployee($values);
 		} catch (\App\UserModule\Model\Exception $e) {
@@ -81,7 +86,6 @@ final class EditEmployeeControl extends \IIS\Application\UI\BaseControl
 			return;
 		}
 
-		$presenter = $this->getPresenter();
 		if ($presenter) {
 			$presenter->flashMessage('Zaměstnanec byl úspěšně uložen.', 'success');
 			$presenter->redirect('this');

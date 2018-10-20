@@ -61,6 +61,7 @@ final class CategoryListGridControl extends \IIS\Application\UI\BaseControl
 	/**
 	 * @throws \Nette\Application\AbortException
 	 * @throws \Nette\InvalidArgumentException
+	 * @throws \Nette\Application\BadRequestException
 	 */
 	public function handleDelete(int $id): void
 	{
@@ -71,6 +72,12 @@ final class CategoryListGridControl extends \IIS\Application\UI\BaseControl
 
 		if ($presenter instanceof \App\CoreModule\Presenters\SecuredPresenter) {
 			$presenter->checkPermission(\App\UserModule\Model\AuthorizatorFactory::ACTION_DELETE);
+		}
+
+		$category = $this->categoryService->fetchById($id);
+		if (!$category) {
+			$presenter->error();
+			return;
 		}
 
 		if ($this->costumeService->isCategoryUsed($id)) {

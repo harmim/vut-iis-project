@@ -126,8 +126,6 @@ parameters:
 		admin:
 			resources:
 				user.user: []
-			denyResources:
-				costume.costume: [add]
 
 services:
 	# Application templates locator

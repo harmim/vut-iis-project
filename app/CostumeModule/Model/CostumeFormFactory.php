@@ -13,10 +13,18 @@ final class CostumeFormFactory
 	 */
 	private $categoryService;
 
+	/**
+	 * @var \App\UserModule\Model\UserService
+	 */
+	private $userService;
 
-	public function __construct(\App\CostumeModule\Model\CategoryService $categoryService)
-	{
+
+	public function __construct(
+		\App\CostumeModule\Model\CategoryService $categoryService,
+		\App\UserModule\Model\UserService $userService
+	) {
 		$this->categoryService = $categoryService;
+		$this->userService = $userService;
 	}
 
 
@@ -36,7 +44,13 @@ final class CostumeFormFactory
 			->addText('material', 'Materiál')
 			->setRequired();
 
-		$form->addText('description', 'Popis')
+		$row = $form->addRow();
+		$row->addCell()
+			->addText('description', 'Popis')
+			->setRequired();
+		$row->addCell()
+			->addSelect('employee', 'Správce kostýmu', $this->getEmployees())
+			->setPrompt('Vyberte')
 			->setRequired();
 
 		$row = $form->addRow();
@@ -82,5 +96,14 @@ final class CostumeFormFactory
 		$form->addProtection();
 
 		return $form;
+	}
+
+
+	private function getEmployees(): array
+	{
+		return
+			$this->userService->fetchPairs('id', 'email', function (\Nette\Database\Table\Selection $selection): void {
+				$selection->where('zamestnanec_id NOT', null);
+			});
 	}
 }
