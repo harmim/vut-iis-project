@@ -129,19 +129,24 @@ final class UserPresenter extends \App\CoreModule\Presenters\SecuredPresenter
 	public function renderEdit(): void
 	{
 		$this->getTemplate()->add('editedUser', $this->editedUser);
-		switch ($this->editedUser->typ) {
-			case \App\UserModule\Model\AuthorizatorFactory::ROLE_ADMIN:
-				$this->getTemplate()->add('title', 'Editace administrátora');
-				break;
 
-			case \App\UserModule\Model\AuthorizatorFactory::ROLE_EMPLOYEE:
-				$this->getTemplate()->add('title', 'Editace zaměstnance');
-				break;
+		$title = '';
+		if ($this->editedUser) {
+			switch ($this->editedUser->typ) {
+				case \App\UserModule\Model\AuthorizatorFactory::ROLE_ADMIN:
+					$title = 'Editace administrátora';
+					break;
 
-			case \App\UserModule\Model\AuthorizatorFactory::ROLE_CLIENT:
-				$this->getTemplate()->add('title', 'Editace klienta');
-				break;
+				case \App\UserModule\Model\AuthorizatorFactory::ROLE_EMPLOYEE:
+					$title = 'Editace zaměstnance';
+					break;
+
+				case \App\UserModule\Model\AuthorizatorFactory::ROLE_CLIENT:
+					$title = 'Editace klienta';
+					break;
+			}
 		}
+		$this->getTemplate()->add('title', $title);
 	}
 
 

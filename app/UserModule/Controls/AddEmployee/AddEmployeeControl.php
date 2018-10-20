@@ -34,7 +34,7 @@ final class AddEmployeeControl extends \IIS\Application\UI\BaseControl
 	{
 		$form = $this->userFormFactory->createEmployeeForm();
 
-		$form->addSubmit('add', 'Přidat')
+		$form->addSubmit('add', 'Vytvořit')
 			->setAttribute('class', 'btn btn-primary btn-block');
 
 		$form->onSuccess[] = [$this, 'onSuccessAddForm'];
@@ -60,7 +60,7 @@ final class AddEmployeeControl extends \IIS\Application\UI\BaseControl
 
 		$presenter = $this->getPresenter();
 		if ($presenter) {
-			$presenter->flashMessage('Zaměstnanec byl úspěšně přidán.', 'success');
+			$presenter->flashMessage('Zaměstnanec byl úspěšně vytvořen.', 'success');
 			$presenter->redirect(':User:User:list');
 		}
 	}

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b4f95d9f87fbc274d2425073366fc8b4",
+    "content-hash": "7516fe6992cf22afc9288e8ca4170695",
     "packages": [
         {
             "name": "czubehead/bootstrap-4-forms",
@@ -50,6 +50,62 @@
                 "nette"
             ],
             "time": "2018-05-28T20:41:44+00:00"
+        },
+        {
+            "name": "harmim/images",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/harmim/images.git",
+                "reference": "7b596701994c5458777cb7906013121385f39540"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/harmim/images/zipball/7b596701994c5458777cb7906013121385f39540",
+                "reference": "7b596701994c5458777cb7906013121385f39540",
+                "shasum": ""
+            },
+            "require": {
+                "ext-fileinfo": "*",
+                "ext-gd": "*",
+                "latte/latte": "^2.4",
+                "nette/di": "^2.4",
+                "nette/finder": "^2.4",
+                "nette/http": "^2.4",
+                "nette/utils": "^2.4",
+                "php": ">= 7.1"
+            },
+            "require-dev": {
+                "nette/coding-standard": "^0.5",
+                "nette/tester": "^2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Harmim\\Images\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dominik Harmim",
+                    "email": "harmim6@gmail.com",
+                    "homepage": "http://www.harmim.cz/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A tool for working with images.",
+            "homepage": "https://github.com/harmim/images",
+            "keywords": [
+                "gd",
+                "images",
+                "nette",
+                "php"
+            ],
+            "time": "2017-09-10T23:13:42+00:00"
         },
         {
             "name": "latte/latte",
@@ -418,16 +474,16 @@
         },
         {
             "name": "nette/database",
-            "version": "v2.4.6",
+            "version": "v2.4.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/database.git",
-                "reference": "b094b7ae07daa7d4c188168f78b15eb2f4f27212"
+                "reference": "b7b1b990abdc612d45f5dd6fe24618329768f864"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/database/zipball/b094b7ae07daa7d4c188168f78b15eb2f4f27212",
-                "reference": "b094b7ae07daa7d4c188168f78b15eb2f4f27212",
+                "url": "https://api.github.com/repos/nette/database/zipball/b7b1b990abdc612d45f5dd6fe24618329768f864",
+                "reference": "b7b1b990abdc612d45f5dd6fe24618329768f864",
                 "shasum": ""
             },
             "require": {
@@ -486,7 +542,7 @@
                 "queries",
                 "sqlite"
             ],
-            "time": "2018-06-01T15:50:27+00:00"
+            "time": "2018-10-16T12:52:07+00:00"
         },
         {
             "name": "nette/di",
@@ -1346,12 +1402,12 @@
             "version": "v5.6.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/ublaboo/datagrid.git",
+                "url": "https://github.com/contributte/datagrid.git",
                 "reference": "9cab60969ecd979f6ce722c1a460d415f48a8474"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ublaboo/datagrid/zipball/9cab60969ecd979f6ce722c1a460d415f48a8474",
+                "url": "https://api.github.com/repos/contributte/datagrid/zipball/9cab60969ecd979f6ce722c1a460d415f48a8474",
                 "reference": "9cab60969ecd979f6ce722c1a460d415f48a8474",
                 "shasum": ""
             },

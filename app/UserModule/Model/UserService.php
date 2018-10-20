@@ -140,7 +140,7 @@ final class UserService extends \IIS\Model\BaseService implements \Nette\Securit
 		}
 
 		if (!$user instanceof \Nette\Database\Table\ActiveRow) {
-			throw new \App\UserModule\Model\Exception('Administrátora se nepodařilo přidat.');
+			throw new \App\UserModule\Model\Exception('Administrátora se nepodařilo vytvořit.');
 		}
 	}
 
@@ -151,7 +151,7 @@ final class UserService extends \IIS\Model\BaseService implements \Nette\Securit
 	 */
 	public function addEmployee(\Nette\Utils\ArrayHash $data): void
 	{
-		$errorMessage = 'Zaměstnance se nepodařilo přidat.';
+		$errorMessage = 'Zaměstnance se nepodařilo vytvořit.';
 		$this->database->beginTransaction();
 
 		$employee = $this->getEmployeeTable()->insert([
@@ -284,16 +284,5 @@ final class UserService extends \IIS\Model\BaseService implements \Nette\Securit
 		}
 
 		$this->database->commit();
-	}
-
-
-	/**
-	 * @throws \Nette\InvalidArgumentException
-	 */
-	public function changeActive(int $id, bool $active): void
-	{
-		$this->getTable()->wherePrimary($id)->update([
-			'aktivni' => $active,
-		]);
 	}
 }

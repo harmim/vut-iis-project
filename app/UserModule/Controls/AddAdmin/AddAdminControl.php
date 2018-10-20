@@ -34,7 +34,7 @@ final class AddAdminControl extends \IIS\Application\UI\BaseControl
 	{
 		$form = $this->userFormFactory->createAdminForm();
 
-		$form->addSubmit('add', 'Přidat')
+		$form->addSubmit('add', 'Vytvořit')
 			->setAttribute('class', 'btn btn-primary btn-block');
 
 		$form->onSuccess[] = [$this, 'onSuccessAddForm'];
@@ -60,7 +60,7 @@ final class AddAdminControl extends \IIS\Application\UI\BaseControl
 
 		$presenter = $this->getPresenter();
 		if ($presenter) {
-			$presenter->flashMessage('Administrátor byl úspěšně přidán.', 'success');
+			$presenter->flashMessage('Administrátor byl úspěšně vytvořen.', 'success');
 			$presenter->redirect(':User:User:list');
 		}
 	}

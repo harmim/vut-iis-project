@@ -41,7 +41,7 @@ final class RegistrationControl extends \IIS\Application\UI\BaseControl
 	{
 		$form = $this->userFormFactory->createClientForm();
 
-		$form->addSubmit('register', $this->addClientTemplate ? 'Přidat' : 'Registrovat')
+		$form->addSubmit('register', $this->addClientTemplate ? 'Vytvořit' : 'Registrovat')
 			->setAttribute('class', 'btn btn-primary btn-block');
 
 		$form->onSuccess[] = [$this, 'onSuccessRegistrationForm'];
@@ -68,7 +68,7 @@ final class RegistrationControl extends \IIS\Application\UI\BaseControl
 		$presenter = $this->getPresenter();
 		if ($presenter) {
 			if ($this->addClientTemplate) {
-				$presenter->flashMessage('Klient byl úspěšně přidán.', 'success');
+				$presenter->flashMessage('Klient byl úspěšně vytvořen.', 'success');
 				$presenter->redirect(':User:User:list');
 			} else {
 				$presenter->flashMessage('Registrace proběhla úspěšně.', 'success');

@@ -1,0 +1,14 @@
+services:
+	# Services
+	- \App\CostumeModule\Model\CostumeService
+	- \App\CostumeModule\Model\CategoryService
+
+	# Controls
+	- \App\CostumeModule\Controls\CostumeListGrid\ICostumeListGridControlFactory
+	- \App\CostumeModule\Controls\AddCostume\IAddCostumeControlFactory
+	- \App\CostumeModule\Controls\CategoryListGrid\ICategoryListGridControlFactory
+	- \App\CostumeModule\Controls\AddCategory\IAddCategoryControlFactory
+
+	# Forms
+	- \App\CostumeModule\Model\CostumeFormFactory
+	- \App\CostumeModule\Model\CategoryFormFactory

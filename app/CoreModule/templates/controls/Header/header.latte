@@ -15,6 +15,15 @@
 					n:class="nav-item, $presenter->isLinkCurrent(':User:User:list') ? active">
 					<a class="nav-link" href="{plink :User:User:list}">Uživatelé</a>
 				</li>
+
+				<li n:class="nav-item, $presenter->isLinkCurrent(':Costume:Costume:list') ? active">
+					<a class="nav-link" href="{plink :Costume:Costume:list}">Kostýmy</a>
+				</li>
+
+				<li n:if="!$user->isInRole(\App\UserModule\Model\AuthorizatorFactory::ROLE_CLIENT)"
+					n:class="nav-item, $presenter->isLinkCurrent(':Costume:Category:list') ? active">
+					<a class="nav-link" href="{plink :Costume:Category:list}">Kategorie</a>
+				</li>
 			{else}
 				<li n:class="nav-item, $presenter->isLinkCurrent(':User:Registration:default') ? active">
 					<a class="nav-link" href="{plink :User:Registration:default}">Registrace</a>
@@ -24,8 +33,7 @@
 
 		<ul class="navbar-nav float-lg-right">
 			{if $user->isLoggedIn()}
-				{var $myProfileActive = $presenter->isLinkCurrent(':User:Profile:edit') || $presenter->isLinkCurrent(':User:Profile:editAdmin') || $presenter->isLinkCurrent(':User:Profile:editEmployee') || $presenter->isLinkCurrent(':User:Profile:editClient')}
-				<li n:class="nav-item, $myProfileActive ? active">
+				<li n:class="nav-item, $presenter->isLinkCurrent(':User:Profile:edit') ? active">
 					<a class="nav-link" href="{plink :User:Profile:edit}">Můj profil</a>
 				</li>
 

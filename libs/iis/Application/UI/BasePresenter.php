@@ -9,6 +9,8 @@ namespace IIS\Application\UI;
  */
 abstract class BasePresenter extends \Nette\Application\UI\Presenter
 {
+	use \Harmim\Images\TImageStorage;
+
 	/**
 	 * @var \IIS\Application\Templates\ITemplateLocator
 	 */

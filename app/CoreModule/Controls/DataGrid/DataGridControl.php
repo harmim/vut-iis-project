@@ -101,7 +101,7 @@ final class DataGridControl extends \Ublaboo\DataGrid\DataGrid
 		callable $handleOnChange,
 		bool $setFilter = true
 	): \Ublaboo\DataGrid\Column\ColumnStatus {
-		$column = $this->addColumnStatus('aktivni', 'Aktivní')
+		$column = $this->addColumnStatus('active', 'Aktivní', 'aktivni')
 			->setAlign('center')
 			->addOption(true, 'Ano')
 				->setClass('btn-success')

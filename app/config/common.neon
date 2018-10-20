@@ -1,3 +1,6 @@
+extensions:
+	images: \Harmim\Images\DI\ImagesExtension
+
 application:
 	errorPresenter: Core:Error
 	scanComposer: false
@@ -31,6 +34,9 @@ forms:
 		FILLED: "Toto pole je povinné."
 		EMAIL: "Zadejte prosím platnou e-mailovou adresu."
 		MIN_LENGTH: "Zadejte prosím alespoň %d znaků."
+		PROTECTION: "Vypršel časový limit, odešlete formulář znovu."
+		IMAGE: "Soubor musí být JPEG, PNG nebo GIF."
+		MAX_FILE_SIZE: "Maximální velikost souboru je 32 MB."
 
 http:
 	cookieSecure: auto
@@ -112,10 +118,16 @@ parameters:
 		klient:
 			resources:
 				user.profile: []
+				costume.costume: [list]
 		zamestnanec:
+			resources:
+				costume.costume: []
+				costume.category: []
 		admin:
 			resources:
 				user.user: []
+			denyResources:
+				costume.costume: [add]
 
 services:
 	# Application templates locator
@@ -125,5 +137,7 @@ services:
 	- \IIS\Config\ConfigService(%config%)
 
 includes:
+	- images.neon
 	- ../CoreModule/core.neon
+	- ../CostumeModule/costume.neon
 	- ../UserModule/user.neon

@@ -24,7 +24,17 @@ customMain.netteAjax = {
 };
 
 
+customMain.fileInputFileName = {
+	init: function () {
+		$("input.custom-file-input").change(function () {
+			$(this).next("label.custom-file-label").text($(this).val().split('\\').pop());
+		});
+	}
+};
+
+
 $(function () {
 	customMain.liveForm.init();
 	customMain.netteAjax.init();
+	customMain.fileInputFileName.init();
 });

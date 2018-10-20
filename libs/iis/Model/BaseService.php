@@ -50,4 +50,30 @@ abstract class BaseService
 	{
 		return $this->getTable()->get($id) ?: null;
 	}
+
+
+	/**
+	 * @return array|\Nette\Database\Table\ActiveRow[]
+	 */
+	public function fetchAll(callable $callback = null): array
+	{
+		return $this->selectionCallback($callback)->fetchAll();
+	}
+
+
+	public function fetchPairs(string $key = null, string $value = null, callable $callback = null): array
+	{
+		return $this->selectionCallback($callback)->fetchPairs($key, $value);
+	}
+
+
+	/**
+	 * @throws \Nette\InvalidArgumentException
+	 */
+	public function changeActive(int $id, bool $active): void
+	{
+		$this->getTable()->wherePrimary($id)->update([
+			'aktivni' => $active,
+		]);
+	}
 }

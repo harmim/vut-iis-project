@@ -35,13 +35,11 @@ final class UserListGridControl extends \IIS\Application\UI\BaseControl
 	{
 		$grid = $this->dataGridControlFactory->create($this->userService);
 
-		$grid->addColumnText('typ', 'Role')
-			->setRenderer(function (\Nette\Database\Table\ActiveRow $row): string {
-				return \App\UserModule\Model\UserService::ROLE_TRANSLATION_MAP[$row->typ];
-			})
+		$grid->addColumnText('type', 'Role', 'typ')
+			->setRenderer([$this, 'renderRole'])
 			->setFilterSelect(\App\UserModule\Model\UserService::ROLE_TRANSLATION_MAP);
 
-		$grid->addColumnText('email', 'E-mail')
+		$grid->addColumnText('email', 'E-mail', 'email')
 			->setFilterText();
 
 		$grid->addColumnActive([$this, 'onActiveChange']);
@@ -49,6 +47,12 @@ final class UserListGridControl extends \IIS\Application\UI\BaseControl
 		$grid->addActionEdit();
 
 		return $grid;
+	}
+
+
+	public function renderRole(\Nette\Database\Table\ActiveRow $row): string
+	{
+		return \App\UserModule\Model\UserService::ROLE_TRANSLATION_MAP[$row->typ];
 	}
 
 

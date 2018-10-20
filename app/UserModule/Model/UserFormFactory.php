@@ -31,6 +31,8 @@ final class UserFormFactory
 				->setRequired()
 				->addRule(\Nette\Forms\Form::EQUAL, 'Hesla se musí shodovat.', $form['password']);
 
+		$form->addProtection();
+
 		return $form;
 	}
 

@@ -15,6 +15,7 @@ RUN apt-get clean -y
 
 RUN pecl install xdebug
 
+RUN docker-php-ext-configure gd --with-jpeg-dir=/usr/lib/x86_64-linux-gnu/
 RUN docker-php-ext-install \
 	intl \
 	gd \

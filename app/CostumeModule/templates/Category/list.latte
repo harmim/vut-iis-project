@@ -1,0 +1,20 @@
+{default $title = 'Výpis kategorií'}
+
+{block content}
+
+<div class="row">
+	<div class="col-md-12">
+		<h3>{$title}</h3>
+		<hr class="my-4">
+	</div>
+
+	<div class="col-md-12">
+		<a n:href=":Costume:Category:add" class="btn btn-success btn-lg">Vytvořit</a>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		{control categoryListGrid}
+	</div>
+</div>

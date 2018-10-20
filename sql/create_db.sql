@@ -87,8 +87,7 @@ CREATE TABLE `kategorie` (
 	`id` INT UNSIGNED AUTO_INCREMENT NOT NULL,
 	`nazev` VARCHAR(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
 	`popis` LONGTEXT COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
-	PRIMARY KEY (`id`),
-	UNIQUE KEY `nazev` (`nazev`)
+	PRIMARY KEY (`id`)
 )
 	ENGINE = InnoDB
 	DEFAULT CHARSET = utf8mb4
@@ -99,13 +98,13 @@ CREATE TABLE `kostym` (
 	`id` INT UNSIGNED AUTO_INCREMENT NOT NULL,
 	`vyrobce` VARCHAR(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
 	`material` VARCHAR(25) COLLATE utf8mb4_unicode_520_ci NOT NULL,
-	`popis` LONGTEXT COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
+	`popis` LONGTEXT COLLATE utf8mb4_unicode_520_ci NOT NULL,
 	`cena` NUMERIC(15, 5) NOT NULL,
 	`datum_vyroby` DATETIME NOT NULL,
 	`opotrebeni` VARCHAR(255) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
 	`velikost` VARCHAR(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
 	`barva` VARCHAR(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
-	`dostupnost` VARCHAR(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+	`dostupnost` ENUM('Na skladě', 'Nedostupné') COLLATE utf8mb4_unicode_520_ci NOT NULL,
 	`obrazek` VARCHAR(255) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
 	`aktivni` TINYINT(1) DEFAULT 1 NOT NULL,
 	`kategorie_id` INT UNSIGNED NOT NULL,
@@ -131,7 +130,7 @@ CREATE TABLE `doplnek` (
 	`popis` LONGTEXT COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
 	`datum_vyroby` DATE NOT NULL,
 	`cena` NUMERIC(15, 5) NOT NULL,
-	`dostupnost` VARCHAR(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+	`dostupnost` ENUM('Na skladě', 'Nedostupné') COLLATE utf8mb4_unicode_520_ci NOT NULL,
 	`obrazek` VARCHAR(255) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
 	`aktivni` TINYINT(1) DEFAULT 1 NOT NULL,
 	`zamestnanec_id` INT UNSIGNED NOT NULL,

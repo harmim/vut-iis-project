@@ -9,6 +9,8 @@ namespace IIS\Application\UI;
  */
 abstract class BaseControl extends \Nette\Application\UI\Control
 {
+	use \Harmim\Images\TImageStorage;
+
 	/**
 	 * @var string|null
 	 */
