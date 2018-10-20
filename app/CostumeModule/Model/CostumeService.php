@@ -66,7 +66,6 @@ final class CostumeService extends \IIS\Model\BaseService
 			'velikost' => $data->size,
 			'barva' => $data->color,
 			'dostupnost' => $data->availability,
-			'aktivni' => true,
 			'kategorie_id' => $data->category,
 			'zamestnanec_id' => $data->employee,
 		];

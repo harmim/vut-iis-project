@@ -9,6 +9,7 @@ services:
 	- \App\CostumeModule\Controls\CategoryListGrid\ICategoryListGridControlFactory
 	- \App\CostumeModule\Controls\AddCategory\IAddCategoryControlFactory
 	- \App\CostumeModule\Controls\EditCostume\IEditCostumeControlFactory
+	- \App\CostumeModule\Controls\CostumeDetail\ICostumeDetailControlFactory
 
 	# Forms
 	- \App\CostumeModule\Model\CostumeFormFactory

@@ -11,7 +11,7 @@
 	<div class="collapse navbar-collapse" id="navbarCollapse">
 		<ul class="navbar-nav mr-auto">
 			{if $user->isLoggedIn()}
-				<li n:if="$user->isInRole(\App\UserModule\Model\AuthorizatorFactory::ROLE_ADMIN)"
+				<li n:if="$user->isAllowed('user.user', \App\UserModule\Model\AuthorizatorFactory::ACTION_LIST)"
 					n:class="nav-item, $presenter->isLinkCurrent(':User:User:list') ? active">
 					<a class="nav-link" href="{plink :User:User:list}">Uživatelé</a>
 				</li>
@@ -20,7 +20,7 @@
 					<a class="nav-link" href="{plink :Costume:Costume:list}">Kostýmy</a>
 				</li>
 
-				<li n:if="!$user->isInRole(\App\UserModule\Model\AuthorizatorFactory::ROLE_CLIENT)"
+				<li n:if="$user->isAllowed('costume.category', \App\UserModule\Model\AuthorizatorFactory::ACTION_LIST)"
 					n:class="nav-item, $presenter->isLinkCurrent(':Costume:Category:list') ? active">
 					<a class="nav-link" href="{plink :Costume:Category:list}">Kategorie</a>
 				</li>

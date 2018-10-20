@@ -118,7 +118,7 @@ parameters:
 		klient:
 			resources:
 				user.profile: []
-				costume.costume: [list]
+				costume.costume: [list, default]
 		zamestnanec:
 			resources:
 				costume.costume: []

@@ -31,18 +31,25 @@ final class CostumePresenter extends \App\CoreModule\Presenters\SecuredPresenter
 	 */
 	private $costumeService;
 
+	/**
+	 * @var \App\CostumeModule\Controls\CostumeDetail\ICostumeDetailControlFactory
+	 */
+	private $costumeDetailControlFactory;
+
 
 	public function __construct(
 		\App\CostumeModule\Controls\CostumeListGrid\ICostumeListGridControlFactory $costumeListGridControlFactory,
 		\App\CostumeModule\Controls\AddCostume\IAddCostumeControlFactory $addCostumeControlFactory,
 		\App\CostumeModule\Controls\EditCostume\IEditCostumeControlFactory $editCostumeControlFactory,
-		\App\CostumeModule\Model\CostumeService $costumeService
+		\App\CostumeModule\Model\CostumeService $costumeService,
+		\App\CostumeModule\Controls\CostumeDetail\ICostumeDetailControlFactory $costumeDetailControlFactory
 	) {
 		parent::__construct();
 		$this->costumeListGridControlFactory = $costumeListGridControlFactory;
 		$this->addCostumeControlFactory = $addCostumeControlFactory;
 		$this->editCostumeControlFactory = $editCostumeControlFactory;
 		$this->costumeService = $costumeService;
+		$this->costumeDetailControlFactory = $costumeDetailControlFactory;
 	}
 
 
@@ -80,6 +87,31 @@ final class CostumePresenter extends \App\CoreModule\Presenters\SecuredPresenter
 	}
 
 
+	/**
+	 * @throws \Nette\Application\AbortException
+	 * @throws \Nette\Application\BadRequestException
+	 */
+	public function actionDefault(int $id): void
+	{
+		$this->checkPermission();
+
+		$this->editedCostume = $this->costumeService->fetchById($id);
+		if (
+			!$this->editedCostume
+			|| (
+				!$this->editedCostume->aktivni
+				&& !$this->getUser()->isAllowed(
+					'costume.costume',
+					\App\UserModule\Model\AuthorizatorFactory::ACTION_EDIT
+				)
+			)
+		) {
+			$this->error();
+			return;
+		}
+	}
+
+
 	protected function createComponentCostumeListGrid(
 	): \App\CostumeModule\Controls\CostumeListGrid\CostumeListGridControl {
 		return $this->costumeListGridControlFactory->create();
@@ -103,5 +135,19 @@ final class CostumePresenter extends \App\CoreModule\Presenters\SecuredPresenter
 		}
 
 		return $this->editCostumeControlFactory->create($this->editedCostume);
+	}
+
+
+	/**
+	 * @throws \Nette\Application\BadRequestException
+	 */
+	protected function createComponentCostumeDetail(): ?\App\CostumeModule\Controls\CostumeDetail\CostumeDetailControl
+	{
+		if (!$this->editedCostume) {
+			$this->error();
+			return null;
+		}
+
+		return $this->costumeDetailControlFactory->create($this->editedCostume);
 	}
 }

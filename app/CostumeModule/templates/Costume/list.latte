@@ -8,7 +8,8 @@
 		<hr class="my-4">
 	</div>
 
-	<div class="col-md-12">
+	<div n:if="$user->isAllowed('costume.costume', \App\UserModule\Model\AuthorizatorFactory::ACTION_ADD)"
+		 class="col-md-12">
 		<a n:href=":Costume:Costume:add" class="btn btn-success btn-lg">Vytvořit</a>
 	</div>
 </div>

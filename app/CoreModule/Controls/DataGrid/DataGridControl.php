@@ -57,7 +57,7 @@ final class DataGridControl extends \Ublaboo\DataGrid\DataGrid
 	): \Ublaboo\DataGrid\Column\Action {
 		$action = $this->addAction('edit', '', $href, $params);
 		$action->setTitle('Editovat')
-			->setClass('btn btn-xs btn-default')
+			->setClass('btn btn-xs btn-secondary')
 			->setIcon('pencil');
 
 		if ($condition) {
