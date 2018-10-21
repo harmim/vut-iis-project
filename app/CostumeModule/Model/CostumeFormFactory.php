@@ -101,8 +101,10 @@ final class CostumeFormFactory
 
 	private function getEmployees(): array
 	{
-		return
-			$this->userService->fetchPairs('id', 'email', function (\Nette\Database\Table\Selection $selection): void {
+		return $this->userService->fetchPairs(
+			'zamestnanec_id',
+			'email',
+			function (\Nette\Database\Table\Selection $selection): void {
 				$selection->where('zamestnanec_id NOT', null);
 			});
 	}

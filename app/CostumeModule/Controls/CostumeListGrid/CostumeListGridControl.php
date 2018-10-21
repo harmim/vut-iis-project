@@ -21,16 +21,23 @@ final class CostumeListGridControl extends \IIS\Application\UI\BaseControl
 	 */
 	private $user;
 
+	/**
+	 * @var \App\CostumeModule\Model\CategoryService
+	 */
+	private $categoryService;
+
 
 	public function __construct(
 		\App\CoreModule\Controls\DataGrid\IDataGridControlFactory $dataGridControlFactory,
 		\App\CostumeModule\Model\CostumeService $costumeService,
-		\Nette\Security\User $user
+		\Nette\Security\User $user,
+		\App\CostumeModule\Model\CategoryService $categoryService
 	) {
 		parent::__construct();
 		$this->dataGridControlFactory = $dataGridControlFactory;
 		$this->costumeService = $costumeService;
 		$this->user = $user;
+		$this->categoryService = $categoryService;
 	}
 
 
@@ -53,8 +60,7 @@ final class CostumeListGridControl extends \IIS\Application\UI\BaseControl
 
 		$grid->addColumnText('category', 'Kategori', 'kategorie_id')
 			->setRenderer([$this, 'renderCategory'])
-			->setFilterText()
-				->setCondition([$this, 'filterCategory']);
+			->setFilterSelect($this->categoryService->fetchPairs('id', 'nazev'));
 
 		if ($this->user->isAllowed('costume.costume', \App\UserModule\Model\AuthorizatorFactory::ACTION_EDIT)) {
 			$grid->addColumnActive([$this, 'onActiveChange']);
@@ -81,12 +87,6 @@ final class CostumeListGridControl extends \IIS\Application\UI\BaseControl
 	public function renderCategory(\Nette\Database\Table\ActiveRow $row): string
 	{
 		return (string) $row->kategorie->nazev;
-	}
-
-
-	private function filterCategory(\Nette\Database\Table\Selection $selection, string $value): void
-	{
-		$selection->where('kategorie.nazev LIKE', "%$value%");
 	}
 
 

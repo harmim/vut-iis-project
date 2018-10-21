@@ -100,6 +100,7 @@ final class CostumeDetailControl extends \IIS\Application\UI\BaseControl
 		) {
 			$presenter->flashMessage('Kostým není možné rezervovat.', 'error');
 			$presenter->redirect('this');
+			return;
 		}
 
 		try {
