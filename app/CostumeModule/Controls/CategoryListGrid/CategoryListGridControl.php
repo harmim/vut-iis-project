@@ -80,7 +80,7 @@ final class CategoryListGridControl extends \IIS\Application\UI\BaseControl
 			return;
 		}
 
-		if ($this->costumeService->isCategoryUsed($id)) {
+		if ($this->costumeService->isCategoryUsed($category)) {
 			$presenter->flashMessage('Kategorie nemůže být smazána, pokud má přiřazeny nějaké kostýmy.', 'error');
 		} else {
 			$this->categoryService->getTable()->wherePrimary($id)->delete();

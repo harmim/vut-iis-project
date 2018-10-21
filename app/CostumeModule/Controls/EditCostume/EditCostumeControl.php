@@ -64,7 +64,7 @@ final class EditCostumeControl extends \IIS\Application\UI\BaseControl
 		}
 
 		$this->imageStorage->deleteImage($costume->obrazek);
-		$this->costumeService->deleteImage($costumeId);
+		$this->costumeService->deleteImage($costume);
 
 		$presenter->flashMessage('Obrázek byl úspěšně smazán', 'success');
 		$presenter->redirect('this');
@@ -137,10 +137,7 @@ final class EditCostumeControl extends \IIS\Application\UI\BaseControl
 
 		$previousImage = null;
 		if ($values->imageFile) {
-			$costume = $this->costumeService->fetchById((int) $values->id);
-			if ($costume) {
-				$previousImage = $costume->obrazek;
-			}
+			$previousImage = $this->costume->obrazek;
 		}
 
 		$this->costumeService->editCostume($values);

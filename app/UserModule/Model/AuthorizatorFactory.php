@@ -56,12 +56,14 @@ final class AuthorizatorFactory
 			$moduleName = \strtolower($matches[1]);
 
 			$presentersDir = $dir->getRealPath() . \DIRECTORY_SEPARATOR . 'Presenters';
-			/** @var \SplFileInfo $presenter */
-			foreach (\Nette\Utils\Finder::findFiles()->in($presentersDir) as $presenter) {
-				\preg_match('~^(.+)Presenter.php\z~', $presenter->getFilename(), $matches);
-				$presenterName = \strtolower($matches[1]);
+			if (\is_dir($presentersDir)) {
+				/** @var \SplFileInfo $presenter */
+				foreach (\Nette\Utils\Finder::findFiles()->in($presentersDir) as $presenter) {
+					\preg_match('~^(.+)Presenter.php\z~', $presenter->getFilename(), $matches);
+					$presenterName = \strtolower($matches[1]);
 
-				$permission->addResource("$moduleName.$presenterName");
+					$permission->addResource("$moduleName.$presenterName");
+				}
 			}
 		}
 	}

@@ -137,5 +137,6 @@ services:
 includes:
 	- images.neon
 	- ../CoreModule/core.neon
+	- ../BorrowModule/borrow.neon
 	- ../CostumeModule/costume.neon
 	- ../UserModule/user.neon

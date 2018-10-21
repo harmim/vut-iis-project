@@ -100,7 +100,7 @@ CREATE TABLE `kostym` (
 	`material` VARCHAR(25) COLLATE utf8mb4_unicode_520_ci NOT NULL,
 	`popis` LONGTEXT COLLATE utf8mb4_unicode_520_ci NOT NULL,
 	`cena` NUMERIC(15, 5) NOT NULL,
-	`datum_vyroby` DATETIME NOT NULL,
+	`datum_vyroby` DATE NOT NULL,
 	`opotrebeni` VARCHAR(255) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
 	`velikost` VARCHAR(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
 	`barva` VARCHAR(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
@@ -153,9 +153,8 @@ CREATE TABLE `doplnek` (
 CREATE TABLE `zaznam` (
 	`id` INT UNSIGNED AUTO_INCREMENT NOT NULL,
 	`nazev_akce` VARCHAR(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
-	`pocet` INT UNSIGNED DEFAULT 1 NOT NULL,
-	`cas_zapujceni` DATETIME NOT NULL,
-	`cas_vraceni` DATETIME DEFAULT NULL,
+	`datum_zapujceni` DATE NOT NULL,
+	`datum_vraceni` DATE DEFAULT NULL,
 	`cena` NUMERIC(15, 5) NOT NULL,
 	`kostym_id` INT UNSIGNED DEFAULT NULL,
 	`doplnek_id` INT UNSIGNED DEFAULT NULL,
@@ -243,13 +242,13 @@ VALUES
 	(4, 'Dřevenné sluneční brýle', 'Dřevenné sluneční brýle s černým sklem.', '2018-01-04', 500, 'Na skladě', 1, 3);
 
 
-INSERT INTO `zaznam` (`nazev_akce`, `pocet`, `cas_zapujceni`, `cas_vraceni`, `cena`, `kostym_id`, `doplnek_id`, `zamestnanec_id`, `klient_id`)
+INSERT INTO `zaznam` (`nazev_akce`, `datum_zapujceni`, `datum_vraceni`, `cena`, `kostym_id`, `doplnek_id`, `zamestnanec_id`, `klient_id`)
 VALUES
-	('Kácení máje', 1, '2018-01-01', '2018-02-02', 1100, 1, NULL, 1, 3),
-	('Maškarní bál', 2, '2018-01-02', NULL, 3200, 3, NULL, 2, 2),
-	('Divadelní hra', 1, '2018-01-03', '2018-02-04', 1600, 4, NULL, 3, 1),
-	('Kácení máje', 3, '2018-01-04', NULL, 300, NULL, 2, 3, 1),
-	('Párty ve škole', 1, '2018-01-05', '2018-02-06', 1100, 7, NULL, 1, 1),
-	('Párty ve škole', 1, '2018-01-07', NULL, 1000, 6, NULL, NULL, 3),
-	('Kácení máje', 1, '2018-01-09', '2018-02-10', 1600, 3, NULL, 2, 2),
-	('Ples', 1, '2018-01-11', '2018-02-12', 500, NULL, 4, NULL, 2);
+	('Kácení máje', '2018-01-01', '2018-02-02', 1100, 1, NULL, 1, 3),
+	('Maškarní bál', '2018-01-02', NULL, 1600, 3, NULL, 2, 2),
+	('Divadelní hra', '2018-01-03', '2018-02-04', 1600, 4, NULL, 3, 1),
+	('Kácení máje', '2018-01-04', NULL, 100, NULL, 2, 3, 1),
+	('Párty ve škole', '2018-01-05', '2018-02-06', 1100, 7, NULL, 1, 1),
+	('Párty ve škole', '2018-01-07', NULL, 1000, 6, NULL, NULL, 3),
+	('Kácení máje', '2018-01-09', '2018-02-10', 1600, 3, NULL, 2, 2),
+	('Ples', '2018-01-11', '2018-02-12', 500, NULL, 4, NULL, 2);

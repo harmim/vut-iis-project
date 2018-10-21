@@ -12,10 +12,10 @@ final class CostumeService extends \IIS\Model\BaseService
 	}
 
 
-	public function isCategoryUsed(int $categoryId): bool
+	public function isCategoryUsed(\Nette\Database\Table\ActiveRow $category): bool
 	{
-		$costume = $this->fetch(function (\Nette\Database\Table\Selection $selection) use ($categoryId): void {
-			$selection->where('kategorie_id', $categoryId);
+		$costume = $this->fetch(function (\Nette\Database\Table\Selection $selection) use ($category): void {
+			$selection->where('kategorie_id', $category->id);
 		});
 
 		return $costume !== null;
@@ -80,10 +80,18 @@ final class CostumeService extends \IIS\Model\BaseService
 	/**
 	 * @throws \Nette\InvalidArgumentException
 	 */
-	public function deleteImage(int $costumeId): void
+	public function deleteImage(\Nette\Database\Table\ActiveRow $costume): void
 	{
-		$this->getTable()->wherePrimary($costumeId)->update([
+		$costume->update([
 			'obrazek' => null,
 		]);
+	}
+
+
+	public function isCostumeReservable(\Nette\Database\Table\ActiveRow $costume): bool
+	{
+		return
+			(bool) $costume->aktivni === true
+			&& $costume->dostupnost === \App\CoreModule\Model\Availability::AVAILABILITY_AVAILABLE;
 	}
 }
