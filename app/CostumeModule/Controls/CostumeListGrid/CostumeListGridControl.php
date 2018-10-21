@@ -58,10 +58,10 @@ final class CostumeListGridControl extends \IIS\Application\UI\BaseControl
 
 		if ($this->user->isAllowed('costume.costume', \App\UserModule\Model\AuthorizatorFactory::ACTION_EDIT)) {
 			$grid->addColumnActive([$this, 'onActiveChange']);
-			$grid->addActionEdit();
+			$grid->addActionEdit(':Costume:Costume:edit');
 		}
 
-		$actionDetail = $grid->addAction('detail', '', 'default');
+		$actionDetail = $grid->addAction('detail', '', ':Costume:Costume:default');
 		$actionDetail->setTitle('Detail')
 			->setClass('btn btn-xs btn-primary')
 			->setIcon('eye');

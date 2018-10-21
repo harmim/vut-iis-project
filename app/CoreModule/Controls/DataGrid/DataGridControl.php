@@ -50,21 +50,12 @@ final class DataGridControl extends \Ublaboo\DataGrid\DataGrid
 	/**
 	 * @throws \Ublaboo\DataGrid\Exception\DataGridException
 	 */
-	public function addActionEdit(
-		?callable $condition = null,
-		string $href = 'edit',
-		array $params = null
-	): \Ublaboo\DataGrid\Column\Action {
+	public function addActionEdit(string $href = 'edit', array $params = null): \Ublaboo\DataGrid\Column\Action
+	{
 		$action = $this->addAction('edit', '', $href, $params);
 		$action->setTitle('Editovat')
 			->setClass('btn btn-xs btn-secondary')
 			->setIcon('pencil');
-
-		if ($condition) {
-			$this->allowRowsAction('edit', function ($item) use ($condition): bool {
-				return $condition($item);
-			});
-		}
 
 		return $action;
 	}
@@ -73,22 +64,13 @@ final class DataGridControl extends \Ublaboo\DataGrid\DataGrid
 	/**
 	 * @throws \Ublaboo\DataGrid\Exception\DataGridException
 	 */
-	public function addActionDelete(
-		?callable $condition = null,
-		string $href = 'delete!',
-		array $params = null
-	): \Ublaboo\DataGrid\Column\Action {
+	public function addActionDelete(string $href = 'delete!', array $params = null): \Ublaboo\DataGrid\Column\Action
+	{
 		$action = $this->addAction('delete', '', $href, $params);
 		$action->setTitle('Smazat')
 			->setClass('btn btn-xs btn-danger ajax')
 			->setConfirm('Opravdu chcete provést tuto akci?')
 			->setIcon('trash');
-
-		if ($condition) {
-			$this->allowRowsAction('delete', function ($item) use ($condition): bool {
-				return $condition($item);
-			});
-		}
 
 		return $action;
 	}

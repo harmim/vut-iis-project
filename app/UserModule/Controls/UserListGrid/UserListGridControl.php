@@ -44,7 +44,7 @@ final class UserListGridControl extends \IIS\Application\UI\BaseControl
 
 		$grid->addColumnActive([$this, 'onActiveChange']);
 
-		$grid->addActionEdit();
+		$grid->addActionEdit(':User:User:edit');
 
 		return $grid;
 	}
