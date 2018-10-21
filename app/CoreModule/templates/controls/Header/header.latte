@@ -15,7 +15,10 @@
 					n:class="nav-item, $presenter->isLinkCurrent(':User:User:list') ? active">
 					<a class="nav-link" href="{plink :User:User:list}">Uživatelé</a>
 				</li>
-
+                <li n:if="$user->isInRole(\App\UserModule\Model\AuthorizatorFactory::ROLE_ADMIN) || $user->isInRole(\App\UserModule\Model\AuthorizatorFactory::ROLE_EMPLOYEE)"
+                        n:class="nav-item, $presenter->isLinkCurrent(':User:Record:list') ? active">
+                    <a class="nav-link" href="{plink :User:Record:list}">Výpůjčky</a>
+                </li>
 				<li n:class="nav-item, $presenter->isLinkCurrent(':Costume:Costume:list') ? active">
 					<a class="nav-link" href="{plink :Costume:Costume:list}">Kostýmy</a>
 				</li>
@@ -30,7 +33,6 @@
 				</li>
 			{/if}
 		</ul>
-
 		<ul class="navbar-nav float-lg-right">
 			{if $user->isLoggedIn()}
 				<li n:class="nav-item, $presenter->isLinkCurrent(':User:Profile:edit') ? active">

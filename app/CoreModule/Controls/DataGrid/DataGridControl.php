@@ -60,6 +60,27 @@ final class DataGridControl extends \Ublaboo\DataGrid\DataGrid
 		return $action;
 	}
 
+    /**
+     * @throws \Ublaboo\DataGrid\Exception\DataGridException
+     */
+    public function addActionDetails(
+        ?callable $condition = null,
+        string $href = 'details',
+        array $params = null
+    ): \Ublaboo\DataGrid\Column\Action {
+        $action = $this->addAction('datails', 'Detaily', $href, $params);
+        $action->setTitle('Detaily')
+            ->setClass('btn btn-xs btn-primary');
+
+        if ($condition) {
+            $this->allowRowsAction('details', function ($item) use ($condition): bool {
+                return $condition($item);
+            });
+        }
+
+        return $action;
+    }
+
 
 	/**
 	 * @throws \Ublaboo\DataGrid\Exception\DataGridException

@@ -1,0 +1,70 @@
+{default $title = 'Detaily výpůjčky'}
+
+{block content}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <h3>{$title}</h3>
+        <hr class="my-4">
+    </div>
+</div>
+<div class="col-md-12">
+    <p>Název akce: {$record->nazev_akce}</p>
+    <p>Počet: {$record->pocet}</p>
+    <p>Čas zapůjčení: {$record->cas_zapujceni}</p>
+    <p>Čas vrácení: {$record->cas_vraceni}</p>
+    <p>Cena výpůjčky: {$record->cena}</p>
+    <hr class="my-4">
+</div>
+{ifset $kostym}
+    <div class="col-md-12">
+        <h5>Kostým</h5>
+        <p>Popis: {$kostym->popis}</p>
+        <p>Výrobce: {$kostym->vyrobce}</p>
+        <p>Materiá: {$kostym->material}</p>
+        <p>Cena kostýmu: {$kostym->cena}</p>
+        <p>Datum výroby: {$kostym->datum_vyroby}</p>
+        <p>Opotrebení: {$kostym->opotrebeni}</p>
+        <p>Velikost: {$kostym->velikost}</p>
+        <p>Barva: {$kostym->barva}</p>
+        <p>Dostupnost: {$kostym->dostupnost}</p>
+        <p>Kategorie: {$kostym->kategorie}</p>
+        <hr class="my-4">
+    </div>
+{/ifset}
+{ifset $doplnek}
+    <div class="col-md-12">
+        <h5>Doplňek</h5>
+        <p>Název: {$doplnek->nazev}</p>
+        <p>Popis: {$doplnek>popis}</p>
+        <p>Datum výroby: {$doplnek->datum_vyroby}</p>
+        <p>Cena doplňku: {$doplnek->cena}</p>
+        <p>Dostupnost: {$doplnek->dostupnost}</p>
+        <hr class="my-4">
+    </div>
+{/ifset}
+{ifset $klient}
+    <div class="col-md-12">
+        <h5>Klient</h5>
+        <p>Jméno: {$klient->jmeno}</p>
+        <p>Příjmení: {$klient->prijmeni}</p>
+        <p>Telefoní číslo: {$klient->telefonni_cislo}</p>
+        <p>Adresa: {$klient->adresa}</p>
+        <hr class="my-4">
+    </div>
+{/ifset}
+{ifset $zamestnanec}
+    <div class="col-md-12">
+        <h5>Zaměstnanec</h5>
+        <p>Jméno: {$zamestnanec->jmeno}</p>
+        <p>Příjmení: {$zamestnanec->prijmeni}</p>
+        <p>Telefoní číslo: {$zamestnanec->telefonni_cislo}</p>
+        <hr class="my-4">
+    </div>
+{/ifset}
+{if $user->isLoggedIn() && $user->isInRole(\App\UserModule\Model\AuthorizatorFactory::ROLE_EMPLOYEE)}
+    {if null == $record->cas_vraceni}
+        {control closeForm}
+    {/if}
+{/if}
