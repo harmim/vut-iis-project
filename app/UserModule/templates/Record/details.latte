@@ -2,69 +2,166 @@
 
 {block content}
 
-
 <div class="row">
     <div class="col-md-12">
         <h3>{$title}</h3>
         <hr class="my-4">
     </div>
 </div>
-<div class="col-md-12">
-    <p>Název akce: {$record->nazev_akce}</p>
-    <p>Počet: {$record->pocet}</p>
-    <p>Čas zapůjčení: {$record->cas_zapujceni}</p>
-    <p>Čas vrácení: {$record->cas_vraceni}</p>
-    <p>Cena výpůjčky: {$record->cena}</p>
-    <hr class="my-4">
-</div>
-{ifset $kostym}
-    <div class="col-md-12">
-        <h5>Kostým</h5>
-        <p>Popis: {$kostym->popis}</p>
-        <p>Výrobce: {$kostym->vyrobce}</p>
-        <p>Materiá: {$kostym->material}</p>
-        <p>Cena kostýmu: {$kostym->cena}</p>
-        <p>Datum výroby: {$kostym->datum_vyroby}</p>
-        <p>Opotrebení: {$kostym->opotrebeni}</p>
-        <p>Velikost: {$kostym->velikost}</p>
-        <p>Barva: {$kostym->barva}</p>
-        <p>Dostupnost: {$kostym->dostupnost}</p>
-        <p>Kategorie: {$kostym->kategorie}</p>
-        <hr class="my-4">
+<div class="row">
+    <div class="col-md-6">
+        <dl>
+            <dt>Název akce</dt>
+            <dd>{$record->nazev_akce}</dd>
+
+            <dt>Cena výpůjčky</dt>
+            <dd>{$record->cena}</dd>
+        </dl>
     </div>
+    <div class="col-md-6">
+        <dl>
+            <dt>Datum zapůjčení</dt>
+            <dd>{$record->datum_zapujceni|date:'%d.%m.%Y'}</dd>
+
+            <dt>Datum vrácení</dt>
+            {ifset $record->datum_vraceni}
+                <dd>{$record->datum_vraceni|date:'%d.%m.%Y'}</dd>
+            {else}
+                <dd style="color:dodgerblue">nevráceno</dd>
+            {/ifset}
+        </dl>
+    </div>
+</div>
+<hr class="my-4">
+{ifset $zamestnanec}
+    {if $user->isLoggedIn() && $user->isInRole(\App\UserModule\Model\AuthorizatorFactory::ROLE_EMPLOYEE)}
+        {if null == $record->datum_vraceni}
+            {control closeForm}
+            <hr class="my-4">
+        {/if}
+    {/if}
+{else}
+    {if $user->isLoggedIn() && $user->isInRole(\App\UserModule\Model\AuthorizatorFactory::ROLE_EMPLOYEE)}
+        {control confirmForm}
+        <hr class="my-4">
+    {/if}
+{/ifset}
+
+{ifset $costume}
+    <h4>Kostým</h4>
+    <div class="row">
+        <div class="col-md-6">
+            <dl>
+                <dt>Výrobce</dt>
+                <dd>{$costume->vyrobce}</dd>
+
+                <dt>Popis</dt>
+                <dd>{$costume->popis}</dd>
+
+                <dt>Cena</dt>
+                <dd>{$costume->cena|number:0, '', ' '}</dd>
+
+                <dt>Opotřebení</dt>
+                <dd>{$costume->opotrebeni}</dd>
+
+                <dt>Barva</dt>
+                <dd>{$costume->barva}</dd>
+
+                <dt>Kategorie</dt>
+                <dd>{$costume->kategorie->nazev} ({$costume->kategorie->popis})</dd>
+            </dl>
+        </div>
+        <div class="col-md-6">
+            <dl>
+                <dt>Materiál</dt>
+                <dd>{$costume->material}</dd>
+
+                <dt>Správce kostýmu</dt>
+                <dd>{$costume->zamestnanec->jmeno} {$costume->zamestnanec->prijmeni}</dd>
+
+                <dt>Datum výroby</dt>
+                <dd>{$costume->datum_vyroby|date:'%d.%m.%Y'}</dd>
+
+                <dt>Velikost</dt>
+                <dd>{$costume->velikost}</dd>
+
+                <dt>Dostupnost</dt>
+                <dd>{$costume->dostupnost}</dd>
+            </dl>
+        </div>
+    </div>
+    <hr class="my-4">
 {/ifset}
 {ifset $doplnek}
-    <div class="col-md-12">
-        <h5>Doplňek</h5>
-        <p>Název: {$doplnek->nazev}</p>
-        <p>Popis: {$doplnek>popis}</p>
-        <p>Datum výroby: {$doplnek->datum_vyroby}</p>
-        <p>Cena doplňku: {$doplnek->cena}</p>
-        <p>Dostupnost: {$doplnek->dostupnost}</p>
-        <hr class="my-4">
+    <h4>Doplňek</h4>
+    <div class="row">
+        <div class="col-md-6">
+            <dl>
+                <dt>Název</dt>
+                <dd>{$doplnek->nazev}</dd>
+
+                <dt>Popis</dt>
+                <dd>{$doplnek>popis}</dd>
+
+                <dt>Datum výroby</dt>
+                <dd>{$doplnek->datum_vyroby}</dd>
+            </dl>
+        </div>
+        <div class="col-md-6">
+            <dl>
+                <dt>Cena</dt>
+                <dd>{$doplnek->cena}</dd>
+
+                <dt>Dostupnost</dt>
+                <dd>{$doplnek->dostupnost}</dd>
+            </dl>
+        </div>
     </div>
+    <hr class="my-4">
 {/ifset}
+
+
+<dt></dt>
+<dd></dd>
+
 {ifset $klient}
-    <div class="col-md-12">
-        <h5>Klient</h5>
-        <p>Jméno: {$klient->jmeno}</p>
-        <p>Příjmení: {$klient->prijmeni}</p>
-        <p>Telefoní číslo: {$klient->telefonni_cislo}</p>
-        <p>Adresa: {$klient->adresa}</p>
-        <hr class="my-4">
+    <h4>Klient</h4>
+    <div class="row">
+        <div class="col-md-6">
+            <dl>
+                <dt>Jméno</dt>
+                <dd>{$klient->jmeno}</dd>
+
+                <dt>Příjmení</dt>
+                <dd>{$klient->prijmeni}</dd>
+            </dl>
+        </div>
+        <div class="col-md-6">
+            <dt>Telefoní číslo</dt>
+            <dd>{$klient->telefonni_cislo}</dd>
+
+            <dt>Adresa</dt>
+            <dd>{$klient->adresa}</dd>
+        </div>
     </div>
+    <hr class="my-4">
 {/ifset}
 {ifset $zamestnanec}
-    <div class="col-md-12">
-        <h5>Zaměstnanec</h5>
-        <p>Jméno: {$zamestnanec->jmeno}</p>
-        <p>Příjmení: {$zamestnanec->prijmeni}</p>
-        <p>Telefoní číslo: {$zamestnanec->telefonni_cislo}</p>
-        <hr class="my-4">
+    <h4>Zaměstnanec</h4>
+    <div class="row">
+        <div class="col-md-6">
+            <dl>
+                <dt>Jméno</dt>
+                <dd>{$zamestnanec->jmeno}</dd>
+
+                <dt>Příjmení</dt>
+                <dd>{$zamestnanec->prijmeni}</dd>
+            </dl>
+        </div>
+        <div class="col-md-6">
+            <dt>Telefoní číslo</dt>
+            <dd>{$zamestnanec->telefonni_cislo}</dd>
+        </div>
     </div>
+    <hr class="my-4">
 {/ifset}
-{if $user->isLoggedIn() && $user->isInRole(\App\UserModule\Model\AuthorizatorFactory::ROLE_EMPLOYEE)}
-    {if null == $record->cas_vraceni}
-        {control closeForm}
-    {/if}
-{/if}

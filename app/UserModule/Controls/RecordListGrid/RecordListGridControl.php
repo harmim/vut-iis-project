@@ -38,10 +38,10 @@ final class RecordListGridControl extends \IIS\Application\UI\BaseControl
         $grid->addColumnText('nazev_akce', 'Název akce', "")
             ->setFilterText();
 
-        $grid->addColumnDateTime('cas_zapujceni', 'Datum zapujčení')
+        $grid->addColumnDateTime('datum_zapujceni', 'Datum zapujčení')
             ->setFilterDate();
 
-        $grid->addColumnDateTime('cas_vraceni', 'Datum vrácení')
+        $grid->addColumnDateTime('datum_vraceni', 'Datum vrácení')
             ->setFilterDate();
 
         $grid->addColumnText('kostym_id', 'Kostým', 'kostym.popis')

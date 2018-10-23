@@ -21,16 +21,23 @@ final class RecordPresenter extends \App\CoreModule\Presenters\SecuredPresenter
      */
     private $closeForm;
 
+    /**
+     * @var \App\UserModule\Controls\ConfirmForm\IConfirmFormControlFactory
+     */
+    private $confirmForm;
+
 
     public function __construct(
         \App\UserModule\Model\RecordService $recordService,
         \App\UserModule\Controls\RecordListGrid\IRecordListGridControlFactory $recordListGridFactory,
-        \App\UserModule\Controls\CloseForm\ICloseFormControlFactory $closeFormFactory
+        \App\UserModule\Controls\CloseForm\ICloseFormControlFactory $closeFormFactory,
+        \App\UserModule\Controls\ConfirmForm\IConfirmFormControlFactory $confirmFormFactory
     ) {
         parent::__construct();
         $this->recordListGridFactory = $recordListGridFactory;
         $this->recordService = $recordService;
         $this->closeForm = $closeFormFactory;
+        $this->confirmForm = $confirmFormFactory;
     }
 
 
@@ -42,6 +49,11 @@ final class RecordPresenter extends \App\CoreModule\Presenters\SecuredPresenter
     protected function createComponentCloseForm(): \App\UserModule\Controls\CloseForm\CloseFormControl
     {
         return $this->closeForm->create($this->recordService->fetchById(intval($this->params['id'])));
+    }
+
+    protected function createComponentConfirmForm(): \App\UserModule\Controls\ConfirmForm\ConfirmFormControl
+    {
+        return $this->confirmForm->create($this->recordService->fetchById(intval($this->params['id'])), $this->getUser()->getId());
     }
 
 
@@ -65,7 +77,7 @@ final class RecordPresenter extends \App\CoreModule\Presenters\SecuredPresenter
         }
 
         if ($record->kostym_id){
-            $this->template->kostym = $this->recordService->readCostume($record->kostym_id);
+            $this->template->costume = $this->recordService->readCostume($record->kostym_id);
         }
 
         if ($record->doplnek_id){

@@ -12,7 +12,6 @@ final class RecordService extends \IIS\Model\BaseService
     	return $this->database->table('kostym');
     }
 
-
     public function getAcessoryTable(): \Nette\Database\Table\Selection
     {
     	return $this->database->table('doplnek');
@@ -31,6 +30,11 @@ final class RecordService extends \IIS\Model\BaseService
     public function getEmployeeTable(): \Nette\Database\Table\Selection
     {
         return $this->database->table('zamestnanec');
+    }
+
+    public function getUserTable(): \Nette\Database\Table\Selection
+    {
+       return $this->database->table('uzivatel');
     }
 
 	public function getTableName(): string
@@ -58,6 +62,16 @@ final class RecordService extends \IIS\Model\BaseService
         return $this->getEmployeeTable()->get($id);
     }
 
+    public function readUser(int $id)
+    {
+        return $this->getUserTable()->get($id);
+    }
+
+    public function getEmployeeIdByUserId(int $userId)
+    {
+        return $this->readUser($userId)->zamestnanec_id;
+    }
+
     /**
      * @throws \App\UserModule\Model\Exception
     * @throws \Nette\InvalidArgumentException
@@ -66,11 +80,31 @@ final class RecordService extends \IIS\Model\BaseService
     {
     	try {
     		$updateData = [
-    			'cas_vraceni' => $data->cas_vraceni,
+    			'datum_vraceni' => $data->datum_vraceni,
     		];
     		$this->getRecordTable()->wherePrimary($data->id)->update($updateData);
     	} catch (\Nette\Database\UniqueConstraintViolationException $e) {
     		throw new \App\UserModule\Model\Exception('chyba');
     	}
     }
+
+
+    /**
+         * @throws \App\UserModule\Model\Exception
+        * @throws \Nette\InvalidArgumentException
+        */
+        public function confirmReservation(\Nette\Utils\ArrayHash $data): void
+        {
+
+        	try {
+                $employeeId = $this->getEmployeeIdByUserId(intval($data->employee_id));
+        		$updateData = [
+        			'zamestnanec_id' => $employeeId,
+        		];
+        		$this->getRecordTable()->wherePrimary($data->record_id)->update($updateData);
+        	} catch (\Nette\Database\UniqueConstraintViolationException $e) {
+        		throw new \App\UserModule\Model\Exception('chyba');
+        	}
+        }
+
 }

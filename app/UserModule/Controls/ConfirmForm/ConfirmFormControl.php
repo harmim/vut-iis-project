@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\UserModule\Controls\CloseForm;
+namespace App\UserModule\Controls\ConfirmForm;
 
 
-final class CloseFormControl extends \IIS\Application\UI\BaseControl
+final class ConfirmFormControl extends \IIS\Application\UI\BaseControl
 {
     /**
      * @var \Nette\Database\Table\ActiveRow
@@ -17,36 +17,36 @@ final class CloseFormControl extends \IIS\Application\UI\BaseControl
      */
     private $recordService;
 
+    private $userId;
 
     public function __construct(
         \App\UserModule\Model\RecordService $recordService,
-        \Nette\Database\Table\ActiveRow $record
+        \Nette\Database\Table\ActiveRow $record,
+        int $userId
     ) {
         parent::__construct();
         $this->recordService = $recordService;
         $this->record = $record;
+        $this->userId = $userId;
     }
 
 
     /**
      * @throws \Nette\InvalidArgumentException
      */
-    protected function createComponentCloseForm(): \Czubehead\BootstrapForms\BootstrapForm
+    protected function createComponentConfirmForm(): \Czubehead\BootstrapForms\BootstrapForm
     {
         $form = new \Czubehead\BootstrapForms\BootstrapForm();
 
-        $form->addHidden('id', $this->record->id);
+        $form->addHidden('record_id', $this->record->id);
 
-        $form->addDateTime('datum_vraceni', 'Čas vrácení:')
-            ->setAttribute('data-provide', 'datepicker')
-            ->setAttribute('data-date-format', 'd.m.yyyy')
-            ->setRequired()
-            ->setFormat(\Czubehead\BootstrapForms\Enums\DateTimeFormat::D_DMY_DOTS_NO_LEAD);
+        $form->addHidden('employee_id', $this->userId);
 
-        $form->addSubmit('add', 'Uzavřít výpůjčku')
+
+        $form->addSubmit('add', 'Zprostředkovat výpůjčku.')
             ->setAttribute('class', 'btn btn-primary btn-block');
 
-        $form->onSuccess[] = [$this, 'onSuccessCloseForm'];
+        $form->onSuccess[] = [$this, 'onSuccessConfirmForm'];
 
         return $form;
     }
@@ -56,12 +56,12 @@ final class CloseFormControl extends \IIS\Application\UI\BaseControl
      * @throws \Nette\Application\AbortException
      * @throws \Nette\InvalidArgumentException
      */
-    public function onSuccessCloseForm(
+    public function onSuccessConfirmForm(
         \Czubehead\BootstrapForms\BootstrapForm $form,
         \Nette\Utils\ArrayHash $values
     ): void {
         try {
-            $this->recordService->closeRecord($values);
+            $this->recordService->confirmReservation($values);
         } catch (\App\UserModule\Model\Exception $e) {
             $form->addError($e->getMessage());
             return;
@@ -69,7 +69,7 @@ final class CloseFormControl extends \IIS\Application\UI\BaseControl
 
         $presenter = $this->getPresenter();
         if ($presenter) {
-            $presenter->flashMessage('Výpůjčka byla uzavřena', 'success');
+            $presenter->flashMessage('Výpůjčka byla Zprostředkována.', 'success');
             $presenter->redirect('this');
         }
     }
