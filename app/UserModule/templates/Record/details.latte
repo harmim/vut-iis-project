@@ -124,7 +124,7 @@
 <dt></dt>
 <dd></dd>
 
-{ifset $klient}
+{if $user->isLoggedIn() && !$user->isInRole(\App\UserModule\Model\AuthorizatorFactory::ROLE_CLIENT)}
     <h4>Klient</h4>
     <div class="row">
         <div class="col-md-6">
@@ -145,7 +145,7 @@
         </div>
     </div>
     <hr class="my-4">
-{/ifset}
+{/if}
 {ifset $zamestnanec}
     <h4>Zaměstnanec</h4>
     <div class="row">

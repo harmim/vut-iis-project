@@ -68,9 +68,10 @@ final class DataGridControl extends \Ublaboo\DataGrid\DataGrid
         string $href = 'details',
         array $params = null
     ): \Ublaboo\DataGrid\Column\Action {
-        $action = $this->addAction('datails', 'Detaily', $href, $params);
+        $action = $this->addAction('datails', '', $href, $params);
         $action->setTitle('Detaily')
-            ->setClass('btn btn-xs btn-primary');
+            ->setClass('btn btn-xs btn-primary')
+            ->setIcon('eye');;
 
         if ($condition) {
             $this->allowRowsAction('details', function ($item) use ($condition): bool {

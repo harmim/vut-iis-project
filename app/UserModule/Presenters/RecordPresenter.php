@@ -17,6 +17,11 @@ final class RecordPresenter extends \App\CoreModule\Presenters\SecuredPresenter
     private $recordListGridFactory;
 
     /**
+     * @var \App\UserModule\Controls\ClientRecordListGrid\IClientRecordListGridControlFactory
+     */
+    private $clientRecordListGridFactory;
+
+    /**
      * @var \App\UserModule\Controls\CloseForm\ICloseFormControlFactory
      */
     private $closeForm;
@@ -31,19 +36,26 @@ final class RecordPresenter extends \App\CoreModule\Presenters\SecuredPresenter
         \App\UserModule\Model\RecordService $recordService,
         \App\UserModule\Controls\RecordListGrid\IRecordListGridControlFactory $recordListGridFactory,
         \App\UserModule\Controls\CloseForm\ICloseFormControlFactory $closeFormFactory,
-        \App\UserModule\Controls\ConfirmForm\IConfirmFormControlFactory $confirmFormFactory
+        \App\UserModule\Controls\ConfirmForm\IConfirmFormControlFactory $confirmFormFactory,
+        \App\UserModule\Controls\ClientRecordListGrid\IClientRecordListGridControlFactory $clientRecordListGridFactory
     ) {
         parent::__construct();
         $this->recordListGridFactory = $recordListGridFactory;
         $this->recordService = $recordService;
         $this->closeForm = $closeFormFactory;
         $this->confirmForm = $confirmFormFactory;
+        $this->clientRecordListGridFactory = $clientRecordListGridFactory;
     }
 
 
     protected function createComponentRecordListGrid(): \App\UserModule\Controls\RecordListGrid\RecordListGridControl
     {
         return $this->recordListGridFactory->create();
+    }
+
+    protected function createComponentClientRecordListGrid(): \App\UserModule\Controls\ClientRecordListGrid\ClientRecordListGridControl
+    {
+        return $this->clientRecordListGridFactory->create($this->recordService, $this->getUser()->getId());
     }
 
     protected function createComponentCloseForm(): \App\UserModule\Controls\CloseForm\CloseFormControl
@@ -64,9 +76,6 @@ final class RecordPresenter extends \App\CoreModule\Presenters\SecuredPresenter
      */
     public function actionDetails(int $id): void
     {
-//      $this->checkPermission();
-
-
         $record = $this->recordService->fetchById($id);
 
         $this->template->record = $record;

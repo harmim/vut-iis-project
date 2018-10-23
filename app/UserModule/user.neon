@@ -15,6 +15,7 @@ services:
 	- \App\UserModule\Controls\RecordListGrid\IRecordListGridControlFactory
 	- \App\UserModule\Controls\CloseForm\ICloseFormControlFactory
 	- \App\UserModule\Controls\ConfirmForm\IConfirmFormControlFactory
+	- \App\UserModule\Controls\ClientRecordListGrid\IClientRecordListGridControlFactory
 
 	# Authorizator
 	- \App\UserModule\Model\AuthorizatorFactory::create(%roles%, %appDir%)

@@ -37,10 +37,10 @@ final class RecordService extends \IIS\Model\BaseService
        return $this->database->table('uzivatel');
     }
 
-	public function getTableName(): string
-	{
-		return 'zaznam';
-	}
+    public function getTableName(): string
+    {
+    	return 'zaznam';
+    }
 
 	public function readCostume(int $id)
 	{
@@ -71,6 +71,12 @@ final class RecordService extends \IIS\Model\BaseService
     {
         return $this->readUser($userId)->zamestnanec_id;
     }
+
+    public function getClientIdByUserId(int $userId)
+    {
+        return $this->readUser($userId)->klient_id;
+    }
+
 
     /**
      * @throws \App\UserModule\Model\Exception
