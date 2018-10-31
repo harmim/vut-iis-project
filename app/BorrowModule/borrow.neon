@@ -1,3 +1,0 @@
-services:
-	# Services
-	- \App\BorrowModule\Model\BorrowService

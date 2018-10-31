@@ -58,8 +58,7 @@ final class CostumeListGridControl extends \IIS\Application\UI\BaseControl
 		$grid->addColumnText('availability', 'Dostupnost', 'dostupnost')
 			->setFilterSelect(\App\CoreModule\Model\Availability::AVAILABILITIES);
 
-		$grid->addColumnText('category', 'Kategori', 'kategorie_id')
-			->setRenderer([$this, 'renderCategory'])
+		$grid->addColumnText('category', 'Kategori', 'kategorie.nazev')
 			->setFilterSelect($this->categoryService->fetchPairs('id', 'nazev'));
 
 		if ($this->user->isAllowed('costume.costume', \App\UserModule\Model\AuthorizatorFactory::ACTION_EDIT)) {
@@ -81,12 +80,6 @@ final class CostumeListGridControl extends \IIS\Application\UI\BaseControl
 		if (!$this->user->isAllowed('costume.costume', \App\UserModule\Model\AuthorizatorFactory::ACTION_EDIT)) {
 			$selection->where('aktivni', true);
 		}
-	}
-
-
-	public function renderCategory(\Nette\Database\Table\ActiveRow $row): string
-	{
-		return (string) $row->kategorie->nazev;
 	}
 
 

@@ -22,22 +22,22 @@ final class CostumeDetailControl extends \IIS\Application\UI\BaseControl
 	private $costumeService;
 
 	/**
-	 * @var \App\BorrowModule\Model\BorrowService
+	 * @var \App\RecordModule\Model\RecordService
 	 */
-	private $borrowService;
+	private $recordService;
 
 
 	public function __construct(
 		\Nette\Database\Table\ActiveRow $costume,
 		\Nette\Security\User $user,
 		\App\CostumeModule\Model\CostumeService $costumeService,
-		\App\BorrowModule\Model\BorrowService $borrowService
+		\App\RecordModule\Model\RecordService $recordService
 	) {
 		parent::__construct();
 		$this->costume = $costume;
 		$this->user = $user;
 		$this->costumeService = $costumeService;
-		$this->borrowService = $borrowService;
+		$this->recordService = $recordService;
 	}
 
 
@@ -104,13 +104,13 @@ final class CostumeDetailControl extends \IIS\Application\UI\BaseControl
 		}
 
 		try {
-			$this->borrowService->makeCostumeReservation(
+			$this->recordService->makeCostumeReservation(
 				$this->costume,
 				$values->eventName,
 				$identity->klient_id,
 				$values->borrowDate
 			);
-		} catch (\App\BorrowModule\Model\Exception $e) {
+		} catch (\App\RecordModule\Model\Exception $e) {
 			$presenter->flashMessage($e->getMessage(), 'error');
 			return;
 		}

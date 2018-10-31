@@ -119,13 +119,17 @@ parameters:
 			resources:
 				user.profile: []
 				costume.costume: [list, default]
+				record.record: [list, default]
 		zamestnanec:
 			resources:
 				costume.costume: []
 				costume.category: []
+				record.record: []
 		admin:
 			resources:
 				user.user: []
+			denyResources:
+				record.record: [edit]
 
 services:
 	# Application templates locator
@@ -137,6 +141,6 @@ services:
 includes:
 	- images.neon
 	- ../CoreModule/core.neon
-	- ../BorrowModule/borrow.neon
+	- ../RecordModule/record.neon
 	- ../CostumeModule/costume.neon
 	- ../UserModule/user.neon

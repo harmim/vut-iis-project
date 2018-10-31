@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\BorrowModule\Model;
+namespace App\RecordModule\Model;
 
 final class Exception extends \Exception
 {
