@@ -285,4 +285,15 @@ final class UserService extends \IIS\Model\BaseService implements \Nette\Securit
 
 		$this->database->commit();
 	}
+
+
+	public function getEmployeeEmails(): array
+	{
+		return $this->fetchPairs(
+			'zamestnanec_id',
+			'email',
+			function (\Nette\Database\Table\Selection $selection): void {
+				$selection->where('zamestnanec_id NOT', null);
+			});
+	}
 }

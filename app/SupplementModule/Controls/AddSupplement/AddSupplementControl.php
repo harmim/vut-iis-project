@@ -2,28 +2,42 @@
 
 declare(strict_types=1);
 
-namespace App\CostumeModule\Controls\AddCostume;
+namespace App\SupplementModule\Controls\AddSupplement;
 
-final class AddCostumeControl extends \IIS\Application\UI\BaseControl
+final class AddSupplementControl extends \IIS\Application\UI\BaseControl
 {
 	/**
-	 * @var \App\CostumeModule\Model\CostumeFormFactory
+	 * @var \Nette\Database\Table\ActiveRow
 	 */
-	private $costumeFormFactory;
+	private $costume;
 
 	/**
-	 * @var \App\CostumeModule\Model\CostumeService
+	 * @var \App\SupplementModule\Model\SupplementFormFactory
 	 */
-	private $costumeService;
+	private $supplementFormFactory;
+
+	/**
+	 * @var \App\SupplementModule\Model\SupplementService
+	 */
+	private $supplementService;
 
 
 	public function __construct(
-		\App\CostumeModule\Model\CostumeFormFactory $costumeFormFactory,
-		\App\CostumeModule\Model\CostumeService $costumeService
+		\Nette\Database\Table\ActiveRow $costume,
+		\App\SupplementModule\Model\SupplementFormFactory $supplementFormFactory,
+		\App\SupplementModule\Model\SupplementService $supplementService
 	) {
 		parent::__construct();
-		$this->costumeFormFactory = $costumeFormFactory;
-		$this->costumeService = $costumeService;
+		$this->costume = $costume;
+		$this->supplementFormFactory = $supplementFormFactory;
+		$this->supplementService = $supplementService;
+	}
+
+
+	protected function beforeRender(): void
+	{
+		parent::beforeRender();
+		$this->getTemplate()->add('costume', $this->costume);
 	}
 
 
@@ -33,7 +47,7 @@ final class AddCostumeControl extends \IIS\Application\UI\BaseControl
 	 */
 	protected function createComponentAddForm(): \Czubehead\BootstrapForms\BootstrapForm
 	{
-		$form = $this->costumeFormFactory->createCostumeForm();
+		$form = $this->supplementFormFactory->createSupplementForm();
 
 		$form->addSubmit('add', 'Vytvořit')
 			->setAttribute('class', 'btn btn-primary btn-block');
@@ -75,8 +89,8 @@ final class AddCostumeControl extends \IIS\Application\UI\BaseControl
 		}
 
 		try {
-			$this->costumeService->addCostume($values);
-		} catch (\App\CostumeModule\Model\Exception $e) {
+			$this->supplementService->addSupplement($this->costume, $values);
+		} catch (\App\SupplementModule\Model\Exception $e) {
 			$form->addError($e->getMessage());
 			if ($values->imageFile) {
 				$this->imageStorage->deleteImage($values->imageFile);
@@ -84,7 +98,7 @@ final class AddCostumeControl extends \IIS\Application\UI\BaseControl
 			return;
 		}
 
-		$presenter->flashMessage('Kostým byl úspěšně vytvořen.', 'success');
-		$presenter->redirect(':Costume:Costume:list');
+		$presenter->flashMessage('Doplněk byl úspěšně vytvořen.', 'success');
+		$presenter->redirect(':Costume:Costume:default', $this->costume->id);
 	}
 }

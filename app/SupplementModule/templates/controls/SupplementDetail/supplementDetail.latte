@@ -1,0 +1,92 @@
+{if $showReservation}
+	<div class="row">
+		<div class="col-md-12">
+			{if $isSupplementReservable}
+				<button type="button" class="btn btn-success" data-toggle="modal" data-target="#reserveSupplementModal">
+					Rezervovat doplněk
+				</button>
+
+				<div class="modal fade" id="reserveSupplementModal" tabindex="-1" role="dialog"
+					 aria-labelledby="Rezervovat kostým" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel">Rezervovat doplněk</h5>
+
+								<button type="button" class="close" data-dismiss="modal" aria-label="Zavřít">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+
+							<div class="modal-body">
+								{control reservationForm}
+							</div>
+
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Zavřít</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			{else}
+				<p>
+					Doplněk není možné rezervovat.
+				</p>
+			{/if}
+		</div>
+	</div>
+
+	<hr class="my-4">
+{/if}
+
+<div class="row">
+	<div class="col-md-12">
+		<h5>Obrázek:</h5>
+
+		{if $supplement->obrazek}
+			<figure class="figure">
+				{img $supplement->obrazek costume alt => $supplement->nazev, class => 'figure-img img-fluid rounded'}
+			</figure>
+		{else}
+			<p>
+				Bez obrázku
+			</p>
+		{/if}
+	</div>
+</div>
+
+<hr class="my-4">
+
+<div class="row">
+	<div class="col-md-6">
+		<dl>
+			<dt>Název</dt>
+			<dd>{$supplement->nazev}</dd>
+
+			<dt>Datum výroby</dt>
+			<dd>{$supplement->datum_vyroby|date:'%d.%m.%Y'}</dd>
+
+			<dt>Dostupnost</dt>
+			<dd>{$supplement->dostupnost}</dd>
+		</dl>
+	</div>
+
+	<div class="col-md-6">
+		<dl>
+			<dt>Popis</dt>
+			<dd>{$supplement->popis}</dd>
+
+			<dt>Cena</dt>
+			<dd>{$supplement->cena|number:0, '', ' '},-</dd>
+
+			<dt>Správce kostýmu</dt>
+			<dd>{$supplement->zamestnanec->jmeno} {$supplement->zamestnanec->prijmeni}</dd>
+		</dl>
+	</div>
+</div>
+
+<hr class="my-4">
+
+<a href="{plink :Costume:Costume:default $supplement->kostym_id}" class="btn btn-secondary">
+	<i class="fa fa-arrow-left"></i> Zpět na detail kostýmu
+</a>

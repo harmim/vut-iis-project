@@ -36,13 +36,19 @@ final class CostumePresenter extends \App\CoreModule\Presenters\SecuredPresenter
 	 */
 	private $costumeDetailControlFactory;
 
+	/**
+	 * @var \App\SupplementModule\Controls\SupplementListGrid\ISupplementListGridControlFactory
+	 */
+	private $supplementListGridControlFactory;
+
 
 	public function __construct(
 		\App\CostumeModule\Controls\CostumeListGrid\ICostumeListGridControlFactory $costumeListGridControlFactory,
 		\App\CostumeModule\Controls\AddCostume\IAddCostumeControlFactory $addCostumeControlFactory,
 		\App\CostumeModule\Controls\EditCostume\IEditCostumeControlFactory $editCostumeControlFactory,
 		\App\CostumeModule\Model\CostumeService $costumeService,
-		\App\CostumeModule\Controls\CostumeDetail\ICostumeDetailControlFactory $costumeDetailControlFactory
+		\App\CostumeModule\Controls\CostumeDetail\ICostumeDetailControlFactory $costumeDetailControlFactory,
+		\App\SupplementModule\Controls\SupplementListGrid\ISupplementListGridControlFactory $supplementListGridControlFactory
 	) {
 		parent::__construct();
 		$this->costumeListGridControlFactory = $costumeListGridControlFactory;
@@ -50,6 +56,7 @@ final class CostumePresenter extends \App\CoreModule\Presenters\SecuredPresenter
 		$this->editCostumeControlFactory = $editCostumeControlFactory;
 		$this->costumeService = $costumeService;
 		$this->costumeDetailControlFactory = $costumeDetailControlFactory;
+		$this->supplementListGridControlFactory = $supplementListGridControlFactory;
 	}
 
 
@@ -112,6 +119,12 @@ final class CostumePresenter extends \App\CoreModule\Presenters\SecuredPresenter
 	}
 
 
+	public function renderDefault(): void
+	{
+		$this->getTemplate()->add('editedCostume', $this->editedCostume);
+	}
+
+
 	protected function createComponentCostumeListGrid(
 	): \App\CostumeModule\Controls\CostumeListGrid\CostumeListGridControl {
 		return $this->costumeListGridControlFactory->create();
@@ -149,5 +162,19 @@ final class CostumePresenter extends \App\CoreModule\Presenters\SecuredPresenter
 		}
 
 		return $this->costumeDetailControlFactory->create($this->editedCostume);
+	}
+
+
+	/**
+	 * @throws \Nette\Application\BadRequestException
+	 */
+	protected function createComponentSupplementListGrid(
+	): ?\App\SupplementModule\Controls\SupplementListGrid\SupplementListGridControl {
+		if (!$this->editedCostume) {
+			$this->error();
+			return null;
+		}
+
+		return $this->supplementListGridControlFactory->create($this->editedCostume);
 	}
 }

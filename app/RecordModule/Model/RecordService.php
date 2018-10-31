@@ -49,6 +49,31 @@ final class RecordService extends \IIS\Model\BaseService
 
 
 	/**
+	 * @throws \App\RecordModule\Model\Exception
+	 */
+	public function makeSupplementReservation(
+		\Nette\Database\Table\ActiveRow $supplement,
+		string $eventName,
+		int $clientId,
+		\DateTimeInterface $borrowDate
+	): void {
+		$insertData = [
+			'nazev_akce' => $eventName,
+			'datum_zapujceni' => $borrowDate,
+			'cena' => $supplement->cena,
+			'doplnek_id' => $supplement->id,
+			'klient_id' => $clientId,
+		];
+
+		$reservation = $this->getTable()->insert($insertData);
+
+		if (!$reservation instanceof \Nette\Database\Table\ActiveRow) {
+			throw new \App\RecordModule\Model\Exception('Doplněk se nepodařilo rezervovat.');
+		}
+	}
+
+
+	/**
 	 * @throws \Nette\InvalidArgumentException
 	 */
 	public function closeRecord(\Nette\Database\Table\ActiveRow $record, \DateTimeInterface $returnDate): void

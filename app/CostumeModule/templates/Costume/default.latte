@@ -14,3 +14,17 @@
 		{control costumeDetail}
 	</div>
 </div>
+
+<hr class="my-4">
+
+<div class="row">
+	<div class="col-md-12">
+		<h4>Doplňky</h4>
+
+		{if $user->isAllowed('supplement.supplement', \App\UserModule\Model\AuthorizatorFactory::ACTION_ADD)}
+			<a n:href=":Supplement:Supplement:add $editedCostume->id" class="btn btn-success btn-lg">Vytvořit</a>
+		{/if}
+
+		{control supplementListGrid}
+	</div>
+</div>

@@ -1,0 +1,12 @@
+services:
+	# Services
+	- \App\SupplementModule\Model\SupplementService
+
+	# Controls
+	- \App\SupplementModule\Controls\SupplementListGrid\ISupplementListGridControlFactory
+	- \App\SupplementModule\Controls\SupplementDetail\ISupplementDetailControlFactory
+	- \App\SupplementModule\Controls\AddSupplement\IAddSupplementControlFactory
+	- \App\SupplementModule\Controls\EditSupplement\IEditSupplementControlFactory
+
+	# Forms
+	- \App\SupplementModule\Model\SupplementFormFactory
