@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\CostumeModule\Controls\CostumeDetail;
+namespace App\SupplementModule\Controls\SupplementDetail;
 
-final class CostumeDetailControl extends \IIS\Application\UI\BaseControl
+final class SupplementDetailControl extends \IIS\Application\UI\BaseControl
 {
 	/**
 	 * @var \Nette\Database\Table\ActiveRow
 	 */
-	private $costume;
+	private $supplement;
 
 	/**
 	 * @var \Nette\Security\User
@@ -17,9 +17,9 @@ final class CostumeDetailControl extends \IIS\Application\UI\BaseControl
 	private $user;
 
 	/**
-	 * @var \App\CostumeModule\Model\CostumeService
+	 * @var \App\SupplementModule\Model\SupplementService
 	 */
-	private $costumeService;
+	private $supplementService;
 
 	/**
 	 * @var \App\RecordModule\Model\RecordService
@@ -28,15 +28,15 @@ final class CostumeDetailControl extends \IIS\Application\UI\BaseControl
 
 
 	public function __construct(
-		\Nette\Database\Table\ActiveRow $costume,
+		\Nette\Database\Table\ActiveRow $supplement,
 		\Nette\Security\User $user,
-		\App\CostumeModule\Model\CostumeService $costumeService,
+		\App\SupplementModule\Model\SupplementService $supplementService,
 		\App\RecordModule\Model\RecordService $recordService
 	) {
 		parent::__construct();
-		$this->costume = $costume;
+		$this->supplement = $supplement;
 		$this->user = $user;
-		$this->costumeService = $costumeService;
+		$this->supplementService = $supplementService;
 		$this->recordService = $recordService;
 	}
 
@@ -44,14 +44,14 @@ final class CostumeDetailControl extends \IIS\Application\UI\BaseControl
 	protected function beforeRender(): void
 	{
 		parent::beforeRender();
-		$this->getTemplate()->add('costume', $this->costume);
+		$this->getTemplate()->add('supplement', $this->supplement);
 
 		$showReservation = $this->user->isInRole(\App\UserModule\Model\AuthorizatorFactory::ROLE_CLIENT);
 		$this->getTemplate()->add('showReservation', $showReservation);
 
 		$this->getTemplate()->add(
-			'isCostumeReservable',
-			$showReservation ? $this->costumeService->isCostumeReservable($this->costume) : false
+			'isSupplementReservable',
+			$showReservation ? $this->supplementService->isSupplementReservable($this->supplement) : false
 		);
 	}
 
@@ -60,7 +60,7 @@ final class CostumeDetailControl extends \IIS\Application\UI\BaseControl
 	{
 		$form = new \Czubehead\BootstrapForms\BootstrapForm();
 
-		$form->addText('eventName', 'Název akce pro zapůjčení kostýmu')
+		$form->addText('eventName', 'Název akce pro zapůjčení doplňku')
 			->setRequired();
 
 		$form->addDateTime('borrowDate', 'Datum zapůjčení')
@@ -96,16 +96,16 @@ final class CostumeDetailControl extends \IIS\Application\UI\BaseControl
 		if (
 			!$identity instanceof \Nette\Security\Identity
 			|| !$this->user->isInRole(\App\UserModule\Model\AuthorizatorFactory::ROLE_CLIENT)
-			|| !$this->costumeService->isCostumeReservable($this->costume)
+			|| !$this->supplementService->isSupplementReservable($this->supplement)
 		) {
-			$presenter->flashMessage('Kostým není možné rezervovat.', 'error');
+			$presenter->flashMessage('Doplněk není možné rezervovat.', 'error');
 			$presenter->redirect('this');
 			return;
 		}
 
 		try {
-			$this->recordService->makeCostumeReservation(
-				$this->costume,
+			$this->recordService->makeSupplementReservation(
+				$this->supplement,
 				$values->eventName,
 				$identity->klient_id,
 				$values->borrowDate
@@ -115,7 +115,7 @@ final class CostumeDetailControl extends \IIS\Application\UI\BaseControl
 			return;
 		}
 
-		$presenter->flashMessage('Kostým byl úspěšně rezervován.', 'success');
+		$presenter->flashMessage('Doplněk byl úspěšně rezervován.', 'success');
 		$presenter->redirect('this');
 	}
 }

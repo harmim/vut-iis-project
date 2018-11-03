@@ -67,7 +67,7 @@
 			<dd>{$costume->popis}</dd>
 
 			<dt>Cena</dt>
-			<dd>{$costume->cena|number:0, '', ' '}</dd>
+			<dd>{$costume->cena|number:0, '', ' '},-</dd>
 
 			<dt>Opotřebení</dt>
 			<dd>{$costume->opotrebeni}</dd>
@@ -79,6 +79,7 @@
 			<dd>{$costume->kategorie->nazev} ({$costume->kategorie->popis})</dd>
 		</dl>
 	</div>
+
 	<div class="col-md-6">
 		<dl>
 			<dt>Materiál</dt>

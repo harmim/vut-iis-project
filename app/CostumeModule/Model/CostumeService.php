@@ -77,9 +77,6 @@ final class CostumeService extends \IIS\Model\BaseService
 	}
 
 
-	/**
-	 * @throws \Nette\InvalidArgumentException
-	 */
 	public function deleteImage(\Nette\Database\Table\ActiveRow $costume): void
 	{
 		$costume->update([

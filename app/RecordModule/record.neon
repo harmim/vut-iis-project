@@ -1,0 +1,8 @@
+services:
+	# Services
+	- \App\RecordModule\Model\RecordService
+
+	# Controls
+	- \App\RecordModule\Controls\RecordListGrid\IRecordListGridControlFactory
+	- \App\RecordModule\Controls\CloseForm\ICloseFormControlFactory
+	- \App\RecordModule\Controls\ConfirmForm\IConfirmFormControlFactory

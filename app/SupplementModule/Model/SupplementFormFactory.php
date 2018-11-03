@@ -2,16 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\CostumeModule\Model;
+namespace App\SupplementModule\Model;
 
-final class CostumeFormFactory
+final class SupplementFormFactory
 {
 	use \Nette\SmartObject;
-
-	/**
-	 * @var \App\CostumeModule\Model\CategoryService
-	 */
-	private $categoryService;
 
 	/**
 	 * @var \App\UserModule\Model\UserService
@@ -19,11 +14,8 @@ final class CostumeFormFactory
 	private $userService;
 
 
-	public function __construct(
-		\App\CostumeModule\Model\CategoryService $categoryService,
-		\App\UserModule\Model\UserService $userService
-	) {
-		$this->categoryService = $categoryService;
+	public function __construct(\App\UserModule\Model\UserService $userService)
+	{
 		$this->userService = $userService;
 	}
 
@@ -32,26 +24,16 @@ final class CostumeFormFactory
 	 * @throws \Nette\InvalidArgumentException
 	 * @throws \Nette\NotSupportedException
 	 */
-	public function createCostumeForm(): \Czubehead\BootstrapForms\BootstrapForm
+	public function createSupplementForm(): \Czubehead\BootstrapForms\BootstrapForm
 	{
 		$form = new \Czubehead\BootstrapForms\BootstrapForm();
 
 		$row = $form->addRow();
 		$row->addCell()
-			->addText('manufacturer', 'Výrobce')
+			->addText('name', 'Název')
 			->setRequired();
 		$row->addCell()
-			->addText('material', 'Materiál')
-			->setRequired();
-
-		$row = $form->addRow();
-		$row->addCell()
-			->addText('description', 'Popis')
-			->setRequired();
-		$row->addCell()
-			->addSelect('employee', 'Správce kostýmu', $this->userService->getEmployeeEmails())
-			->setPrompt('Vyberte')
-			->setRequired();
+			->addText('description', 'Popis');
 
 		$row = $form->addRow();
 		$row->addCell()
@@ -67,25 +49,15 @@ final class CostumeFormFactory
 
 		$row = $form->addRow();
 		$row->addCell()
-			->addText('wear', 'Opotřebení');
-		$row->addCell()
-			->addText('size', 'Velikost')
-			->setRequired();
-
-		$row = $form->addRow();
-		$row->addCell()
-			->addText('color', 'Barva')
-			->setRequired();
-		$row->addCell()
 			->addSelect('availability', 'Dostupnost', \App\CoreModule\Model\Availability::AVAILABILITIES)
 			->setPrompt('Vyberte')
 			->setRequired();
-
-		$row = $form->addRow();
 		$row->addCell()
-			->addSelect('category', 'Kategorie', $this->categoryService->fetchPairs('id', 'nazev'))
+			->addSelect('employee', 'Správce doplňku', $this->userService->getEmployeeEmails())
 			->setPrompt('Vyberte')
 			->setRequired();
+
+		$row = $form->addRow();
 		$row->addCell()
 			->addUpload('image', 'Obrázek')
 			->setButtonCaption('Vyberte')

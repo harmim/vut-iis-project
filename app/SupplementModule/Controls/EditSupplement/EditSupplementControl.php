@@ -2,42 +2,42 @@
 
 declare(strict_types=1);
 
-namespace App\CostumeModule\Controls\EditCostume;
+namespace App\SupplementModule\Controls\EditSupplement;
 
-final class EditCostumeControl extends \IIS\Application\UI\BaseControl
+final class EditSupplementControl extends \IIS\Application\UI\BaseControl
 {
 	/**
-	 * @var \App\CostumeModule\Model\CostumeFormFactory
+	 * @var \App\SupplementModule\Model\SupplementFormFactory
 	 */
-	private $costumeFormFactory;
+	private $supplementFormFactory;
 
 	/**
-	 * @var \App\CostumeModule\Model\CostumeService
+	 * @var \App\SupplementModule\Model\SupplementService
 	 */
-	private $costumeService;
+	private $supplementService;
 
 	/**
 	 * @var \Nette\Database\Table\ActiveRow
 	 */
-	private $costume;
+	private $supplement;
 
 
 	public function __construct(
-		\App\CostumeModule\Model\CostumeFormFactory $costumeFormFactory,
-		\App\CostumeModule\Model\CostumeService $costumeService,
-		\Nette\Database\Table\ActiveRow $costume
+		\App\SupplementModule\Model\SupplementFormFactory $supplementFormFactory,
+		\App\SupplementModule\Model\SupplementService $supplementService,
+		\Nette\Database\Table\ActiveRow $supplement
 	) {
 		parent::__construct();
-		$this->costumeFormFactory = $costumeFormFactory;
-		$this->costumeService = $costumeService;
-		$this->costume = $costume;
+		$this->supplementFormFactory = $supplementFormFactory;
+		$this->supplementService = $supplementService;
+		$this->supplement = $supplement;
 	}
 
 
 	protected function beforeRender(): void
 	{
 		parent::beforeRender();
-		$this->getTemplate()->add('costume', $this->costume);
+		$this->getTemplate()->add('supplement', $this->supplement);
 	}
 
 
@@ -45,7 +45,7 @@ final class EditCostumeControl extends \IIS\Application\UI\BaseControl
 	 * @throws \Nette\Application\AbortException
 	 * @throws \Nette\Application\BadRequestException
 	 */
-	public function handleDeleteImage(int $costumeId): void
+	public function handleDeleteImage(int $supplementId): void
 	{
 		$presenter = $this->getPresenter();
 		if (!$presenter) {
@@ -56,14 +56,14 @@ final class EditCostumeControl extends \IIS\Application\UI\BaseControl
 			$presenter->checkPermission(\App\UserModule\Model\AuthorizatorFactory::ACTION_DELETE);
 		}
 
-		$costume = $this->costumeService->fetchById($costumeId);
-		if (!$costume) {
+		$supplement = $this->supplementService->fetchById($supplementId);
+		if (!$supplement) {
 			$presenter->error();
 			return;
 		}
 
-		$this->imageStorage->deleteImage($costume->obrazek);
-		$this->costumeService->deleteImage($costume);
+		$this->imageStorage->deleteImage($supplement->obrazek);
+		$this->supplementService->deleteImage($supplement);
 
 		$presenter->flashMessage('Obrázek byl úspěšně smazán.', 'success');
 		$presenter->redirect('this');
@@ -76,23 +76,18 @@ final class EditCostumeControl extends \IIS\Application\UI\BaseControl
 	 */
 	protected function createComponentEditForm(): \Czubehead\BootstrapForms\BootstrapForm
 	{
-		$form = $this->costumeFormFactory->createCostumeForm();
+		$form = $this->supplementFormFactory->createSupplementForm();
 
 		$form->setDefaults([
-			'manufacturer' => $this->costume->vyrobce,
-			'material' => $this->costume->material,
-			'description' => $this->costume->popis,
-			'employee' => $this->costume->zamestnanec_id,
-			'price' => $this->costume->cena,
-			'createdDate' => $this->costume->datum_vyroby,
-			'wear' => $this->costume->opotrebeni,
-			'size' => $this->costume->velikost,
-			'color' => $this->costume->barva,
-			'availability' => $this->costume->dostupnost,
-			'category' => $this->costume->kategorie_id,
+			'name' => $this->supplement->nazev,
+			'description' => $this->supplement->popis,
+			'createdDate' => $this->supplement->datum_vyroby,
+			'price' => $this->supplement->cena,
+			'availability' => $this->supplement->dostupnost,
+			'employee' => $this->supplement->zamestnanec_id,
 		]);
 
-		$form->addHidden('id', $this->costume->id);
+		$form->addHidden('id', $this->supplement->id);
 
 		$form->addSubmit('save', 'Uložit')
 			->setAttribute('class', 'btn btn-primary btn-block');
@@ -136,16 +131,16 @@ final class EditCostumeControl extends \IIS\Application\UI\BaseControl
 
 		$previousImage = null;
 		if ($values->imageFile) {
-			$previousImage = $this->costume->obrazek;
+			$previousImage = $this->supplement->obrazek;
 		}
 
-		$this->costumeService->editCostume($values);
+		$this->supplementService->editSupplement($values);
 
 		if ($previousImage) {
 			$this->imageStorage->deleteImage($previousImage);
 		}
 
-		$presenter->flashMessage('Kostým byl úspěšně uložen.', 'success');
+		$presenter->flashMessage('Doplněk byl úspěšně uložen.', 'success');
 		$presenter->redirect('this');
 	}
 }

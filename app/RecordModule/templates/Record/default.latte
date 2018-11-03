@@ -1,0 +1,193 @@
+{default $title = 'Detail výpůjčky'}
+
+{block content}
+
+<div class="row">
+	<div class="col-md-12">
+		<h3>{$title}</h3>
+		<hr class="my-4">
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-6">
+		<dl>
+			<dt>Název akce</dt>
+			<dd>{$record->nazev_akce}</dd>
+
+			<dt>Cena výpůjčky</dt>
+			<dd>{$record->cena|number:0, '', ' '},-</dd>
+
+			<dt>Stav</dt>
+			<dd>{\App\RecordModule\Model\RecordService::RECORD_STATUSES[$recordStatus]}</dd>
+		</dl>
+	</div>
+
+	<div class="col-md-6">
+		<dl>
+			<dt>Datum zapůjčení</dt>
+			<dd>{$record->datum_zapujceni|date:'%d.%m.%Y'}</dd>
+
+			<dt>Datum vrácení</dt>
+			{ifset $record->datum_vraceni}
+				<dd>{$record->datum_vraceni|date:'%d.%m.%Y'}</dd>
+			{else}
+				<dd class="text-danger">nevráceno</dd>
+			{/ifset}
+		</dl>
+	</div>
+</div>
+
+<hr class="my-4">
+
+{if $user->isAllowed('record.record', \App\UserModule\Model\AuthorizatorFactory::ACTION_EDIT)}
+	{if $recordStatus === \App\RecordModule\Model\RecordService::RECORD_STATUS_RESERVATION}
+		{control confirmForm}
+		<hr class="my-4">
+	{elseif $recordStatus === \App\RecordModule\Model\RecordService::RECORD_STATUS_CONFIRMED}
+		{control closeForm}
+		<hr class="my-4">
+	{/if}
+{/if}
+
+<div class="row">
+	<div class="col-md-12">
+		<h5>Obrázek:</h5>
+
+		{var $image = $costume ? $costume->obrazek : $supplement->obrazek}
+		{if $image}
+			<figure class="figure">
+				{img $image costume alt => $costume ? $costume->popis : $supplement->nazev, class => 'figure-img img-fluid rounded'}
+			</figure>
+		{else}
+			<p>
+				Bez obrázku
+			</p>
+		{/if}
+	</div>
+</div>
+
+<hr class="my-4">
+
+{if $costume}
+	<h4>Kostým</h4>
+
+	<div class="row">
+		<div class="col-md-6">
+			<dl>
+				<dt>Výrobce</dt>
+				<dd>{$costume->vyrobce}</dd>
+
+				<dt>Popis</dt>
+				<dd>{$costume->popis}</dd>
+
+				<dt>Cena</dt>
+				<dd>{$costume->cena|number:0, '', ' '},-</dd>
+
+				<dt>Opotřebení</dt>
+				<dd>{$costume->opotrebeni}</dd>
+
+				<dt>Barva</dt>
+				<dd>{$costume->barva}</dd>
+
+				<dt>Kategorie</dt>
+				<dd>{$costume->kategorie->nazev} ({$costume->kategorie->popis})</dd>
+			</dl>
+		</div>
+
+		<div class="col-md-6">
+			<dl>
+				<dt>Materiál</dt>
+				<dd>{$costume->material}</dd>
+
+				<dt>Správce kostýmu</dt>
+				<dd>{$costume->zamestnanec->jmeno} {$costume->zamestnanec->prijmeni}</dd>
+
+				<dt>Datum výroby</dt>
+				<dd>{$costume->datum_vyroby|date:'%d.%m.%Y'}</dd>
+
+				<dt>Velikost</dt>
+				<dd>{$costume->velikost}</dd>
+
+				<dt>Dostupnost</dt>
+				<dd>{$costume->dostupnost}</dd>
+			</dl>
+		</div>
+	</div>
+{elseif $supplement}
+	<h4>Doplňek</h4>
+
+	<div class="row">
+		<div class="col-md-6">
+			<dl>
+				<dt>Název</dt>
+				<dd>{$supplement->nazev}</dd>
+
+				<dt>Popis</dt>
+				<dd>{$supplement>popis}</dd>
+
+				<dt>Datum výroby</dt>
+				<dd>{$supplement->datum_vyroby|date:'%d.%m.%Y'}</dd>
+			</dl>
+		</div>
+
+		<div class="col-md-6">
+			<dl>
+				<dt>Cena</dt>
+				<dd>{$supplement->cena|number:0, '', ' '},-</dd>
+
+				<dt>Dostupnost</dt>
+				<dd>{$supplement->dostupnost}</dd>
+			</dl>
+		</div>
+	</div>
+{/if}
+
+{if $client}
+	<hr class="my-4">
+
+	<h4>Klient</h4>
+
+	<div class="row">
+		<div class="col-md-6">
+			<dl>
+				<dt>Jméno</dt>
+				<dd>{$client->jmeno}</dd>
+
+				<dt>Příjmení</dt>
+				<dd>{$client->prijmeni}</dd>
+			</dl>
+		</div>
+
+		<div class="col-md-6">
+			<dt>Telefoní číslo</dt>
+			<dd>{$client->telefonni_cislo}</dd>
+
+			<dt>Adresa</dt>
+			<dd>{$client->adresa}</dd>
+		</div>
+	</div>
+{/if}
+
+{if $employee}
+	<hr class="my-4">
+
+	<h4>Zaměstnanec</h4>
+
+	<div class="row">
+		<div class="col-md-6">
+			<dl>
+				<dt>Jméno</dt>
+				<dd>{$employee->jmeno}</dd>
+
+				<dt>Příjmení</dt>
+				<dd>{$employee->prijmeni}</dd>
+			</dl>
+		</div>
+
+		<div class="col-md-6">
+			<dt>Telefoní číslo</dt>
+			<dd>{$employee->telefonni_cislo}</dd>
+		</div>
+	</div>
+{/if}

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\CostumeModule\Controls\CostumeListGrid;
+namespace App\SupplementModule\Controls\SupplementListGrid;
 
-final class CostumeListGridControl extends \IIS\Application\UI\BaseControl
+final class SupplementListGridControl extends \IIS\Application\UI\BaseControl
 {
 	/**
 	 * @var \App\CoreModule\Controls\DataGrid\IDataGridControlFactory
@@ -12,9 +12,9 @@ final class CostumeListGridControl extends \IIS\Application\UI\BaseControl
 	private $dataGridControlFactory;
 
 	/**
-	 * @var \App\CostumeModule\Model\CostumeService
+	 * @var \App\SupplementModule\Model\SupplementService
 	 */
-	private $costumeService;
+	private $supplementService;
 
 	/**
 	 * @var \Nette\Security\User
@@ -22,22 +22,22 @@ final class CostumeListGridControl extends \IIS\Application\UI\BaseControl
 	private $user;
 
 	/**
-	 * @var \App\CostumeModule\Model\CategoryService
+	 * @var \Nette\Database\Table\ActiveRow
 	 */
-	private $categoryService;
+	private $costume;
 
 
 	public function __construct(
 		\App\CoreModule\Controls\DataGrid\IDataGridControlFactory $dataGridControlFactory,
-		\App\CostumeModule\Model\CostumeService $costumeService,
+		\App\SupplementModule\Model\SupplementService $supplementService,
 		\Nette\Security\User $user,
-		\App\CostumeModule\Model\CategoryService $categoryService
+		\Nette\Database\Table\ActiveRow $costume
 	) {
 		parent::__construct();
 		$this->dataGridControlFactory = $dataGridControlFactory;
-		$this->costumeService = $costumeService;
+		$this->supplementService = $supplementService;
 		$this->user = $user;
-		$this->categoryService = $categoryService;
+		$this->costume = $costume;
 	}
 
 
@@ -47,9 +47,9 @@ final class CostumeListGridControl extends \IIS\Application\UI\BaseControl
 	 */
 	protected function createComponentGrid(): \App\CoreModule\Controls\DataGrid\DataGridControl
 	{
-		$grid = $this->dataGridControlFactory->create($this->costumeService, [$this, 'defaultFilter']);
+		$grid = $this->dataGridControlFactory->create($this->supplementService, [$this, 'defaultFilter']);
 
-		$grid->addColumnText('description', 'Popis', 'popis')
+		$grid->addColumnText('name', 'Název', 'nazev')
 			->setFilterText();
 
 		$grid->addColumnNumber('price', 'Cena', 'cena')
@@ -58,15 +58,12 @@ final class CostumeListGridControl extends \IIS\Application\UI\BaseControl
 		$grid->addColumnText('availability', 'Dostupnost', 'dostupnost')
 			->setFilterSelect(\App\CoreModule\Model\Availability::AVAILABILITIES);
 
-		$grid->addColumnText('category', 'Kategori', 'kategorie.nazev')
-			->setFilterSelect($this->categoryService->fetchPairs('id', 'nazev'));
-
-		if ($this->user->isAllowed('costume.costume', \App\UserModule\Model\AuthorizatorFactory::ACTION_EDIT)) {
+		if ($this->user->isAllowed('supplement.supplement', \App\UserModule\Model\AuthorizatorFactory::ACTION_EDIT)) {
 			$grid->addColumnActive([$this, 'onActiveChange']);
-			$grid->addActionEdit(':Costume:Costume:edit');
+			$grid->addActionEdit(':Supplement:Supplement:edit');
 		}
 
-		$actionDetail = $grid->addAction('detail', '', ':Costume:Costume:default');
+		$actionDetail = $grid->addAction('detail', '', ':Supplement:Supplement:default');
 		$actionDetail->setTitle('Detail')
 			->setClass('btn btn-xs btn-primary')
 			->setIcon('eye');
@@ -75,9 +72,11 @@ final class CostumeListGridControl extends \IIS\Application\UI\BaseControl
 	}
 
 
-	public function defaultFilter(\Nette\Database\Table\Selection $selection)
+	public function defaultFilter(\Nette\Database\Table\Selection $selection): void
 	{
-		if (!$this->user->isAllowed('costume.costume', \App\UserModule\Model\AuthorizatorFactory::ACTION_EDIT)) {
+		$selection->where('kostym_id', $this->costume->id);
+
+		if (!$this->user->isAllowed('supplement.supplement', \App\UserModule\Model\AuthorizatorFactory::ACTION_EDIT)) {
 			$selection->where('aktivni', true);
 		}
 	}
@@ -94,7 +93,7 @@ final class CostumeListGridControl extends \IIS\Application\UI\BaseControl
 			$presenter->checkPermission(\App\UserModule\Model\AuthorizatorFactory::ACTION_DELETE);
 		}
 
-		$this->costumeService->changeActive($id, $active);
+		$this->supplementService->changeActive($id, $active);
 
 		if ($presenter) {
 			if ($presenter->isAjax()) {

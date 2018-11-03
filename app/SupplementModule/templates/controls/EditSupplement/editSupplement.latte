@@ -1,0 +1,32 @@
+<div class="row">
+	<div class="col-md-12">
+		<h5>Obrázek:</h5>
+
+		{if $supplement->obrazek}
+			<figure class="figure">
+				{img $supplement->obrazek costume alt => $supplement->nazev, class => 'figure-img img-fluid rounded'}
+				<figcaption class="figure-caption">
+					<a n:href="deleteImage! $supplement->id">Smazat obrázek</a>
+				</figcaption>
+			</figure>
+		{else}
+			<p>
+				Bez obrázku
+			</p>
+		{/if}
+	</div>
+</div>
+
+<hr class="my-4">
+
+<div class="row">
+	<div class="col-md-12">
+		{control editForm}
+	</div>
+</div>
+
+<hr class="my-4">
+
+<a href="{plink :Costume:Costume:default $supplement->kostym_id}" class="btn btn-secondary">
+	<i class="fa fa-arrow-left"></i> Zpět na detail kostýmu
+</a>

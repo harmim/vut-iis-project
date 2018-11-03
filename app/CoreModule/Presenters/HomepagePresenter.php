@@ -11,9 +11,11 @@ final class HomepagePresenter extends \App\CoreModule\Presenters\SecuredPresente
 	 */
 	public function actionDefault(): void
 	{
-		if ($this->getUser()->isInRole(\App\UserModule\Model\AuthorizatorFactory::ROLE_ADMIN)) {
+		if ($this->getUser()->isAllowed('user.user', \App\UserModule\Model\AuthorizatorFactory::ACTION_LIST)) {
 			$this->redirect(':User:User:list');
-			return;
+
+		} else {
+			$this->redirect(':Record:Record:list');
 		}
 	}
 }
