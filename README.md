@@ -180,7 +180,7 @@ $ make
 U každého příkazu je možné uvést `DOCKER=1/0` pro používání/nepoužívaní Docker, např. `$ make install DOCKER=0`.
 Výchozí hodnota je `1`.
 
-U kažédho příkazu je možné uvést `PRODUCTION=1/0` pro a nastavení knihoven pro produkční/vývojový server,
+U kažédho příkazu je možné uvést `PRODUCTION=1/0` pro nastavení knihoven pro produkční/vývojový server,
 např. `$ make install PRODUCTION=1`. Výchozí hodnota je `0`.
 
 - `install` `composer` + `assets`. Výchozí cíl.
