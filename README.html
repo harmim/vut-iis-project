@@ -1,0 +1,1004 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><style>@font-face {
+  font-family: octicons-anchor;
+  src: url(https://cdnjs.cloudflare.com/ajax/libs/octicons/4.4.0/font/octicons.woff) format('woff');
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    width: 980px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+body .markdown-body {
+    padding: 45px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    word-wrap: break-word;
+}
+
+pre {
+    font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+
+.markdown-body {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  color: #333;
+  font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 16px;
+  line-height: 1.6;
+  word-wrap: break-word;
+}
+
+.markdown-body a {
+  background-color: transparent;
+}
+
+.markdown-body a:active,
+.markdown-body a:hover {
+  outline: 0;
+}
+
+.markdown-body strong {
+  font-weight: bold;
+}
+
+.markdown-body h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+.markdown-body img {
+  border: 0;
+}
+
+.markdown-body hr {
+  box-sizing: content-box;
+  height: 0;
+}
+
+.markdown-body pre {
+  overflow: auto;
+}
+
+.markdown-body code,
+.markdown-body kbd,
+.markdown-body pre {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+
+.markdown-body input {
+  color: inherit;
+  font: inherit;
+  margin: 0;
+}
+
+.markdown-body html input[disabled] {
+  cursor: default;
+}
+
+.markdown-body input {
+  line-height: normal;
+}
+
+.markdown-body input[type="checkbox"] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.markdown-body table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.markdown-body td,
+.markdown-body th {
+  padding: 0;
+}
+
+.markdown-body input {
+  font: 13px / 1.4 Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+.markdown-body a {
+  color: #4078c0;
+  text-decoration: none;
+}
+
+.markdown-body a:hover,
+.markdown-body a:active {
+  text-decoration: underline;
+}
+
+.markdown-body hr {
+  height: 0;
+  margin: 15px 0;
+  overflow: hidden;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.markdown-body hr:before {
+  display: table;
+  content: "";
+}
+
+.markdown-body hr:after {
+  display: table;
+  clear: both;
+  content: "";
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  line-height: 1.1;
+}
+
+.markdown-body h1 {
+  font-size: 30px;
+}
+
+.markdown-body h2 {
+  font-size: 21px;
+}
+
+.markdown-body h3 {
+  font-size: 16px;
+}
+
+.markdown-body h4 {
+  font-size: 14px;
+}
+
+.markdown-body h5 {
+  font-size: 12px;
+}
+
+.markdown-body h6 {
+  font-size: 11px;
+}
+
+.markdown-body blockquote {
+  margin: 0;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  padding: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body ol ol,
+.markdown-body ul ol {
+  list-style-type: lower-roman;
+}
+
+.markdown-body ul ul ol,
+.markdown-body ul ol ol,
+.markdown-body ol ul ol,
+.markdown-body ol ol ol {
+  list-style-type: lower-alpha;
+}
+
+.markdown-body dd {
+  margin-left: 0;
+}
+
+.markdown-body code {
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 12px;
+}
+
+.markdown-body pre {
+  margin-top: 0;
+  margin-bottom: 0;
+  font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+
+.markdown-body .select::-ms-expand {
+  opacity: 0;
+}
+
+.markdown-body .octicon {
+  font: normal normal normal 16px/1 octicons-anchor;
+  display: inline-block;
+  text-decoration: none;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.markdown-body .octicon-link:before {
+  content: '\f05c';
+}
+
+.markdown-body:before {
+  display: table;
+  content: "";
+}
+
+.markdown-body:after {
+  display: table;
+  clear: both;
+  content: "";
+}
+
+.markdown-body>*:first-child {
+  margin-top: 0 !important;
+}
+
+.markdown-body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+.markdown-body a:not([href]) {
+  color: inherit;
+  text-decoration: none;
+}
+
+.markdown-body .anchor {
+  display: inline-block;
+  padding-right: 2px;
+  margin-left: -18px;
+}
+
+.markdown-body .anchor:focus {
+  outline: none;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  margin-top: 1em;
+  margin-bottom: 16px;
+  font-weight: bold;
+  line-height: 1.4;
+}
+
+.markdown-body h1 .octicon-link,
+.markdown-body h2 .octicon-link,
+.markdown-body h3 .octicon-link,
+.markdown-body h4 .octicon-link,
+.markdown-body h5 .octicon-link,
+.markdown-body h6 .octicon-link {
+  color: #000;
+  vertical-align: middle;
+  visibility: hidden;
+}
+
+.markdown-body h1:hover .anchor,
+.markdown-body h2:hover .anchor,
+.markdown-body h3:hover .anchor,
+.markdown-body h4:hover .anchor,
+.markdown-body h5:hover .anchor,
+.markdown-body h6:hover .anchor {
+  text-decoration: none;
+}
+
+.markdown-body h1:hover .anchor .octicon-link,
+.markdown-body h2:hover .anchor .octicon-link,
+.markdown-body h3:hover .anchor .octicon-link,
+.markdown-body h4:hover .anchor .octicon-link,
+.markdown-body h5:hover .anchor .octicon-link,
+.markdown-body h6:hover .anchor .octicon-link {
+  visibility: visible;
+}
+
+.markdown-body h1 {
+  padding-bottom: 0.3em;
+  font-size: 2.25em;
+  line-height: 1.2;
+  border-bottom: 1px solid #eee;
+}
+
+.markdown-body h1 .anchor {
+  line-height: 1;
+}
+
+.markdown-body h2 {
+  padding-bottom: 0.3em;
+  font-size: 1.75em;
+  line-height: 1.225;
+  border-bottom: 1px solid #eee;
+}
+
+.markdown-body h2 .anchor {
+  line-height: 1;
+}
+
+.markdown-body h3 {
+  font-size: 1.5em;
+  line-height: 1.43;
+}
+
+.markdown-body h3 .anchor {
+  line-height: 1.2;
+}
+
+.markdown-body h4 {
+  font-size: 1.25em;
+}
+
+.markdown-body h4 .anchor {
+  line-height: 1.2;
+}
+
+.markdown-body h5 {
+  font-size: 1em;
+}
+
+.markdown-body h5 .anchor {
+  line-height: 1.1;
+}
+
+.markdown-body h6 {
+  font-size: 1em;
+  color: #777;
+}
+
+.markdown-body h6 .anchor {
+  line-height: 1.1;
+}
+
+.markdown-body p,
+.markdown-body blockquote,
+.markdown-body ul,
+.markdown-body ol,
+.markdown-body dl,
+.markdown-body table,
+.markdown-body pre {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.markdown-body hr {
+  height: 4px;
+  padding: 0;
+  margin: 16px 0;
+  background-color: #e7e7e7;
+  border: 0 none;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  padding-left: 2em;
+}
+
+.markdown-body ul ul,
+.markdown-body ul ol,
+.markdown-body ol ol,
+.markdown-body ol ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body li>p {
+  margin-top: 16px;
+}
+
+.markdown-body dl {
+  padding: 0;
+}
+
+.markdown-body dl dt {
+  padding: 0;
+  margin-top: 16px;
+  font-size: 1em;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.markdown-body dl dd {
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+
+.markdown-body blockquote {
+  padding: 0 15px;
+  color: #777;
+  border-left: 4px solid #ddd;
+}
+
+.markdown-body blockquote>:first-child {
+  margin-top: 0;
+}
+
+.markdown-body blockquote>:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-body table {
+  display: block;
+  width: 100%;
+  overflow: auto;
+  word-break: normal;
+  word-break: keep-all;
+}
+
+.markdown-body table th {
+  font-weight: bold;
+}
+
+.markdown-body table th,
+.markdown-body table td {
+  padding: 6px 13px;
+  border: 1px solid #ddd;
+}
+
+.markdown-body table tr {
+  background-color: #fff;
+  border-top: 1px solid #ccc;
+}
+
+.markdown-body table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+.markdown-body img {
+  max-width: 100%;
+  box-sizing: content-box;
+  background-color: #fff;
+}
+
+.markdown-body code {
+  padding: 0;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  margin: 0;
+  font-size: 85%;
+  background-color: rgba(0,0,0,0.04);
+  border-radius: 3px;
+}
+
+.markdown-body code:before,
+.markdown-body code:after {
+  letter-spacing: -0.2em;
+  content: "\00a0";
+}
+
+.markdown-body pre>code {
+  padding: 0;
+  margin: 0;
+  font-size: 100%;
+  word-break: normal;
+  white-space: pre;
+  background: transparent;
+  border: 0;
+}
+
+.markdown-body .highlight {
+  margin-bottom: 16px;
+}
+
+.markdown-body .highlight pre,
+.markdown-body pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: #f7f7f7;
+  border-radius: 3px;
+}
+
+.markdown-body .highlight pre {
+  margin-bottom: 0;
+  word-break: normal;
+}
+
+.markdown-body pre {
+  word-wrap: normal;
+}
+
+.markdown-body pre code {
+  display: inline;
+  max-width: initial;
+  padding: 0;
+  margin: 0;
+  overflow: initial;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: transparent;
+  border: 0;
+}
+
+.markdown-body pre code:before,
+.markdown-body pre code:after {
+  content: normal;
+}
+
+.markdown-body kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font-size: 11px;
+  line-height: 10px;
+  color: #555;
+  vertical-align: middle;
+  background-color: #fcfcfc;
+  border: solid 1px #ccc;
+  border-bottom-color: #bbb;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #bbb;
+}
+
+.markdown-body .pl-c {
+  color: #969896;
+}
+
+.markdown-body .pl-c1,
+.markdown-body .pl-s .pl-v {
+  color: #0086b3;
+}
+
+.markdown-body .pl-e,
+.markdown-body .pl-en {
+  color: #795da3;
+}
+
+.markdown-body .pl-s .pl-s1,
+.markdown-body .pl-smi {
+  color: #333;
+}
+
+.markdown-body .pl-ent {
+  color: #63a35c;
+}
+
+.markdown-body .pl-k {
+  color: #a71d5d;
+}
+
+.markdown-body .pl-pds,
+.markdown-body .pl-s,
+.markdown-body .pl-s .pl-pse .pl-s1,
+.markdown-body .pl-sr,
+.markdown-body .pl-sr .pl-cce,
+.markdown-body .pl-sr .pl-sra,
+.markdown-body .pl-sr .pl-sre {
+  color: #183691;
+}
+
+.markdown-body .pl-v {
+  color: #ed6a43;
+}
+
+.markdown-body .pl-id {
+  color: #b52a1d;
+}
+
+.markdown-body .pl-ii {
+  background-color: #b52a1d;
+  color: #f8f8f8;
+}
+
+.markdown-body .pl-sr .pl-cce {
+  color: #63a35c;
+  font-weight: bold;
+}
+
+.markdown-body .pl-ml {
+  color: #693a17;
+}
+
+.markdown-body .pl-mh,
+.markdown-body .pl-mh .pl-en,
+.markdown-body .pl-ms {
+  color: #1d3e81;
+  font-weight: bold;
+}
+
+.markdown-body .pl-mq {
+  color: #008080;
+}
+
+.markdown-body .pl-mi {
+  color: #333;
+  font-style: italic;
+}
+
+.markdown-body .pl-mb {
+  color: #333;
+  font-weight: bold;
+}
+
+.markdown-body .pl-md {
+  background-color: #ffecec;
+  color: #bd2c00;
+}
+
+.markdown-body .pl-mi1 {
+  background-color: #eaffea;
+  color: #55a532;
+}
+
+.markdown-body .pl-mdr {
+  color: #795da3;
+  font-weight: bold;
+}
+
+.markdown-body .pl-mo {
+  color: #1d3e81;
+}
+
+.markdown-body kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font: 11px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  line-height: 10px;
+  color: #555;
+  vertical-align: middle;
+  background-color: #fcfcfc;
+  border: solid 1px #ccc;
+  border-bottom-color: #bbb;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #bbb;
+}
+
+.markdown-body .plan-price-unit {
+  color: #767676;
+  font-weight: normal;
+}
+
+.markdown-body .task-list-item {
+  list-style-type: none;
+}
+
+.markdown-body .task-list-item+.task-list-item {
+  margin-top: 3px;
+}
+
+.markdown-body .task-list-item input {
+  margin: 0 0.35em 0.25em -1.6em;
+  vertical-align: middle;
+}
+
+.markdown-body .plan-choice {
+  padding: 15px;
+  padding-left: 40px;
+  display: block;
+  border: 1px solid #e0e0e0;
+  position: relative;
+  font-weight: normal;
+  background-color: #fafafa;
+}
+
+.markdown-body .plan-choice.open {
+  background-color: #fff;
+}
+
+.markdown-body .plan-choice.open .plan-choice-seat-breakdown {
+  display: block;
+}
+
+.markdown-body .plan-choice-free {
+  border-radius: 3px 3px 0 0;
+}
+
+.markdown-body .plan-choice-paid {
+  border-radius: 0 0 3px 3px;
+  border-top: 0;
+  margin-bottom: 20px;
+}
+
+.markdown-body .plan-choice-radio {
+  position: absolute;
+  left: 15px;
+  top: 18px;
+}
+
+.markdown-body .plan-choice-exp {
+  color: #999;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.markdown-body .plan-choice-seat-breakdown {
+  margin-top: 10px;
+  display: none;
+}
+
+.markdown-body :checked+.radio-label {
+  z-index: 1;
+  position: relative;
+  border-color: #4078c0;
+}
+
+@media print {
+  body .markdown-body {
+    padding: 0;
+    border: none;
+  }
+}
+</style><title>README</title></head><body><article class="markdown-body"><h1>
+<a id="user-content-informační-systémy---projekt" class="anchor" href="#informa%C4%8Dn%C3%AD-syst%C3%A9my---projekt" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Informační systémy - Projekt</h1>
+<h2>
+<a id="user-content-půjčovna-kostýmů-založeno-na-zadání-č-10-z-kursu-ius" class="anchor" href="#p%C5%AFj%C4%8Dovna-kost%C3%BDm%C5%AF-zalo%C5%BEeno-na-zad%C3%A1n%C3%AD-%C4%8D-10-z-kursu-ius" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Půjčovna kostýmů (založeno na zadání č. 10 z kursu IUS)</h2>
+<h3>
+<a id="user-content-autoři" class="anchor" href="#auto%C5%99i" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Autoři</h3>
+<ul>
+<li>Dominik Harmim <a href="mailto:xharmi00@stud.fit.vutbr.cz">xharmi00@stud.fit.vutbr.cz</a>
+</li>
+<li>Matúš Burzala <a href="mailto:xburza00@stud.fit.vutbr.cz">xburza00@stud.fit.vutbr.cz</a>
+</li>
+</ul>
+<h3>
+<a id="user-content-dokumentace" class="anchor" href="#dokumentace" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Dokumentace</h3>
+<p>Dokumentace projektu se nachází v <a href="/Users/harmim/Google%20Drive/VUT/BIT/IIS/Projekt/doc/doc.html"><code>./doc/doc.html</code></a>.</p>
+<h3>
+<a id="user-content-databáze" class="anchor" href="#datab%C3%A1ze" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Databáze</h3>
+<p>SQL skript pro inicializaci schématu databáze se nachází v <a href="/Users/harmim/Google%20Drive/VUT/BIT/IIS/Projekt/sql/create_db.sql"><code>./sql/create_db.sql</code></a>.</p>
+<h3>
+<a id="user-content-struktura-projektu" class="anchor" href="#struktura-projektu" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Struktura projektu</h3>
+<ul>
+<li>
+<code>./app/</code> Jádro systému. PHP skripty a třídy, konfigurační NEON soubory. Latte šablony.
+<ul>
+<li>
+<code>./app/config/</code> Konfigurační NEON soubory systému.</li>
+<li>
+<code>./app/*Module/</code> Jednotlivé moduly systému. Tento adresář obsahuje konfigurační NEON soubor pro daný modul,
+adresář <code>Controls</code> pro komponenty, <code>Model</code> pro modelové třídy, <code>Presenters</code> pro presentery (kontrolery) a
+<code>templates</code> pro Latte šablony.</li>
+<li>
+<code>./app/bootstrap.php</code> výchozí skript s nastavením konfigrace celého systému.</li>
+</ul>
+</li>
+<li>
+<code>./doc/</code> Dokumentace.</li>
+<li>
+<code>./docker/</code> Nastavení Docker.</li>
+<li>
+<code>./libs/</code> PHP třídy, které modifikují nebo rozšiřují chování Nette framework.</li>
+<li>
+<code>./log/</code> Chybové záznamy systému ("logy").</li>
+<li>
+<code>./node_modules/</code> JavaScript knihovny nainstalované přes NPM. Slouží k nastavení a stahování JavaScript a CSS
+závislostí systému.</li>
+<li>
+<code>./sql/</code> SQL skripty.
+<ul>
+<li>
+<code>./sql/create_db.sql</code> Skript pro inicializaci databáze.</li>
+</ul>
+</li>
+<li>
+<code>./temp/</code> Dočasné soubory systému.</li>
+<li>
+<code>./vednor/</code> PHP knihovny nainstalované přes Composer.</li>
+<li>
+<code>./www/</code> Kořenový adresář přístupný z webu.
+<ul>
+<li>
+<code>./www/img/</code> Obrázky.</li>
+<li>
+<code>./www/js/</code> JavaScript skripty.</li>
+<li>
+<code>./www/styles/</code> CSS soubory.</li>
+<li>
+<code>./www/index.php</code> Výchozí PHP skript spuštěný při spuštění systému.</li>
+</ul>
+</li>
+<li>
+<code>./.bowerrc</code> Konfigurace nástroje Bower použitého na stahování JavaScript a CSS závislostí systému.</li>
+<li>
+<code>./.gitignore</code> Ignorované soubory verzovacím systémem Git.</li>
+<li>
+<code>./.htaccess</code> Výchozí konfigurace webového serveru Apache pro celý systém.</li>
+<li>
+<code>./bower.json</code> Definice používaných JavaScript a CSS knihoven nástrojem Bower.</li>
+<li>
+<code>./coding-standard.yml</code> Nastavení nástroje <code>nette/coding-standard</code> pro kontrolu stylu PHP kódu.</li>
+<li>
+<code>./composer.json</code> Definice používaných PHP knihoven, verze PHP a způsobu automatického načítání PHP souborů
+nástrojem Composer.</li>
+<li>
+<code>./composer.lock</code> Pomocný soubor pro nástroj Composer.</li>
+<li>
+<code>./docker-compose.override.sample.yml</code> Vzorový konfigurační soubor pro lokální modifikaci konfigurace Docker.</li>
+<li>
+<code>./docker-compose.yml</code> Konfigurační soubor pro Docker.</li>
+<li>
+<code>./Gruntfile.js</code> JavaScript skript pro správu a stahování JavaScript a CSS závislostí systému.
+(Konfigurační soubor nástroje Grunt.)</li>
+<li>
+<code>./LICENSE</code> Licence.</li>
+<li>
+<code>./Makefile</code> Soubor pro správu systému programem make.</li>
+<li>
+<code>./package.json</code> Definice používaných JavaScript knihoven pro stahování JavaScript a CSS závislostí systému
+nástrojem NPM.</li>
+<li>
+<code>./package-lock.json</code> Pomocný soubor pro nástroj NPM.</li>
+<li>
+<code>./phpstan.neon</code> Nastavení nástroje phpstan pro statickou analýzu PHP kódu.</li>
+<li>
+<code>./README.md</code> README se základními informacemi o systému.</li>
+<li>
+<code>./README.html</code> README ve formátu HTML.</li>
+</ul>
+<h3>
+<a id="user-content-požadavky-obecné" class="anchor" href="#po%C5%BEadavky-obecn%C3%A9" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Požadavky (obecné)</h3>
+<ul>
+<li>
+<a href="https://git-scm.com/downloads" rel="nofollow">Git</a>. (Pro stažení repositáře.)</li>
+</ul>
+<h4>
+<a id="user-content-požadavky-bez-použití-docker" class="anchor" href="#po%C5%BEadavky-bez-pou%C5%BEit%C3%AD-docker" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Požadavky (bez použití Docker)</h4>
+<ul>
+<li>Webový server, např. <a href="http://httpd.apache.org/download.cgi" rel="nofollow">Apache</a> nebo <a href="http://nginx.org/en/download.html" rel="nofollow">Nginx</a> +
+<a href="https://www.mysql.com/downloads" rel="nofollow">MySQL</a> nebo <a href="https://mariadb.org/download" rel="nofollow">MariaDB</a> +
+<a href="http://php.net/downloads.php" rel="nofollow">PHP</a> &gt;= 7.2. Možno nainstalovat zvlášť nebo nainstalovat
+<a href="https://www.apachefriends.org/download.html" rel="nofollow">XAMPP</a> nebo třeba <a href="http://www.wampserver.com/en" rel="nofollow">WAMP</a>.</li>
+<li>
+<a href="https://getcomposer.org/download" rel="nofollow">Composer</a>. (Pro správu PHP zavislostí.)</li>
+<li>
+<a href="https://nodejs.org/en/download" rel="nofollow">NodeJS</a>. (Pro správu JavaScript balíčků pro stahování JavaScript a CSS knihoven.)</li>
+</ul>
+<h4>
+<a id="user-content-požadavky-s-použitím-docker" class="anchor" href="#po%C5%BEadavky-s-pou%C5%BEit%C3%ADm-docker" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Požadavky (s použitím Docker)</h4>
+<ul>
+<li>
+<a href="https://www.docker.com/products/docker-engine#/download" rel="nofollow">Docker</a> nebo přes
+<a href="https://www.docker.com/products/docker-desktop" rel="nofollow">Docker Desktop</a>.</li>
+<li>
+<a href="https://docs.docker.com/compose/install/#install-compose" rel="nofollow">Docker Compose</a>.</li>
+</ul>
+<h3>
+<a id="user-content-nastavení-obecné" class="anchor" href="#nastaven%C3%AD-obecn%C3%A9" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Nastavení (obecné)</h3>
+<h4>
+<a id="user-content-nastavení-dns" class="anchor" href="#nastaven%C3%AD-dns" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Nastavení DNS</h4>
+<ul>
+<li>Doména <code>vut-iis-project.localhost.com</code> musí směrovat na localhost (127.0.0.1).
+Lze to udělat např. editací souboru <code>/etc/hosts</code>, respektive (<code>C:\Windows\System32\Drivers\etc\hosts</code>).
+Nebo je možné použít program <a href="http://www.thekelleys.org.uk/dnsmasq/doc.html" rel="nofollow"><code>dnsmasq</code></a> kde je možné
+nastavit, aby celé skupiny domén směrovaly na localhost, např. všechny domény, které mají ve svém
+názvu řetězec <code>localhost</code>. <a href="https://getgrav.org/blog/macos-mojave-apache-mysql-vhost-apc" rel="nofollow">Návod pro Mac</a>.
+Nebo je také možné nainstalovat si <code>dnsmasq</code> přes Docker.</li>
+</ul>
+<h4>
+<a id="user-content-stažení-repositáře" class="anchor" href="#sta%C5%BEen%C3%AD-reposit%C3%A1%C5%99e" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Stažení repositáře</h4>
+<p>Přes SSH</p>
+<pre><code>$ git clone git@github.com:harmim/vut-iis-project.git ~/cesta/k/repositari
+</code></pre>
+<p>nebo přes HTTPS.</p>
+<pre><code>$ git clone https://github.com/harmim/vut-iis-project.git ~/cesta/k/repositari
+</code></pre>
+<h3>
+<a id="user-content-nastavení-bez-použití-docker" class="anchor" href="#nastaven%C3%AD-bez-pou%C5%BEit%C3%AD-docker" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Nastavení (bez použití Docker)</h3>
+<h4>
+<a id="user-content-nastavení-virtual-host" class="anchor" href="#nastaven%C3%AD-virtual-host" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Nastavení virtual host</h4>
+<p>V konfiguračím souboru Apache, např. <code>/usr/local/etc/httpd/extra/httpd-vhosts.conf</code>.</p>
+<pre><code>&lt;VirtualHost *:80&gt;
+	ServerName vut-iis-project.localhost.com
+	DocumentRoot "~/cesta/k/repositari"
+	SetEnv IIS_DEBUG 1
+&lt;/VirtualHost&gt;
+</code></pre>
+<h3>
+<a id="user-content-nastavení-s-použitím-docker" class="anchor" href="#nastaven%C3%AD-s-pou%C5%BEit%C3%ADm-docker" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Nastavení (s použitím Docker)</h3>
+<h4>
+<a id="user-content-nginx-proxy" class="anchor" href="#nginx-proxy" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Nginx-proxy</h4>
+<p>Nastavení Nginx proxy serveru, přes který se budeme připojovat k systému a který bude proxy na Apach server.</p>
+<ol>
+<li>Vytvoření souboru <code>~/docker-compose.yml</code> např. v domovském adresáři:</li>
+</ol>
+<div class="highlight highlight-source-yaml"><pre><span class="pl-ent">version</span>: <span class="pl-s"><span class="pl-pds">'</span>3<span class="pl-pds">'</span></span>
+
+<span class="pl-ent">services</span>:
+    <span class="pl-ent">nginx-proxy</span>:
+        <span class="pl-ent">image</span>: <span class="pl-s">jwilder/nginx-proxy</span>
+        <span class="pl-ent">ports</span>:
+            - <span class="pl-c1">80:80</span>
+        <span class="pl-ent">volumes</span>:
+            - <span class="pl-s">/var/run/docker.sock:/tmp/docker.sock:ro</span>
+        <span class="pl-ent">restart</span>: <span class="pl-s">always</span>
+
+<span class="pl-ent">networks</span>:
+    <span class="pl-ent">default</span>:
+      <span class="pl-ent">external</span>:
+        <span class="pl-ent">name</span>: <span class="pl-s">nginx-proxy</span></pre></div>
+<ol start="2">
+<li>
+</li>
+</ol>
+<pre><code>$ docker network create nginx-proxy
+</code></pre>
+<ol start="3">
+<li>
+</li>
+</ol>
+<pre><code>$ (cd ~ &amp;&amp; docker-compose up -d)
+</code></pre>
+<p>Tato Nginx proxy se teď bude spouštět vždy po restartu Docker automaticky.</p>
+<h3>
+<a id="user-content-instalace-bez-použití-docker" class="anchor" href="#instalace-bez-pou%C5%BEit%C3%AD-docker" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Instalace (bez použití Docker)</h3>
+<pre><code>$ make DOCKER=0
+</code></pre>
+<h4>
+<a id="user-content-nastavení-vlastní-databáze" class="anchor" href="#nastaven%C3%AD-vlastn%C3%AD-datab%C3%A1ze" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Nastavení vlastní databáze</h4>
+<ol>
+<li>
+</li>
+</ol>
+<pre><code>$ cp app/config/local.sample.neon app/config/local.neon
+</code></pre>
+<ol start="2">
+<li>Nastavení údajů k vlastní databázi v souboru <code>app/config/loocal.neon</code>.</li>
+</ol>
+<h3>
+<a id="user-content-instalace-s-použitím-docker" class="anchor" href="#instalace-s-pou%C5%BEit%C3%ADm-docker" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Instalace (s použitím docker)</h3>
+<ol>
+<li>
+</li>
+</ol>
+<pre><code>$ cp docker-compose.override.sample.yml docker-compose.override.yml
+</code></pre>
+<ol start="2">
+<li>
+<p>Změna konfigurace v souboru <code>docker-compose.override.yml</code>, např. nastavení <code>XDEBUG_CONFIG</code> na
+<code>docker.for.win.localhost</code> pro Windows.</p>
+</li>
+<li>
+</li>
+</ol>
+<pre><code>$ docker-compose up -d
+</code></pre>
+<p>(pro vypnutí Docker kontejneru <code>$ docker-compose down</code>)</p>
+<ol start="4">
+<li>
+</li>
+</ol>
+<pre><code>$ make
+</code></pre>
+<h3>
+<a id="user-content-make-příkazy" class="anchor" href="#make-p%C5%99%C3%ADkazy" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Make příkazy</h3>
+<p>U každého příkazu je možné uvést <code>DOCKER=1/0</code> pro používání/nepoužívaní Docker, např. <code>$ make install DOCKER=0</code>.
+Výchozí hodnota je <code>1</code>.</p>
+<p>U kažédho příkazu je možné uvést <code>PRODUCTION=1/0</code> pro nastavení knihoven pro produkční/vývojový server,
+např. <code>$ make install PRODUCTION=1</code>. Výchozí hodnota je <code>0</code>.</p>
+<ul>
+<li>
+<code>install</code> <code>composer</code> + <code>assets</code>. Výchozí cíl.</li>
+<li>
+<code>composer</code> Instalace PHP knihoven a vygenerování souboru pro automatické načítání PHP souborů.</li>
+<li>
+<code>assets</code> <code>npm</code> + <code>bower</code> + <code>grunt</code>.</li>
+<li>
+<code>npm</code> Instalace JavaScript knihoven přes NPM pro nastavování a stahování JavaScript a CSS knihoven systému.</li>
+<li>
+<code>bower</code> Instalace JavaScript a CSS knihoven přes Bower.</li>
+<li>
+<code>grunt</code> Kopírování a nastavování (minifikace, aj.) JavaScript a CSS knihoven systému.</li>
+<li>
+<code>code-checker</code> Spuštění kontroly validity PHP kódu.</li>
+<li>
+<code>coding-standard</code> Spuštění kontroly stylu PHP kódu.</li>
+<li>
+<code>phpstan</code> Spuštění statické analýzy PHP kódu.</li>
+<li>
+<code>clean</code> Odstranení všech dočasných souborů.</li>
+<li>
+<code>clean-cache</code> Ostranění dočasných souborů Nette framework.</li>
+<li>
+<code>pack</code> Vytvoření archívu pro odevzdání.</li>
+</ul>
+</article></body></html>

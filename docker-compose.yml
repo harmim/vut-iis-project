@@ -24,6 +24,8 @@ services:
         image: adminer:latest
         ports:
             - 8080:8080
+        environment:
+            VIRTUAL_HOST: adminer.vut-iis-project.localhost.com
         links:
             - database
 

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+	<meta charset="utf-8">
+	<title>Projekt IIS</title>
+	<style rel="stylesheet" type="text/css">
+		table { border-collapse: collapse; }
+		td, th { border: 1px solid black; padding: 0.3em 0.5em; text-align: left; }
+		dt { font-weight: bold; margin-top: 0.5em; }
+	</style>
+</head>
+<body>
+	<h1>Půjčovna kostýmů (založeno na zadání č. 10 z kursu IUS)</h1>
+
+	<dl>
+		<dt>Autoři</dt>
+		<dd>Dominik Harmim
+			<a href="mailto:xharmi00@stud.fit.vutbr.cz">xharmi00@stud.fit.vutbr.cz</a>
+			-
+			struktura systému, uživatelské rozhraní, přihlašování/registrace, správa uživatelů, správa kostýmů,
+			správa doplňků, dokumentace
+		</dd>
+		<dd>Matúš Burzala
+			<a href="mailto:xburza00@stud.fit.vutbr.cz">xburza00@stud.fit.vutbr.cz</a>
+			-
+			schéma databáze, testovací data, správa uživatelského profilu, správa výpůjček, testování
+		</dd>
+
+		<dt>URL aplikace</dt>
+		<dd>
+			<a href="http://vut-iis-project.harmim.cz" target="_blank">http://vut-iis-project.harmim.cz</a>
+		</dd>
+	</dl>
+
+	<h2>Uživatelé systému pro testování</h2>
+	<table>
+		<tr>
+			<th>Login</th>
+			<th>Heslo</th>
+			<th>Role</th>
+		</tr>
+		<tr>
+			<td>admin@gmail.com</td>
+			<td>test</td>
+			<td>Administrátor</td>
+		</tr>
+		<tr>
+			<td>novak@gmail.com</td>
+			<td>test</td>
+			<td>Zaměstnanec</td>
+		</tr>
+		<tr>
+			<td>suba@gmail.com</td>
+			<td>test</td>
+			<td>Zákazník</td>
+		</tr>
+	</table>
+
+	<h2>Implementace</h2>
+	<span>Seznam presenterů, a popis jejich účelu:</span>
+	<ul>
+		<li><i>app/CoreModule/Presenters/ErrorPresenter.php</i>: zpracování chyb</li>
+		<li><i>app/CoreModule/Presenters/Error4xxPresenter.php</i>: zpracování chyb s kódem 4xx</li>
+		<li><i>app/CoreModule/Presenters/HomepagePresenter.php</i>: domovská stránka</li>
+		<li><i>app/CostumeModule/Presenters/CategoryPresenter.php</i>: správa kategorií kostýmů (výpis, přidávání)</li>
+		<li>
+			<i>app/CostumeModule/Presenters/CostumePresenter.php</i>: správa kostýmů (výpis, přidávání, editace, detail)
+		</li>
+		<li><i>app/RecordModule/Presenters/RecordPresenter.php</i>: správa výpůjček (výpis, detail)</li>
+		<li>
+			<i>app/SupplementModule/Presenters/SupplementPresenter.php</i>: správa doplňků (editace, detail, přidávání)
+		</li>
+		<li><i>app/UserModule/Presenters/ProfilePresenter.php</i>: správa uživatelského profilu</li>
+		<li><i>app/UserModule/Presenters/RegistrationPresenter.php</i>: registrace</li>
+		<li><i>app/UserModule/Presenters/SignPresenter.php</i>: přihlašování</li>
+		<li><i>app/UserModule/Presenters/UserPresenter.php</i>: správa uživatelů (výpis, editace, přidávání)</li>
+	</ul>
+
+	<h2>Instalace</h2>
+	<p>
+		Podrobný popis instalace se nachází v souboru <a href="../README.html" target="_blank">README.html</a>,
+		případně v souboru <a href="../README.md" target="_blank">README.md</a> ve formátu Markdown.
+	</p>
+	<span>V README je detailně popsáno:</span>
+	<ul>
+		<li>Jak inicializovat databázi.</li>
+		<li>Jaká je struktura projektu.</li>
+		<li>Jaké jsou požadavky na software.</li>
+		<li>Jak aplikaci nainstalovat s i bez použití Docker.</li>
+		<li>Jak nastavit určité parametry aplikace.</li>
+		<li>Jak lze aplikaci konfigurovat a instalovat programem Make.</li>
+	</ul>
+</body>
+</html>

@@ -3,7 +3,7 @@ parameters:
 		domainUrl: http://vut-iis-project.harmim.cz
 
 	database:
-		host:
-		user:
-		password:
-		dbname:
+		host: mariadb.best-hosting.cz
+		user: harmim002
+		password: "wL0781@1|71Cd'U(']5~\"|07-"
+		dbname: harmimcz_db002

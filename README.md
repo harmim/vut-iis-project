@@ -1,5 +1,5 @@
 # Informační systémy - Projekt
-## Půjčovna kostýmů
+## Půjčovna kostýmů (založeno na zadání č. 10 z kursu IUS)
 
 
 ### Autoři
@@ -8,7 +8,11 @@
 
 
 ### Dokumentace
-Dokumentace projektu se nachází v ... **TODO**.
+Dokumentace projektu se nachází v [`./doc/doc.html`](./doc/doc.html).
+
+
+### Databáze
+SQL skript pro inicializaci schématu databáze se nachází v [`./sql/create_db.sql`](./sql/create_db.sql).
 
 
 ### Struktura projektu
@@ -52,6 +56,7 @@ Dokumentace projektu se nachází v ... **TODO**.
 - `./package-lock.json` Pomocný soubor pro nástroj NPM.
 - `./phpstan.neon` Nastavení nástroje phpstan pro statickou analýzu PHP kódu.
 - `./README.md` README se základními informacemi o systému.
+- `./README.html` README ve formátu HTML.
 
 
 ### Požadavky (obecné)
@@ -96,7 +101,7 @@ $ git clone https://github.com/harmim/vut-iis-project.git ~/cesta/k/repositari
 
 #### Nastavení virtual host
 V konfiguračím souboru Apache, např. `/usr/local/etc/httpd/extra/httpd-vhosts.conf`.
-```conf
+```
 <VirtualHost *:80>
 	ServerName vut-iis-project.localhost.com
 	DocumentRoot "~/cesta/k/repositari"
@@ -194,3 +199,4 @@ např. `$ make install PRODUCTION=1`. Výchozí hodnota je `0`.
 - `phpstan` Spuštění statické analýzy PHP kódu.
 - `clean` Odstranení všech dočasných souborů.
 - `clean-cache` Ostranění dočasných souborů Nette framework.
+- `pack` Vytvoření archívu pro odevzdání.

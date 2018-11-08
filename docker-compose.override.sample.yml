@@ -13,10 +13,6 @@ services:
             MYSQL_PASSWORD: iis
             MYSQL_DATABASE: vut_iis_project
 
-    adminer:
-        environment:
-            VIRTUAL_HOST: adminer.vut-iis-project.localhost.com
-
 networks:
     default:
         external:
