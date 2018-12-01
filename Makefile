@@ -140,7 +140,7 @@ clean-cache:
 pack: clean $(PACK).zip
 
 $(PACK).zip:
-	zip -r $@ ./*
+	zip -r $@ * .bowerrc .gitignore .htaccess
 
 
 .PHONY: docker-compose-web
